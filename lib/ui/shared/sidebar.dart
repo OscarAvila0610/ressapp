@@ -62,9 +62,11 @@ class Sidebar extends StatelessWidget {
               icon: Icons.airplanemode_active_outlined,
               onPressed: () {}),
           MenuItem(
-              text: 'Reservas',
-              icon: Icons.attach_money_outlined,
-              onPressed: () {}),
+              isActive:
+                  sideMenuProvider.currentPage == Flurorouter.exportersRoute,
+              text: 'Exportadores',
+              icon: Icons.turned_in_not_outlined,
+              onPressed: () => navigateTo(Flurorouter.exportersRoute)),
           MenuItem(
               isActive: sideMenuProvider.currentPage == Flurorouter.usersRoute,
               text: 'Usuarios',
