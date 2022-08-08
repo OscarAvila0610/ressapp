@@ -27,7 +27,7 @@ class DestinationsProviders extends ChangeNotifier {
       destinos.add(newDestination);
       notifyListeners();
     } catch (e) {
-      throw 'Error al crear categoria';
+      throw 'Error al crear Destino';
     }
   }
 
@@ -48,7 +48,7 @@ class DestinationsProviders extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      throw 'Error al actualizar categoria';
+      throw 'Error al actualizar destino';
     }
   }
 
@@ -60,7 +60,7 @@ class DestinationsProviders extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      throw 'Error al crear categoria';
+      throw 'Error al eliminar destino';
     }
   }
 }

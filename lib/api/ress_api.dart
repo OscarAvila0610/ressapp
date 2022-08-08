@@ -5,8 +5,8 @@ class RessApi {
   static final Dio _dio = Dio();
 
   static void configureDio() {
-    // _dio.options.baseUrl = 'http://localhost:8080/api';
-    _dio.options.baseUrl = 'https://ress-aa-app.herokuapp.com/api';
+    _dio.options.baseUrl = 'http://localhost:8080/api';
+    // _dio.options.baseUrl = 'https://ress-aa-app.herokuapp.com/api';
 
     //Headers
     _dio.options.headers = {

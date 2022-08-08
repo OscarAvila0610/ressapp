@@ -11,6 +11,7 @@ import 'package:ress_app/ui/views/dashboard_view.dart';
 import 'package:ress_app/ui/views/destinations_view.dart';
 import 'package:ress_app/ui/views/icons_view.dart';
 import 'package:ress_app/ui/views/login_view.dart';
+import 'package:ress_app/ui/views/origins_views.dart';
 import 'package:ress_app/ui/views/user_view.dart';
 import 'package:ress_app/ui/views/users_view.dart';
 
@@ -54,6 +55,17 @@ class DashboardHandlers {
         .setCurrentPageUrl(Flurorouter.destinationsRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
       return const DestinationsView();
+    } else {
+      return const LoginView();
+    }
+  });
+
+  static Handler origins = Handler(handlerFunc: (context, params) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.originsRoute);
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      return const OriginsView();
     } else {
       return const LoginView();
     }

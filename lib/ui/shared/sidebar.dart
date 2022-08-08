@@ -42,9 +42,11 @@ class Sidebar extends StatelessWidget {
               icon: Icons.compass_calibration_outlined,
               onPressed: () => navigateTo(Flurorouter.dashboardRoute)),
           MenuItem(
+              isActive:
+                  sideMenuProvider.currentPage == Flurorouter.originsRoute,
               text: 'Origenes',
               icon: Icons.flag_outlined,
-              onPressed: () {}),
+              onPressed: () => navigateTo(Flurorouter.originsRoute)),
           MenuItem(
               isActive:
                   sideMenuProvider.currentPage == Flurorouter.destinationsRoute,
