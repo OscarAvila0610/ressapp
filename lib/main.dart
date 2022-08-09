@@ -15,7 +15,6 @@ import 'package:ress_app/ui/layouts/auth/auth_layout.dart';
 import 'package:ress_app/ui/layouts/dashboard/dashboard_layout.dart';
 import 'package:ress_app/ui/layouts/splash/splash_layout.dart';
 
-
 void main() async {
   await LocalStorage.configurePrefs();
   RessApi.configureDio();
@@ -31,6 +30,7 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(lazy: false, create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => AirlinesProvider()),
         ChangeNotifierProvider(lazy: false, create: (_) => SideMenuProvider()),
         ChangeNotifierProvider(create: (_) => DestinationsProviders()),
         ChangeNotifierProvider(create: (_) => OriginsProviders()),

@@ -6,7 +6,10 @@ import 'package:ress_app/router/router.dart';
 import 'package:ress_app/providers/auth_provider.dart';
 import 'package:ress_app/providers/sidemenu_provider.dart';
 
+import 'package:ress_app/ui/views/airlines_view.dart';
 import 'package:ress_app/ui/views/blank_view.dart';
+import 'package:ress_app/ui/views/commodities_view.dart';
+import 'package:ress_app/ui/views/containers_view.dart';
 import 'package:ress_app/ui/views/dashboard_view.dart';
 import 'package:ress_app/ui/views/destinations_view.dart';
 import 'package:ress_app/ui/views/exporters_view.dart';
@@ -39,6 +42,17 @@ class DashboardHandlers {
     }
   });
 
+  static Handler airlines = Handler(handlerFunc: (context, params) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.airlinesRoute);
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      return const AirlinesView();
+    } else {
+      return const LoginView();
+    }
+  });
+
   static Handler blank = Handler(handlerFunc: (context, params) {
     final authProvider = Provider.of<AuthProvider>(context!);
     Provider.of<SideMenuProvider>(context, listen: false)
@@ -56,6 +70,28 @@ class DashboardHandlers {
         .setCurrentPageUrl(Flurorouter.destinationsRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
       return const DestinationsView();
+    } else {
+      return const LoginView();
+    }
+  });
+
+  static Handler containers = Handler(handlerFunc: (context, params) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.containersRoute);
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      return const ContainersView();
+    } else {
+      return const LoginView();
+    }
+  });
+
+  static Handler commodities = Handler(handlerFunc: (context, params) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.commoditiesRoute);
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      return const CommoditiesView();
     } else {
       return const LoginView();
     }

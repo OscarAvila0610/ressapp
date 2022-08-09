@@ -1,3 +1,4 @@
+export 'package:ress_app/providers/airlines_provider.dart';
 export 'package:ress_app/providers/auth_provider.dart';
 export 'package:ress_app/providers/destinations_provider.dart';
 export 'package:ress_app/providers/exporter_provider.dart';

@@ -23,6 +23,7 @@ class Sidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sideMenuProvider = Provider.of<SideMenuProvider>(context);
+    final user = Provider.of<AuthProvider>(context).user;
     return Container(
       width: 200,
       height: double.infinity,
@@ -34,7 +35,7 @@ class Sidebar extends StatelessWidget {
           const SizedBox(
             height: 50,
           ),
-          const TextSeparator(text: 'main'),
+          const TextSeparator(text: 'Administrador'),
           MenuItem(
               isActive:
                   sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
@@ -54,13 +55,23 @@ class Sidebar extends StatelessWidget {
               icon: Icons.airplane_ticket_outlined,
               onPressed: () => navigateTo(Flurorouter.destinationsRoute)),
           MenuItem(
+              isActive:
+                  sideMenuProvider.currentPage == Flurorouter.containersRoute,
               text: 'Contenedores',
               icon: Icons.add_box_outlined,
-              onPressed: () {}),
+              onPressed: () => navigateTo(Flurorouter.containersRoute)),
           MenuItem(
+              isActive:
+                  sideMenuProvider.currentPage == Flurorouter.commoditiesRoute,
+              text: 'Tipo de Carga',
+              icon: Icons.shop_outlined,
+              onPressed: () => navigateTo(Flurorouter.commoditiesRoute)),
+          MenuItem(
+              isActive:
+                  sideMenuProvider.currentPage == Flurorouter.airlinesRoute,
               text: 'Aerolineas',
               icon: Icons.airplanemode_active_outlined,
-              onPressed: () {}),
+              onPressed: () => navigateTo(Flurorouter.airlinesRoute)),
           MenuItem(
               isActive:
                   sideMenuProvider.currentPage == Flurorouter.exportersRoute,
@@ -75,21 +86,21 @@ class Sidebar extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          const TextSeparator(text: 'UI Elements'),
+          const TextSeparator(text: 'Usuario'),
           MenuItem(
               isActive: sideMenuProvider.currentPage == Flurorouter.iconsRoute,
               text: 'Iconos',
               icon: Icons.list_alt_outlined,
               onPressed: () => navigateTo(Flurorouter.iconsRoute)),
           MenuItem(
-              text: 'Mercadotecnia',
+              text: 'Reservas',
               icon: Icons.mark_email_read_outlined,
               onPressed: () {}),
           MenuItem(
-              text: 'Campaña', icon: Icons.note_add_outlined, onPressed: () {}),
+              text: 'Perfil', icon: Icons.note_add_outlined, onPressed: () {}),
           MenuItem(
               isActive: sideMenuProvider.currentPage == Flurorouter.blankRoute,
-              text: 'Domi',
+              text: 'Calculadora',
               icon: Icons.post_add_outlined,
               onPressed: () => navigateTo(Flurorouter.blankRoute)),
           const SizedBox(
