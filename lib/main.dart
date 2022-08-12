@@ -32,6 +32,8 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(lazy: false, create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => AirlinesProvider()),
         ChangeNotifierProvider(lazy: false, create: (_) => SideMenuProvider()),
+        ChangeNotifierProvider(create: (_) => ContainersProviders()),
+        ChangeNotifierProvider(create: (_) => CommoditiesProviders()),
         ChangeNotifierProvider(create: (_) => DestinationsProviders()),
         ChangeNotifierProvider(create: (_) => OriginsProviders()),
         ChangeNotifierProvider(create: (_) => ExportersProviders()),
@@ -70,7 +72,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(
           scrollbarTheme: const ScrollbarThemeData().copyWith(
               thumbColor:
-                  MaterialStateProperty.all(Colors.grey.withOpacity(0.5)))),
+                  MaterialStateProperty.all(Colors.grey.withOpacity(0.5))),
+          unselectedWidgetColor: Colors.white),
     );
   }
 }
