@@ -21,8 +21,7 @@ class _ExportersViewState extends State<ExportersView> {
 
   @override
   void initState() {
-    Provider.of<ExportersProviders>(context, listen: false)
-        .getExporters();
+    Provider.of<ExportersProviders>(context, listen: false).getExporters();
     super.initState();
   }
 
@@ -64,6 +63,7 @@ class _ExportersViewState extends State<ExportersView> {
                 CustomIconButton(
                   onPressed: () {
                     showModalBottomSheet(
+                        isScrollControlled: true,
                         backgroundColor: Colors.transparent,
                         context: context,
                         builder: (_) => const ExporterModal(exportador: null));

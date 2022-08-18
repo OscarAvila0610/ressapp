@@ -64,6 +64,7 @@ class _DestinationsViewState extends State<DestinationsView> {
                 CustomIconButton(
                   onPressed: () {
                     showModalBottomSheet(
+                        isScrollControlled: true,
                         backgroundColor: Colors.transparent,
                         context: context,
                         builder: (_) => const DestinationModal(destino: null));

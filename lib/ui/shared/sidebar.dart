@@ -24,6 +24,9 @@ class Sidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     final sideMenuProvider = Provider.of<SideMenuProvider>(context);
     final user = Provider.of<AuthProvider>(context).user;
+    const admin = 'ADMIN_ROLE';
+    const usuario = 'USER_ROLE';
+    const analist = 'ANALIST_ROLE';
     return Container(
       width: 200,
       height: double.infinity,
@@ -35,77 +38,94 @@ class Sidebar extends StatelessWidget {
           const SizedBox(
             height: 50,
           ),
-          const TextSeparator(text: 'Administrador'),
-          MenuItem(
-              isActive:
-                  sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
-              text: 'Dashboard',
-              icon: Icons.compass_calibration_outlined,
-              onPressed: () => navigateTo(Flurorouter.dashboardRoute)),
-          MenuItem(
-              isActive:
-                  sideMenuProvider.currentPage == Flurorouter.originsRoute,
-              text: 'Origenes',
-              icon: Icons.flag_outlined,
-              onPressed: () => navigateTo(Flurorouter.originsRoute)),
-          MenuItem(
-              isActive:
-                  sideMenuProvider.currentPage == Flurorouter.destinationsRoute,
-              text: 'Destinos',
-              icon: Icons.airplane_ticket_outlined,
-              onPressed: () => navigateTo(Flurorouter.destinationsRoute)),
-          MenuItem(
-              isActive:
-                  sideMenuProvider.currentPage == Flurorouter.containersRoute,
-              text: 'Contenedores',
-              icon: Icons.add_box_outlined,
-              onPressed: () => navigateTo(Flurorouter.containersRoute)),
-          MenuItem(
-              isActive:
-                  sideMenuProvider.currentPage == Flurorouter.commoditiesRoute,
-              text: 'Tipo de Carga',
-              icon: Icons.shop_outlined,
-              onPressed: () => navigateTo(Flurorouter.commoditiesRoute)),
-          MenuItem(
-              isActive:
-                  sideMenuProvider.currentPage == Flurorouter.airlinesRoute,
-              text: 'Aerolineas',
-              icon: Icons.airplanemode_active_outlined,
-              onPressed: () => navigateTo(Flurorouter.airlinesRoute)),
-          MenuItem(
-              isActive:
-                  sideMenuProvider.currentPage == Flurorouter.exportersRoute,
-              text: 'Exportadores',
-              icon: Icons.turned_in_not_outlined,
-              onPressed: () => navigateTo(Flurorouter.exportersRoute)),
-          MenuItem(
-              isActive: sideMenuProvider.currentPage == Flurorouter.usersRoute,
-              text: 'Usuarios',
-              icon: Icons.people_alt_outlined,
-              onPressed: () => navigateTo(Flurorouter.usersRoute)),
-          const SizedBox(
-            height: 30,
-          ),
-          const TextSeparator(text: 'Usuario'),
-          MenuItem(
-              isActive: sideMenuProvider.currentPage == Flurorouter.iconsRoute,
-              text: 'Iconos',
-              icon: Icons.list_alt_outlined,
-              onPressed: () => navigateTo(Flurorouter.iconsRoute)),
-          MenuItem(
-              text: 'Reservas',
-              icon: Icons.mark_email_read_outlined,
-              onPressed: () {}),
-          MenuItem(
-              text: 'Perfil', icon: Icons.note_add_outlined, onPressed: () {}),
-          MenuItem(
-              isActive: sideMenuProvider.currentPage == Flurorouter.blankRoute,
-              text: 'Calculadora',
-              icon: Icons.post_add_outlined,
-              onPressed: () => navigateTo(Flurorouter.blankRoute)),
-          const SizedBox(
-            height: 30,
-          ),
+          if (user!.rol == admin) ...[
+            const TextSeparator(text: 'Administrador'),
+            MenuItem(
+                isActive:
+                    sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
+                text: 'Dashboard',
+                icon: Icons.compass_calibration_outlined,
+                onPressed: () => navigateTo(Flurorouter.dashboardRoute)),
+            MenuItem(
+                isActive:
+                    sideMenuProvider.currentPage == Flurorouter.originsRoute,
+                text: 'Origenes',
+                icon: Icons.flag_outlined,
+                onPressed: () => navigateTo(Flurorouter.originsRoute)),
+            MenuItem(
+                isActive: sideMenuProvider.currentPage ==
+                    Flurorouter.destinationsRoute,
+                text: 'Destinos',
+                icon: Icons.airplane_ticket_outlined,
+                onPressed: () => navigateTo(Flurorouter.destinationsRoute)),
+            MenuItem(
+                isActive:
+                    sideMenuProvider.currentPage == Flurorouter.containersRoute,
+                text: 'Contenedores',
+                icon: Icons.add_box_outlined,
+                onPressed: () => navigateTo(Flurorouter.containersRoute)),
+            MenuItem(
+                isActive: sideMenuProvider.currentPage ==
+                    Flurorouter.commoditiesRoute,
+                text: 'Tipo de Carga',
+                icon: Icons.shop_outlined,
+                onPressed: () => navigateTo(Flurorouter.commoditiesRoute)),
+            MenuItem(
+                isActive:
+                    sideMenuProvider.currentPage == Flurorouter.airlinesRoute,
+                text: 'Aerolineas',
+                icon: Icons.airplanemode_active_outlined,
+                onPressed: () => navigateTo(Flurorouter.airlinesRoute)),
+            MenuItem(
+                isActive:
+                    sideMenuProvider.currentPage == Flurorouter.exportersRoute,
+                text: 'Exportadores',
+                icon: Icons.turned_in_not_outlined,
+                onPressed: () => navigateTo(Flurorouter.exportersRoute)),
+            MenuItem(
+                isActive:
+                    sideMenuProvider.currentPage == Flurorouter.usersRoute,
+                text: 'Usuarios',
+                icon: Icons.people_alt_outlined,
+                onPressed: () => navigateTo(Flurorouter.usersRoute)),
+            const SizedBox(
+              height: 30,
+            ),
+          ],
+          if (user.rol == usuario) ...[
+            const TextSeparator(text: 'Usuario'),
+            MenuItem(
+                isActive:
+                    sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
+                text: 'Dashboard',
+                icon: Icons.compass_calibration_outlined,
+                onPressed: () => navigateTo(Flurorouter.dashboardRoute)),
+            MenuItem(
+                isActive:
+                    sideMenuProvider.currentPage == Flurorouter.iconsRoute,
+                text: 'Iconos',
+                icon: Icons.list_alt_outlined,
+                onPressed: () => navigateTo(Flurorouter.iconsRoute)),
+            MenuItem(
+                isActive:
+                    sideMenuProvider.currentPage == Flurorouter.bookingsRoute,
+                text: 'Reservas',
+                icon: Icons.mark_email_read_outlined,
+                onPressed: () => navigateTo(Flurorouter.bookingsRoute)),
+            MenuItem(
+                text: 'Perfil',
+                icon: Icons.note_add_outlined,
+                onPressed: () {}),
+            MenuItem(
+                isActive:
+                    sideMenuProvider.currentPage == Flurorouter.blankRoute,
+                text: 'Calculadora',
+                icon: Icons.post_add_outlined,
+                onPressed: () => navigateTo(Flurorouter.blankRoute)),
+            const SizedBox(
+              height: 30,
+            ),
+          ],
           const TextSeparator(text: 'Exit'),
           MenuItem(
               text: 'Logout',

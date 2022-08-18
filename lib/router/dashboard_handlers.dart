@@ -1,23 +1,10 @@
 import 'package:fluro/fluro.dart';
 import 'package:provider/provider.dart';
+import 'package:ress_app/providers/providers.dart';
 
 import 'package:ress_app/router/router.dart';
 
-import 'package:ress_app/providers/auth_provider.dart';
-import 'package:ress_app/providers/sidemenu_provider.dart';
-
-import 'package:ress_app/ui/views/airlines_view.dart';
-import 'package:ress_app/ui/views/blank_view.dart';
-import 'package:ress_app/ui/views/commodities_view.dart';
-import 'package:ress_app/ui/views/containers_view.dart';
-import 'package:ress_app/ui/views/dashboard_view.dart';
-import 'package:ress_app/ui/views/destinations_view.dart';
-import 'package:ress_app/ui/views/exporters_view.dart';
-import 'package:ress_app/ui/views/icons_view.dart';
-import 'package:ress_app/ui/views/login_view.dart';
-import 'package:ress_app/ui/views/origins_views.dart';
-import 'package:ress_app/ui/views/user_view.dart';
-import 'package:ress_app/ui/views/users_view.dart';
+import 'package:ress_app/ui/views/views.dart';
 
 class DashboardHandlers {
   static Handler dashboard = Handler(handlerFunc: (context, params) {
@@ -42,11 +29,27 @@ class DashboardHandlers {
     }
   });
 
+  static Handler bookings = Handler(handlerFunc: (context, params) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.bookingsRoute);
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      return const BookingsView();
+    } else {
+      return const LoginView();
+    }
+  });
+
   static Handler airlines = Handler(handlerFunc: (context, params) {
     final authProvider = Provider.of<AuthProvider>(context!);
     Provider.of<SideMenuProvider>(context, listen: false)
         .setCurrentPageUrl(Flurorouter.airlinesRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user!.rol != 'ADMIN_ROLE') {
+        Provider.of<SideMenuProvider>(context, listen: false)
+            .setCurrentPageUrl(Flurorouter.airlinesRoute);
+        return const DashboardView();
+      }
       return const AirlinesView();
     } else {
       return const LoginView();
@@ -69,6 +72,11 @@ class DashboardHandlers {
     Provider.of<SideMenuProvider>(context, listen: false)
         .setCurrentPageUrl(Flurorouter.destinationsRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user!.rol != 'ADMIN_ROLE') {
+        Provider.of<SideMenuProvider>(context, listen: false)
+            .setCurrentPageUrl(Flurorouter.airlinesRoute);
+        return const DashboardView();
+      }
       return const DestinationsView();
     } else {
       return const LoginView();
@@ -80,6 +88,11 @@ class DashboardHandlers {
     Provider.of<SideMenuProvider>(context, listen: false)
         .setCurrentPageUrl(Flurorouter.containersRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user!.rol != 'ADMIN_ROLE') {
+        Provider.of<SideMenuProvider>(context, listen: false)
+            .setCurrentPageUrl(Flurorouter.airlinesRoute);
+        return const DashboardView();
+      }
       return const ContainersView();
     } else {
       return const LoginView();
@@ -91,6 +104,11 @@ class DashboardHandlers {
     Provider.of<SideMenuProvider>(context, listen: false)
         .setCurrentPageUrl(Flurorouter.commoditiesRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user!.rol != 'ADMIN_ROLE') {
+        Provider.of<SideMenuProvider>(context, listen: false)
+            .setCurrentPageUrl(Flurorouter.airlinesRoute);
+        return const DashboardView();
+      }
       return const CommoditiesView();
     } else {
       return const LoginView();
@@ -102,6 +120,11 @@ class DashboardHandlers {
     Provider.of<SideMenuProvider>(context, listen: false)
         .setCurrentPageUrl(Flurorouter.originsRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user!.rol != 'ADMIN_ROLE') {
+        Provider.of<SideMenuProvider>(context, listen: false)
+            .setCurrentPageUrl(Flurorouter.airlinesRoute);
+        return const DashboardView();
+      }
       return const OriginsView();
     } else {
       return const LoginView();
@@ -113,6 +136,11 @@ class DashboardHandlers {
     Provider.of<SideMenuProvider>(context, listen: false)
         .setCurrentPageUrl(Flurorouter.exportersRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user!.rol != 'ADMIN_ROLE') {
+        Provider.of<SideMenuProvider>(context, listen: false)
+            .setCurrentPageUrl(Flurorouter.airlinesRoute);
+        return const DashboardView();
+      }
       return const ExportersView();
     } else {
       return const LoginView();
@@ -124,6 +152,11 @@ class DashboardHandlers {
     Provider.of<SideMenuProvider>(context, listen: false)
         .setCurrentPageUrl(Flurorouter.usersRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
+      if (authProvider.user!.rol != 'ADMIN_ROLE') {
+        Provider.of<SideMenuProvider>(context, listen: false)
+            .setCurrentPageUrl(Flurorouter.airlinesRoute);
+        return const DashboardView();
+      }
       return const UsersView();
     } else {
       return const LoginView();

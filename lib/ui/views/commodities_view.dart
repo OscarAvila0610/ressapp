@@ -63,6 +63,7 @@ class _CommoditiesViewState extends State<CommoditiesView> {
                 CustomIconButton(
                   onPressed: () {
                     showModalBottomSheet(
+                        isScrollControlled: true,
                         backgroundColor: Colors.transparent,
                         context: context,
                         builder: (_) => const CommodityModal(tipo: null));

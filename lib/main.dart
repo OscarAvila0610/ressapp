@@ -32,6 +32,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(lazy: false, create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => AirlinesProvider()),
         ChangeNotifierProvider(lazy: false, create: (_) => SideMenuProvider()),
+        ChangeNotifierProvider(create: (_) => BookingsProvider()),
         ChangeNotifierProvider(create: (_) => ContainersProviders()),
         ChangeNotifierProvider(create: (_) => CommoditiesProviders()),
         ChangeNotifierProvider(create: (_) => DestinationsProviders()),

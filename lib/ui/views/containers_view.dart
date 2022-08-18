@@ -61,6 +61,7 @@ class _ContainersViewState extends State<ContainersView> {
                 CustomIconButton(
                   onPressed: () {
                     showModalBottomSheet(
+                        isScrollControlled: true,
                         backgroundColor: Colors.transparent,
                         context: context,
                         builder: (_) => const ContainerModal(contenedor: null));

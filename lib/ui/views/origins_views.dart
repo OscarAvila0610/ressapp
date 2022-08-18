@@ -21,8 +21,7 @@ class _OriginsViewState extends State<OriginsView> {
 
   @override
   void initState() {
-    Provider.of<OriginsProviders>(context, listen: false)
-        .getOrigins();
+    Provider.of<OriginsProviders>(context, listen: false).getOrigins();
     super.initState();
   }
 
@@ -64,6 +63,7 @@ class _OriginsViewState extends State<OriginsView> {
                 CustomIconButton(
                   onPressed: () {
                     showModalBottomSheet(
+                        isScrollControlled: true,
                         backgroundColor: Colors.transparent,
                         context: context,
                         builder: (_) => const OriginModal(origen: null));

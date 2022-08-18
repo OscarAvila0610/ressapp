@@ -1,0 +1,13 @@
+export 'package:ress_app/ui/views/blank_view.dart';
+export 'package:ress_app/ui/views/bookings_view.dart';
+export 'package:ress_app/ui/views/commodities_view.dart';
+export 'package:ress_app/ui/views/airlines_view.dart';
+export 'package:ress_app/ui/views/containers_view.dart';
+export 'package:ress_app/ui/views/dashboard_view.dart';
+export 'package:ress_app/ui/views/destinations_view.dart';
+export 'package:ress_app/ui/views/exporters_view.dart';
+export 'package:ress_app/ui/views/icons_view.dart';
+export 'package:ress_app/ui/views/login_view.dart';
+export 'package:ress_app/ui/views/origins_views.dart';
+export 'package:ress_app/ui/views/user_view.dart';
+export 'package:ress_app/ui/views/users_view.dart';
