@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ress_app/models/airline.dart';
+import 'package:ress_app/models/commodity.dart';
+import 'package:ress_app/models/container.dart';
+import 'package:ress_app/models/destination.dart';
+import 'package:ress_app/models/origin.dart';
 
 import 'package:ress_app/providers/airlines_provider.dart';
 
@@ -10,8 +15,13 @@ import 'package:ress_app/ui/modals/booking_modal.dart';
 class BookingsDTS extends DataTableSource {
   final List<Reserva> reservas;
   final BuildContext context;
+  final List<Aerolinea> aerolineas;
+  final List<Contenedore> contenedores;
+  final List<Tipo> tipos;
+  final List<Origene> origenes;
+  final List<Destino> destinos;
 
-  BookingsDTS(this.reservas, this.context);
+  BookingsDTS(this.reservas, this.context, this.aerolineas, this.contenedores, this.tipos, this.origenes, this.destinos);
   @override
   DataRow getRow(int index) {
     final reserva = reservas[index];
@@ -30,7 +40,14 @@ class BookingsDTS extends DataTableSource {
                   isScrollControlled: true,
                   backgroundColor: Colors.transparent,
                   context: context,
-                  builder: (_) => BookingModal(reserva: reserva));
+                  builder: (_) => BookingModal(
+                        reserva: reserva,
+                        aerolineas: aerolineas,
+                        contenedores: contenedores,
+                        tipos: tipos,
+                        origenes: origenes,
+                        destinos: destinos,
+                      ));
             },
           ),
           IconButton(

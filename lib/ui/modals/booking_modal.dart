@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:ress_app/models/booking.dart';
+import 'package:ress_app/models/airline.dart';
+import 'package:ress_app/models/commodity.dart';
+import 'package:ress_app/models/container.dart';
+import 'package:ress_app/models/destination.dart';
+import 'package:ress_app/models/origin.dart';
 
-import 'package:ress_app/providers/bookings_provider.dart';
+import 'package:ress_app/providers/providers.dart';
 
 import 'package:ress_app/services/notifications_service.dart';
 
@@ -12,7 +18,21 @@ import 'package:ress_app/ui/inputs/custom_inputs.dart';
 import 'package:ress_app/ui/labels/custom_labels.dart';
 
 class BookingModal extends StatefulWidget {
-  const BookingModal({Key? key, this.reserva}) : super(key: key);
+  const BookingModal(
+      {Key? key,
+      this.reserva,
+      required this.aerolineas,
+      required this.contenedores,
+      required this.tipos,
+      required this.origenes,
+      required this.destinos})
+      : super(key: key);
+
+  final List<Aerolinea> aerolineas;
+  final List<Contenedore> contenedores;
+  final List<Tipo> tipos;
+  final List<Origene> origenes;
+  final List<Destino> destinos;
 
   final Reserva? reserva;
 
@@ -22,18 +42,35 @@ class BookingModal extends StatefulWidget {
 
 class _BookingModalState extends State<BookingModal> {
   int awb = 0;
+  int alto = 0;
+  int largo = 0;
+  int ancho = 0;
+  int pesoFisico = 0;
+  int pesoVolumetrico = 0;
+  String aerolinea = '';
+  String contenedor = '';
+  String tipo = '';
   String origen = '';
   String destino = '';
   String? id;
+  DateTime fecha = DateTime.now();
 
   @override
   void initState() {
     super.initState();
-
+    aerolinea = widget.reserva?.aerolinea.id ?? '62cec0f7717a2552db8f99c6';
+    contenedor = widget.reserva?.contenedor.id ?? '62cec510ad30a92c9c4bdc71';
+    tipo = widget.reserva?.tipoCarga.id ?? '62ceb7f84d468c6ea3b0176c';
     id = widget.reserva?.id;
     awb = widget.reserva?.awb ?? 0;
-    origen = widget.reserva?.origen.prefijo ?? '';
-    destino = widget.reserva?.destino.prefijo ?? '';
+    alto = widget.reserva?.alto ?? 0;
+    largo = widget.reserva?.largo ?? 0;
+    ancho = widget.reserva?.ancho ?? 0;
+    pesoFisico = widget.reserva?.pesoFisico ?? 0;
+    fecha = widget.reserva?.fechaSolicitud ?? DateTime.now();
+    pesoVolumetrico = widget.reserva?.pesoVolumetrico ?? 0;
+    origen = widget.reserva?.origen.id ?? '62f1052b1314231c0daaacb7';
+    destino = widget.reserva?.destino.id ?? '62cdbb6208337546686bdd2f';
   }
 
   @override
@@ -77,14 +114,25 @@ class _BookingModalState extends State<BookingModal> {
                   children: [
                     Container(
                       width: 200,
-                      child: TextFormField(
-                        initialValue: widget.reserva?.origen.prefijo ?? '',
-                        onChanged: (value) => origen = value,
+                      child: DropdownButtonFormField(
                         decoration: CustomInputs.loginInputDecoration(
-                            hint: 'Aerolinea Seleccionada',
-                            label: 'Aerolinea',
-                            icon: Icons.airplanemode_active),
+                            label: 'Aerolínea',
+                            hint: '',
+                            icon: Icons.airplanemode_active_outlined),
+                        dropdownColor: const Color(0xff0F2039),
+                        value: aerolinea,
                         style: const TextStyle(color: Colors.white),
+                        onChanged: (String? value) {
+                          setState(() {
+                            aerolinea = value!;
+                          });
+                        },
+                        items: widget.aerolineas
+                            .map<DropdownMenuItem<String>>((value) {
+                          return DropdownMenuItem<String>(
+                              value: value.id,
+                              child: Text(value.prefijo.toString()));
+                        }).toList(),
                       ),
                     ),
                     const SizedBox(
@@ -93,10 +141,10 @@ class _BookingModalState extends State<BookingModal> {
                     Container(
                       width: 200,
                       child: TextFormField(
-                        initialValue: widget.reserva?.origen.prefijo ?? '',
-                        onChanged: (value) => origen = value,
+                        initialValue: widget.reserva?.awb.toString() ?? '',
+                        onChanged: (value) => awb = int.parse(value),
                         decoration: CustomInputs.loginInputDecoration(
-                            hint: 'Numero de AWB',
+                            hint: 'Número de AWB',
                             label: 'AWB',
                             icon: Icons.format_list_numbered_outlined),
                         style: const TextStyle(color: Colors.white),
@@ -113,14 +161,24 @@ class _BookingModalState extends State<BookingModal> {
                 children: [
                   Container(
                     width: 200,
-                    child: TextFormField(
-                      initialValue: widget.reserva?.origen.prefijo ?? '',
-                      onChanged: (value) => origen = value,
+                    child: DropdownButtonFormField(
                       decoration: CustomInputs.loginInputDecoration(
-                          hint: 'Origen de la Reserva',
                           label: 'Origen',
+                          hint: '',
                           icon: Icons.flight_takeoff_outlined),
+                      dropdownColor: const Color(0xff0F2039),
+                      value: origen,
                       style: const TextStyle(color: Colors.white),
+                      onChanged: (String? value) {
+                        setState(() {
+                          origen = value!;
+                        });
+                      },
+                      items: widget.origenes
+                          .map<DropdownMenuItem<String>>((value) {
+                        return DropdownMenuItem<String>(
+                            value: value.id, child: Text(value.prefijo));
+                      }).toList(),
                     ),
                   ),
                   const SizedBox(
@@ -128,14 +186,24 @@ class _BookingModalState extends State<BookingModal> {
                   ),
                   Container(
                     width: 200,
-                    child: TextFormField(
-                      initialValue: widget.reserva?.destino.prefijo ?? '',
-                      onChanged: (value) => destino = value,
+                    child: DropdownButtonFormField(
                       decoration: CustomInputs.loginInputDecoration(
-                          hint: 'Destino de la Reserva',
                           label: 'Destino',
+                          hint: '',
                           icon: Icons.flag_outlined),
+                      dropdownColor: const Color(0xff0F2039),
+                      value: destino,
                       style: const TextStyle(color: Colors.white),
+                      onChanged: (String? value) {
+                        setState(() {
+                          destino = value!;
+                        });
+                      },
+                      items: widget.destinos
+                          .map<DropdownMenuItem<String>>((value) {
+                        return DropdownMenuItem<String>(
+                            value: value.id, child: Text(value.prefijo));
+                      }).toList(),
                     ),
                   ),
                 ],
@@ -154,11 +222,11 @@ class _BookingModalState extends State<BookingModal> {
                     Container(
                       width: 150,
                       child: TextFormField(
-                        initialValue: widget.reserva?.origen.prefijo ?? '',
-                        onChanged: (value) => origen = value,
+                        initialValue: widget.reserva?.largo.toString() ?? '',
+                        onChanged: (value) => largo = int.parse(value),
                         decoration: CustomInputs.loginInputDecoration(
                             hint: 'Largo de la Carga',
-                            label: 'Largo',
+                            label: 'Largo cm',
                             icon: Icons.vertical_distribute_outlined),
                         style: const TextStyle(color: Colors.white),
                       ),
@@ -169,11 +237,11 @@ class _BookingModalState extends State<BookingModal> {
                     Container(
                       width: 150,
                       child: TextFormField(
-                        initialValue: widget.reserva?.destino.prefijo ?? '',
-                        onChanged: (value) => destino = value,
+                        initialValue: widget.reserva?.ancho.toString() ?? '',
+                        onChanged: (value) => ancho = int.parse(value),
                         decoration: CustomInputs.loginInputDecoration(
                             hint: 'Ancho de la Carga',
-                            label: 'Ancho',
+                            label: 'Ancho cm',
                             icon: Icons.horizontal_distribute_outlined),
                         style: const TextStyle(color: Colors.white),
                       ),
@@ -184,11 +252,11 @@ class _BookingModalState extends State<BookingModal> {
                     Container(
                       width: 150,
                       child: TextFormField(
-                        initialValue: widget.reserva?.destino.prefijo ?? '',
-                        onChanged: (value) => destino = value,
+                        initialValue: widget.reserva?.alto.toString() ?? '',
+                        onChanged: (value) => alto = int.parse(value),
                         decoration: CustomInputs.loginInputDecoration(
                             hint: 'Alto de la Carga',
-                            label: 'Alto',
+                            label: 'Alto cm',
                             icon: Icons.height_outlined),
                         style: const TextStyle(color: Colors.white),
                       ),
@@ -202,11 +270,12 @@ class _BookingModalState extends State<BookingModal> {
                     Container(
                       width: 200,
                       child: TextFormField(
-                        initialValue: widget.reserva?.origen.prefijo ?? '',
-                        onChanged: (value) => origen = value,
+                        initialValue:
+                            widget.reserva?.pesoFisico.toString() ?? '',
+                        onChanged: (value) => pesoFisico = int.parse(value),
                         decoration: CustomInputs.loginInputDecoration(
-                            hint: 'Peso Fisico',
-                            label: 'Fisico',
+                            hint: 'Peso Físico',
+                            label: 'Físico kg',
                             icon: Icons.monitor_weight_outlined),
                         style: const TextStyle(color: Colors.white),
                       ),
@@ -217,11 +286,13 @@ class _BookingModalState extends State<BookingModal> {
                     Container(
                       width: 200,
                       child: TextFormField(
-                        initialValue: widget.reserva?.destino.prefijo ?? '',
-                        onChanged: (value) => destino = value,
+                        initialValue:
+                            widget.reserva?.pesoVolumetrico.toString() ?? '',
+                        onChanged: (value) =>
+                            pesoVolumetrico = int.parse(value),
                         decoration: CustomInputs.loginInputDecoration(
-                            hint: 'Peso Volumetrico',
-                            label: 'Volumetrico',
+                            hint: 'Peso Volumétrico',
+                            label: 'Volumétrico kg',
                             icon: Icons.line_weight_outlined),
                         style: const TextStyle(color: Colors.white),
                       ),
@@ -241,30 +312,49 @@ class _BookingModalState extends State<BookingModal> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                width: 150,
-                child: TextFormField(
-                  initialValue: widget.reserva?.origen.prefijo ?? '',
-                  onChanged: (value) => origen = value,
+                width: 200,
+                child: DropdownButtonFormField(
                   decoration: CustomInputs.loginInputDecoration(
-                      hint: 'Tipo de Carga',
-                      label: 'Tipo',
+                      label: 'Tipo de Carga',
+                      hint: '',
                       icon: Icons.shopping_basket_outlined),
+                  dropdownColor: const Color(0xff0F2039),
+                  value: tipo,
                   style: const TextStyle(color: Colors.white),
+                  onChanged: (String? value) {
+                    setState(() {
+                      tipo = value!;
+                    });
+                  },
+                  items: widget.tipos.map<DropdownMenuItem<String>>((value) {
+                    return DropdownMenuItem<String>(
+                        value: value.id, child: Text(value.prefijo));
+                  }).toList(),
                 ),
               ),
               const SizedBox(
                 width: 10,
               ),
               Container(
-                width: 150,
-                child: TextFormField(
-                  initialValue: widget.reserva?.destino.prefijo ?? '',
-                  onChanged: (value) => destino = value,
+                width: 200,
+                child: DropdownButtonFormField(
                   decoration: CustomInputs.loginInputDecoration(
-                      hint: 'Contenedor de la Carga',
                       label: 'Contenedor',
-                      icon: Icons.inventory_2_outlined),
+                      hint: '',
+                      icon: Icons.dashboard_outlined),
+                  dropdownColor: const Color(0xff0F2039),
+                  value: contenedor,
                   style: const TextStyle(color: Colors.white),
+                  onChanged: (String? value) {
+                    setState(() {
+                      contenedor = value!;
+                    });
+                  },
+                  items: widget.contenedores
+                      .map<DropdownMenuItem<String>>((value) {
+                    return DropdownMenuItem<String>(
+                        value: value.id, child: Text(value.nombre));
+                  }).toList(),
                 ),
               ),
               const SizedBox(
@@ -273,7 +363,10 @@ class _BookingModalState extends State<BookingModal> {
               Container(
                 width: 150,
                 child: TextFormField(
-                  initialValue: widget.reserva?.destino.prefijo ?? '',
+                  initialValue: (widget.reserva == null)
+                      ? ''
+                      : DateFormat('dd-MM-yy')
+                          .format(widget.reserva!.fechaSalida),
                   onChanged: (value) => destino = value,
                   decoration: CustomInputs.loginInputDecoration(
                       hint: 'Fecha de Salida',

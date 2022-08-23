@@ -19,8 +19,7 @@ class RessApi {
       final resp = await _dio.get(path);
       return resp.data;
     } on DioError catch (e) {
-      print(e.response);
-      throw ('Error en el GET');
+      throw ('Error en el GET $e');
     }
   }
 

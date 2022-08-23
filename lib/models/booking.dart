@@ -22,12 +22,12 @@ class Reserva {
     });
 
     String id;
-    Aerolinea aerolinea;
+    _Aerolinea aerolinea;
     int awb;
-    Contenedor tipoCarga;
-    Destino origen;
-    Destino destino;
-    Contenedor contenedor;
+    _Contenedor tipoCarga;
+    _Destino origen;
+    _Destino destino;
+    _Contenedor contenedor;
     int alto;
     int ancho;
     int largo;
@@ -37,7 +37,7 @@ class Reserva {
     DateTime fechaSalida;
     bool aprobacion;
     bool cancelada;
-    Contenedor usuario;
+    _Contenedor usuario;
 
     factory Reserva.fromJson(String str) => Reserva.fromMap(json.decode(str));
 
@@ -45,12 +45,12 @@ class Reserva {
 
     factory Reserva.fromMap(Map<String, dynamic> json) => Reserva(
         id: json["_id"],
-        aerolinea: Aerolinea.fromMap(json["aerolinea"]),
+        aerolinea: _Aerolinea.fromMap(json["aerolinea"]),
         awb: json["awb"],
-        tipoCarga: Contenedor.fromMap(json["tipoCarga"]),
-        origen: Destino.fromMap(json["origen"]),
-        destino: Destino.fromMap(json["destino"]),
-        contenedor: Contenedor.fromMap(json["contenedor"]),
+        tipoCarga: _Contenedor.fromMap(json["tipoCarga"]),
+        origen: _Destino.fromMap(json["origen"]),
+        destino: _Destino.fromMap(json["destino"]),
+        contenedor: _Contenedor.fromMap(json["contenedor"]),
         alto: json["alto"],
         ancho: json["ancho"],
         largo: json["largo"],
@@ -60,7 +60,7 @@ class Reserva {
         fechaSalida: DateTime.parse(json["fechaSalida"]),
         aprobacion: json["aprobacion"],
         cancelada: json["cancelada"],
-        usuario: Contenedor.fromMap(json["usuario"]),
+        usuario: _Contenedor.fromMap(json["usuario"]),
     );
 
     Map<String, dynamic> toMap() => {
@@ -84,8 +84,8 @@ class Reserva {
     };
 }
 
-class Aerolinea {
-    Aerolinea({
+class _Aerolinea {
+    _Aerolinea({
         required this.id,
         required this.prefijo,
     });
@@ -93,11 +93,11 @@ class Aerolinea {
     String id;
     int prefijo;
 
-    factory Aerolinea.fromJson(String str) => Aerolinea.fromMap(json.decode(str));
+    factory _Aerolinea.fromJson(String str) => _Aerolinea.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
-    factory Aerolinea.fromMap(Map<String, dynamic> json) => Aerolinea(
+    factory _Aerolinea.fromMap(Map<String, dynamic> json) => _Aerolinea(
         id: json["_id"],
         prefijo: json["prefijo"],
     );
@@ -108,8 +108,8 @@ class Aerolinea {
     };
 }
 
-class Contenedor {
-    Contenedor({
+class _Contenedor {
+    _Contenedor({
         required this.id,
         required this.nombre,
     });
@@ -117,11 +117,11 @@ class Contenedor {
     String id;
     String nombre;
 
-    factory Contenedor.fromJson(String str) => Contenedor.fromMap(json.decode(str));
+    factory _Contenedor.fromJson(String str) => _Contenedor.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
-    factory Contenedor.fromMap(Map<String, dynamic> json) => Contenedor(
+    factory _Contenedor.fromMap(Map<String, dynamic> json) => _Contenedor(
         id: json["_id"],
         nombre: json["nombre"],
     );
@@ -132,8 +132,8 @@ class Contenedor {
     };
 }
 
-class Destino {
-    Destino({
+class _Destino {
+    _Destino({
         required this.id,
         required this.prefijo,
     });
@@ -141,11 +141,11 @@ class Destino {
     String id;
     String prefijo;
 
-    factory Destino.fromJson(String str) => Destino.fromMap(json.decode(str));
+    factory _Destino.fromJson(String str) => _Destino.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
-    factory Destino.fromMap(Map<String, dynamic> json) => Destino(
+    factory _Destino.fromMap(Map<String, dynamic> json) => _Destino(
         id: json["_id"],
         prefijo: json["prefijo"],
     );
