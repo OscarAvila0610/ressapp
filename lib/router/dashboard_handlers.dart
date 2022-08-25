@@ -34,7 +34,7 @@ class DashboardHandlers {
     Provider.of<SideMenuProvider>(context, listen: false)
         .setCurrentPageUrl(Flurorouter.bookingsRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
-      return const BookingsView();
+      return BookingsView(user: authProvider.user!);
     } else {
       return const LoginView();
     }
@@ -47,7 +47,7 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       if (authProvider.user!.rol != 'ADMIN_ROLE') {
         Provider.of<SideMenuProvider>(context, listen: false)
-            .setCurrentPageUrl(Flurorouter.airlinesRoute);
+            .setCurrentPageUrl(Flurorouter.dashboardRoute);
         return const DashboardView();
       }
       return const AirlinesView();
@@ -74,7 +74,7 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       if (authProvider.user!.rol != 'ADMIN_ROLE') {
         Provider.of<SideMenuProvider>(context, listen: false)
-            .setCurrentPageUrl(Flurorouter.airlinesRoute);
+            .setCurrentPageUrl(Flurorouter.dashboardRoute);
         return const DashboardView();
       }
       return const DestinationsView();
@@ -90,7 +90,7 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       if (authProvider.user!.rol != 'ADMIN_ROLE') {
         Provider.of<SideMenuProvider>(context, listen: false)
-            .setCurrentPageUrl(Flurorouter.airlinesRoute);
+            .setCurrentPageUrl(Flurorouter.dashboardRoute);
         return const DashboardView();
       }
       return const ContainersView();
@@ -106,7 +106,7 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       if (authProvider.user!.rol != 'ADMIN_ROLE') {
         Provider.of<SideMenuProvider>(context, listen: false)
-            .setCurrentPageUrl(Flurorouter.airlinesRoute);
+            .setCurrentPageUrl(Flurorouter.dashboardRoute);
         return const DashboardView();
       }
       return const CommoditiesView();
@@ -122,7 +122,7 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       if (authProvider.user!.rol != 'ADMIN_ROLE') {
         Provider.of<SideMenuProvider>(context, listen: false)
-            .setCurrentPageUrl(Flurorouter.airlinesRoute);
+            .setCurrentPageUrl(Flurorouter.dashboardRoute);
         return const DashboardView();
       }
       return const OriginsView();
@@ -138,7 +138,7 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       if (authProvider.user!.rol != 'ADMIN_ROLE') {
         Provider.of<SideMenuProvider>(context, listen: false)
-            .setCurrentPageUrl(Flurorouter.airlinesRoute);
+            .setCurrentPageUrl(Flurorouter.dashboardRoute);
         return const DashboardView();
       }
       return const ExportersView();
@@ -154,7 +154,7 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       if (authProvider.user!.rol != 'ADMIN_ROLE') {
         Provider.of<SideMenuProvider>(context, listen: false)
-            .setCurrentPageUrl(Flurorouter.airlinesRoute);
+            .setCurrentPageUrl(Flurorouter.dashboardRoute);
         return const DashboardView();
       }
       return const UsersView();

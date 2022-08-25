@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:ress_app/datatable/bookings_datasource.dart';
+import 'package:ress_app/models/user.dart';
 
 import 'package:ress_app/providers/providers.dart';
 
@@ -10,7 +11,8 @@ import 'package:ress_app/ui/buttons/custom_icon_button.dart';
 import 'package:ress_app/ui/modals/booking_modal.dart';
 
 class BookingsView extends StatefulWidget {
-  const BookingsView({Key? key}) : super(key: key);
+  const BookingsView({Key? key, required this.user}) : super(key: key);
+  final Usuario user;
 
   @override
   State<BookingsView> createState() => _BookingsViewState();
@@ -21,12 +23,13 @@ class _BookingsViewState extends State<BookingsView> {
 
   @override
   void initState() {
-    Provider.of<BookingsProvider>(context, listen: false).getBookings();
+    Provider.of<BookingsProvider>(context, listen: false).getBookings(widget.user);
     Provider.of<AirlinesProvider>(context, listen: false).getAirlines();
     Provider.of<ContainersProviders>(context, listen: false).getContainers();
     Provider.of<CommoditiesProviders>(context, listen: false).getCommodities();
     Provider.of<OriginsProviders>(context, listen: false).getOrigins();
-    Provider.of<DestinationsProviders>(context, listen: false).getDestinations();
+    Provider.of<DestinationsProviders>(context, listen: false)
+        .getDestinations();
     super.initState();
   }
 
@@ -65,8 +68,8 @@ class _BookingsViewState extends State<BookingsView> {
                 });
               },
               rowsPerPage: _rowsPerPage,
-              source: BookingsDTS(
-                  reservas, context, aerolineas, contenedores, tipos, origenes, destinos),
+              source: BookingsDTS(reservas, context, aerolineas, contenedores,
+                  tipos, origenes, destinos),
               header: const Text(
                 'Reservas realizadas: ',
                 maxLines: 2,

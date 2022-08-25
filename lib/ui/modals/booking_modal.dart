@@ -52,8 +52,10 @@ class _BookingModalState extends State<BookingModal> {
   String tipo = '';
   String origen = '';
   String destino = '';
+  String descripcion = '';
   String? id;
   DateTime fecha = DateTime.now();
+  String date = '';
 
   @override
   void initState() {
@@ -71,6 +73,7 @@ class _BookingModalState extends State<BookingModal> {
     pesoVolumetrico = widget.reserva?.pesoVolumetrico ?? 0;
     origen = widget.reserva?.origen.id ?? '62f1052b1314231c0daaacb7';
     destino = widget.reserva?.destino.id ?? '62cdbb6208337546686bdd2f';
+    descripcion = widget.reserva?.descripcion ?? '';
   }
 
   @override
@@ -365,12 +368,12 @@ class _BookingModalState extends State<BookingModal> {
                 child: TextFormField(
                   initialValue: (widget.reserva == null)
                       ? ''
-                      : DateFormat('dd-MM-yy')
+                      : DateFormat('yyyy-MM-dd')
                           .format(widget.reserva!.fechaSalida),
-                  onChanged: (value) => destino = value,
+                  onChanged: (value) => date = value,
                   decoration: CustomInputs.loginInputDecoration(
                       hint: 'Fecha de Salida',
-                      label: 'Fecha',
+                      label: 'Año/Mes/Día',
                       icon: Icons.date_range_outlined),
                   style: const TextStyle(color: Colors.white),
                 ),
@@ -381,8 +384,8 @@ class _BookingModalState extends State<BookingModal> {
             height: 10,
           ),
           TextFormField(
-            initialValue: widget.reserva?.destino.prefijo ?? '',
-            onChanged: (value) => destino = value,
+            initialValue: widget.reserva?.descripcion ?? '',
+            onChanged: (value) => descripcion = value,
             decoration: CustomInputs.loginInputDecoration(
                 hint: 'Descripcion de la Reserva',
                 label: 'Descripcion',
@@ -397,22 +400,35 @@ class _BookingModalState extends State<BookingModal> {
             alignment: Alignment.center,
             child: CustomOutlinedButton(
               onPressed: () async {
-                // try {
-                //   if (id == null) {
-                //     await airlineProvider.newAirline(
-                //         prefijo, nombre, estacion);
-                //     NotificationsService.showSnackbar('$nombre creado');
-                //   } else {
-                //     await airlineProvider.updateAirline(
-                //         id!, prefijo, nombre, estacion);
-                //     NotificationsService.showSnackbar('$nombre actualizado');
-                //   }
-                //   Navigator.of(context).pop();
-                // } catch (e) {
-                //   Navigator.of(context).pop();
-                //   NotificationsService.showSnackbarError(
-                //       'No se pudo guardar aerolinea');
-                // }
+                try {
+                  if (id == null) {
+                    await bookingsProvider.newBooking(
+                        aerolinea,
+                        awb,
+                        tipo,
+                        origen,
+                        destino,
+                        contenedor,
+                        alto,
+                        ancho,
+                        largo,
+                        pesoFisico,
+                        pesoVolumetrico,
+                        date,
+                        descripcion);
+                    NotificationsService.showSnackbar(
+                        'Reserva AWB $awb creada');
+                    // } else {
+                    //   await airlineProvider.updateAirline(
+                    //       id!, prefijo, nombre, estacion);
+                    //   NotificationsService.showSnackbar('$nombre actualizado');
+                  }
+                  Navigator.of(context).pop();
+                } catch (e) {
+                  Navigator.of(context).pop();
+                  NotificationsService.showSnackbarError(
+                      'No se pudo guardar reserva');
+                }
               },
               text: 'Guardar',
               color: Colors.white,
