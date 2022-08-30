@@ -60,7 +60,7 @@ class _UserViewState extends State<UserView> {
           physics: const ClampingScrollPhysics(),
           children: [
             Text(
-              'User View',
+              'Usuario',
               style: CustomLabels.h1,
             ),
             const SizedBox(
@@ -205,7 +205,7 @@ class _AvatarContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Profile',
+                'Perfil',
                 style: CustomLabels.h2,
               ),
               const SizedBox(

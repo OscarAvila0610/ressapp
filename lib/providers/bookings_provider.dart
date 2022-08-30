@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:ress_app/api/ress_api.dart';
 
@@ -62,6 +63,98 @@ class BookingsProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       throw 'Error al crear Reserva';
+    }
+  }
+
+  Future updateBooking(
+      String id,
+      String airline,
+      int awb,
+      String commodity,
+      String origin,
+      String dest,
+      String cont,
+      int alt,
+      int anch,
+      int lar,
+      int fis,
+      int vol,
+      String date,
+      String descrip) async {
+    final data = {
+      "aerolinea": airline,
+      "awb": awb,
+      "tipoCarga": commodity,
+      "origen": origin,
+      "destino": dest,
+      "contenedor": cont,
+      "alto": alt,
+      "ancho": anch,
+      "largo": lar,
+      "pesoFisico": fis,
+      "pesoVolumetrico": vol,
+      "fecha": date,
+      "descripcion": descrip
+    };
+
+    try {
+      await RessApi.put('/reservas/$id', data);
+
+      reservas = reservas.map((reserva) {
+        if (reserva.id != id) return reserva;
+        reserva.aerolinea.id = airline;
+        reserva.awb = awb;
+        reserva.tipoCarga.id = commodity;
+        reserva.origen.id = origin;
+        reserva.destino.id = dest;
+        reserva.contenedor.id = cont;
+        reserva.alto = alt;
+        reserva.ancho = anch;
+        reserva.largo = lar;
+        reserva.pesoFisico = fis;
+        reserva.pesoVolumetrico = vol;
+        reserva.descripcion = descrip;
+        return reserva;
+      }).toList();
+
+      notifyListeners();
+    } catch (e) {
+      print(e);
+      throw 'Error al actualizar Reserva';
+    }
+  }
+
+  Future approveBooking(String id) async {
+    final data = {"aprobacion": true};
+    try {
+      await RessApi.put('/reservas/$id', data);
+
+      reservas = reservas.map((reserva) {
+        if (reserva.id != id) return reserva;
+        reserva.aprobacion = true;
+        return reserva;
+      }).toList();
+
+      notifyListeners();
+    } catch (e) {
+      throw 'Error al aprobar reserva';
+    }
+  }
+
+  Future cancelBooking(String id) async {
+    final data = {"cancelada": true};
+    try {
+      await RessApi.put('/reservas/$id', data);
+
+      reservas = reservas.map((reserva) {
+        if (reserva.id != id) return reserva;
+        reserva.cancelada = true;
+        return reserva;
+      }).toList();
+
+      notifyListeners();
+    } catch (e) {
+      throw 'Error al cancelar reserva';
     }
   }
 }

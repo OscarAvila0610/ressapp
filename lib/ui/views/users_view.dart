@@ -20,7 +20,7 @@ class UsersView extends StatelessWidget {
           physics: const ClampingScrollPhysics(),
           children: [
             Text(
-              'Users View',
+              'Usuarios Disponibles',
               style: CustomLabels.h1,
             ),
             const SizedBox(
@@ -29,27 +29,32 @@ class UsersView extends StatelessWidget {
             PaginatedDataTable(
               sortAscending: usersProvider.ascending,
               sortColumnIndex: usersProvider.sortColumnIndex,
-              columns:  [
-              const DataColumn(label: Text('Avatar')),
-              DataColumn(label: const Text('Nombre'), onSort: (colIndex, _){
-                usersProvider.sortColumnIndex = colIndex;
-                usersProvider.sort<String>((user) => user.nombre);
-              }),
-              DataColumn(label: const Text('Email'),onSort: (colIndex, _){
-                usersProvider.sortColumnIndex = colIndex;
-                usersProvider.sort<String>((user) => user.correo);
-              }),
-              DataColumn(label: const Text('Exportador'),onSort: (colIndex, _){
-                usersProvider.sortColumnIndex = colIndex;
-                usersProvider.sort<String>((user) => user.exportador.nombre);
-              }),
-              const DataColumn(label: Text('Acciones')),
-            ], source: usersDataSource,
-            onPageChanged: (page){
-
-            },
+              columns: [
+                const DataColumn(label: Text('Avatar')),
+                DataColumn(
+                    label: const Text('Nombre'),
+                    onSort: (colIndex, _) {
+                      usersProvider.sortColumnIndex = colIndex;
+                      usersProvider.sort<String>((user) => user.nombre);
+                    }),
+                DataColumn(
+                    label: const Text('Email'),
+                    onSort: (colIndex, _) {
+                      usersProvider.sortColumnIndex = colIndex;
+                      usersProvider.sort<String>((user) => user.correo);
+                    }),
+                DataColumn(
+                    label: const Text('Exportador'),
+                    onSort: (colIndex, _) {
+                      usersProvider.sortColumnIndex = colIndex;
+                      usersProvider
+                          .sort<String>((user) => user.exportador.nombre);
+                    }),
+                const DataColumn(label: Text('Acciones')),
+              ],
+              source: usersDataSource,
+              onPageChanged: (page) {},
             ),
-            
           ],
         ));
   }

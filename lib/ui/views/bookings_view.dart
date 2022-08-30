@@ -23,7 +23,8 @@ class _BookingsViewState extends State<BookingsView> {
 
   @override
   void initState() {
-    Provider.of<BookingsProvider>(context, listen: false).getBookings(widget.user);
+    Provider.of<BookingsProvider>(context, listen: false)
+        .getBookings(widget.user);
     Provider.of<AirlinesProvider>(context, listen: false).getAirlines();
     Provider.of<ContainersProviders>(context, listen: false).getContainers();
     Provider.of<CommoditiesProviders>(context, listen: false).getCommodities();
@@ -54,12 +55,14 @@ class _BookingsViewState extends State<BookingsView> {
               height: 10,
             ),
             PaginatedDataTable(
+              columnSpacing: 30,
               columns: const [
-                DataColumn(label: Text('Aerolinea')),
+                DataColumn(label: Text('Aerolínea')),
                 DataColumn(label: Text('AWB')),
                 DataColumn(label: Text('Origen')),
                 DataColumn(label: Text('Destino')),
                 DataColumn(label: Text('Creado Por')),
+                DataColumn(label: Text('Estado')),
                 DataColumn(label: Text('Acciones')),
               ],
               onRowsPerPageChanged: (value) {

@@ -418,10 +418,23 @@ class _BookingModalState extends State<BookingModal> {
                         descripcion);
                     NotificationsService.showSnackbar(
                         'Reserva AWB $awb creada');
-                    // } else {
-                    //   await airlineProvider.updateAirline(
-                    //       id!, prefijo, nombre, estacion);
-                    //   NotificationsService.showSnackbar('$nombre actualizado');
+                  } else {
+                    await bookingsProvider.updateBooking(
+                        id!,
+                        aerolinea,
+                        awb,
+                        tipo,
+                        origen,
+                        destino,
+                        contenedor,
+                        alto,
+                        ancho,
+                        largo,
+                        pesoFisico,
+                        pesoVolumetrico,
+                        date,
+                        descripcion);
+                    NotificationsService.showSnackbar('$awb actualizado');
                   }
                   Navigator.of(context).pop();
                 } catch (e) {

@@ -9,6 +9,7 @@ import 'package:ress_app/models/origin.dart';
 import 'package:ress_app/providers/airlines_provider.dart';
 
 import 'package:ress_app/models/booking.dart';
+import 'package:ress_app/providers/bookings_provider.dart';
 
 import 'package:ress_app/ui/modals/booking_modal.dart';
 
@@ -21,7 +22,8 @@ class BookingsDTS extends DataTableSource {
   final List<Origene> origenes;
   final List<Destino> destinos;
 
-  BookingsDTS(this.reservas, this.context, this.aerolineas, this.contenedores, this.tipos, this.origenes, this.destinos);
+  BookingsDTS(this.reservas, this.context, this.aerolineas, this.contenedores,
+      this.tipos, this.origenes, this.destinos);
   @override
   DataRow getRow(int index) {
     final reserva = reservas[index];
@@ -31,6 +33,11 @@ class BookingsDTS extends DataTableSource {
       DataCell(Text(reserva.origen.prefijo)),
       DataCell(Text(reserva.destino.prefijo)),
       DataCell(Text(reserva.usuario.nombre)),
+      DataCell((reserva.aprobacion == true) 
+                ? const Text('Aprobada', style: TextStyle(color: Colors.green),) 
+                : (reserva.cancelada == true) 
+                ? const Text('Cancelada', style: TextStyle(color: Colors.red),) 
+                : const Text('Pendiente')),
       DataCell(Row(
         children: [
           IconButton(
@@ -52,26 +59,83 @@ class BookingsDTS extends DataTableSource {
           ),
           IconButton(
             icon: Icon(
-              Icons.delete_outline,
-              color: Colors.red.withOpacity(0.9),
+              Icons.check_circle_outline,
+              color: Colors.green.withOpacity(0.9),
             ),
             onPressed: () {
               final dialog = AlertDialog(
-                title: const Text('Esta seguro de borrarlo?'),
-                content: Text('Borrar definitivamente ${reserva.awb} ?'),
+                backgroundColor: const Color(0xff092044),
+                title: const Text(
+                  'Desea Aprobar la Reserva?',
+                  style: TextStyle(color: Colors.white),
+                ),
+                content: Text(
+                  'AWB ${reserva.awb} ?',
+                  style: const TextStyle(color: Colors.white),
+                ),
                 actions: [
                   TextButton(
-                    child: const Text('No'),
+                    child:  const Text(
+                      'No',
+                      style: TextStyle(color: Colors.red),
+                    ),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
                   ),
                   TextButton(
-                    child: const Text('Si, borrar'),
+                    child: const Text(
+                      'Si',
+                      style: TextStyle(color: Colors.green),
+                    ),
                     onPressed: () async {
-                      await Provider.of<AirlinesProvider>(context,
+                      await Provider.of<BookingsProvider>(context,
                               listen: false)
-                          .deleteAirline(reserva.id);
+                          .approveBooking(reserva.id);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+
+              showDialog(context: context, builder: (_) => dialog);
+            },
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.delete_outline,
+              color: Colors.red.withOpacity(0.9),
+            ),
+            onPressed: () {
+              final dialog = AlertDialog(
+                backgroundColor: const Color(0xff092044),
+                title: const Text(
+                  'Desea Cancelar la Reserva?',
+                  style: TextStyle(color: Colors.white),
+                ),
+                content: Text(
+                  'AWB ${reserva.awb} ?',
+                  style: const TextStyle(color: Colors.white),
+                ),
+                actions: [
+                  TextButton(
+                    child:  const Text(
+                      'No',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  TextButton(
+                    child: const Text(
+                      'Si',
+                      style: TextStyle(color: Colors.green),
+                    ),
+                    onPressed: () async {
+                      await Provider.of<BookingsProvider>(context,
+                              listen: false)
+                          .cancelBooking(reserva.id);
                       Navigator.of(context).pop();
                     },
                   ),

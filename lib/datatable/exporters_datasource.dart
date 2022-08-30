@@ -26,6 +26,7 @@ class ExportersDTS extends DataTableSource {
             icon: const Icon(Icons.edit_outlined),
             onPressed: () {
               showModalBottomSheet(
+                  isScrollControlled: true,
                   backgroundColor: Colors.transparent,
                   context: context,
                   builder: (_) => ExporterModal(exportador: exportador));

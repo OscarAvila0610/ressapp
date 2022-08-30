@@ -51,7 +51,7 @@ class _CommodityModalState extends State<CommodityModal> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                widget.tipo?.nombre ?? 'Nuevo Contenedor',
+                widget.tipo?.nombre ?? 'Nuevo Tipo de Carga',
                 style: CustomLabels.h1.copyWith(color: Colors.white),
               ),
               IconButton(
