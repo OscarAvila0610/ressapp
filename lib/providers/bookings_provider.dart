@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import 'package:ress_app/api/ress_api.dart';
 
@@ -9,6 +8,8 @@ import 'package:ress_app/models/user.dart';
 
 class BookingsProvider extends ChangeNotifier {
   List<Reserva> reservas = [];
+  bool ascending = true;
+  int? sortColumnIndex;
 
   getBookings(Usuario user) async {
     if (user.rol != 'USER_ROLE') {
@@ -32,6 +33,7 @@ class BookingsProvider extends ChangeNotifier {
       String origin,
       String dest,
       String cont,
+      String exp,
       int alt,
       int anch,
       int lar,
@@ -46,6 +48,7 @@ class BookingsProvider extends ChangeNotifier {
       "origen": origin,
       "destino": dest,
       "contenedor": cont,
+      "exportador": exp,
       "alto": alt,
       "ancho": anch,
       "largo": lar,
@@ -156,5 +159,18 @@ class BookingsProvider extends ChangeNotifier {
     } catch (e) {
       throw 'Error al cancelar reserva';
     }
+  }
+
+  void sort<T>(Comparable<T> Function(Reserva reserva) getField) {
+    reservas.sort((a, b) {
+      final aValue = getField(a);
+      final bValue = getField(b);
+      return ascending
+          ? Comparable.compare(aValue, bValue)
+          : Comparable.compare(bValue, aValue);
+    });
+
+    ascending = !ascending;
+    notifyListeners();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -80,6 +81,7 @@ class _BookingModalState extends State<BookingModal> {
   Widget build(BuildContext context) {
     final bookingsProvider =
         Provider.of<BookingsProvider>(context, listen: false);
+    final user = Provider.of<AuthProvider>(context).user;
     return Container(
       padding: const EdgeInsets.all(20),
       height: 500,
@@ -144,8 +146,17 @@ class _BookingModalState extends State<BookingModal> {
                     Container(
                       width: 200,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         initialValue: widget.reserva?.awb.toString() ?? '',
-                        onChanged: (value) => awb = int.parse(value),
+                        onChanged: (value) {
+                          if (value.isEmpty) {
+                            value = '0';
+                          }
+                          awb = int.parse(value);
+                        },
                         decoration: CustomInputs.loginInputDecoration(
                             hint: 'Número de AWB',
                             label: 'AWB',
@@ -225,8 +236,17 @@ class _BookingModalState extends State<BookingModal> {
                     Container(
                       width: 150,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         initialValue: widget.reserva?.largo.toString() ?? '',
-                        onChanged: (value) => largo = int.parse(value),
+                        onChanged: (value) {
+                          if (value.isEmpty) {
+                            value = '0';
+                          }
+                          largo = int.parse(value);
+                        },
                         decoration: CustomInputs.loginInputDecoration(
                             hint: 'Largo de la Carga',
                             label: 'Largo cm',
@@ -240,8 +260,17 @@ class _BookingModalState extends State<BookingModal> {
                     Container(
                       width: 150,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         initialValue: widget.reserva?.ancho.toString() ?? '',
-                        onChanged: (value) => ancho = int.parse(value),
+                        onChanged: (value) {
+                          if (value.isEmpty) {
+                            value = '0';
+                          }
+                          ancho = int.parse(value);
+                        },
                         decoration: CustomInputs.loginInputDecoration(
                             hint: 'Ancho de la Carga',
                             label: 'Ancho cm',
@@ -255,8 +284,17 @@ class _BookingModalState extends State<BookingModal> {
                     Container(
                       width: 150,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         initialValue: widget.reserva?.alto.toString() ?? '',
-                        onChanged: (value) => alto = int.parse(value),
+                        onChanged: (value) {
+                          if (value.isEmpty) {
+                            value = '0';
+                          }
+                          alto = int.parse(value);
+                        },
                         decoration: CustomInputs.loginInputDecoration(
                             hint: 'Alto de la Carga',
                             label: 'Alto cm',
@@ -273,9 +311,18 @@ class _BookingModalState extends State<BookingModal> {
                     Container(
                       width: 200,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         initialValue:
                             widget.reserva?.pesoFisico.toString() ?? '',
-                        onChanged: (value) => pesoFisico = int.parse(value),
+                        onChanged: (value) {
+                          if (value.isEmpty) {
+                            value = '0';
+                          }
+                          pesoFisico = int.parse(value);
+                        },
                         decoration: CustomInputs.loginInputDecoration(
                             hint: 'Peso Físico',
                             label: 'Físico kg',
@@ -289,10 +336,18 @@ class _BookingModalState extends State<BookingModal> {
                     Container(
                       width: 200,
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         initialValue:
                             widget.reserva?.pesoVolumetrico.toString() ?? '',
-                        onChanged: (value) =>
-                            pesoVolumetrico = int.parse(value),
+                        onChanged: (value) {
+                          if (value.isEmpty) {
+                            value = '0';
+                          }
+                          pesoVolumetrico = int.parse(value);
+                        },
                         decoration: CustomInputs.loginInputDecoration(
                             hint: 'Peso Volumétrico',
                             label: 'Volumétrico kg',
@@ -366,6 +421,7 @@ class _BookingModalState extends State<BookingModal> {
               Container(
                 width: 150,
                 child: TextFormField(
+                  keyboardType: TextInputType.datetime,
                   initialValue: (widget.reserva == null)
                       ? ''
                       : DateFormat('yyyy-MM-dd')
@@ -409,6 +465,7 @@ class _BookingModalState extends State<BookingModal> {
                         origen,
                         destino,
                         contenedor,
+                        user!.exportador.id,
                         alto,
                         ancho,
                         largo,

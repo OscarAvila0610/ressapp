@@ -19,16 +19,17 @@ class NewBooking {
         required this.aprobacion,
         required this.cancelada,
         required this.usuario,
+        required this.exportador,
         required this.descripcion,
         required this.id,
     });
 
-    PorNombre aerolinea;
+    _NumberPrefix aerolinea;
     int awb;
-    PorNombre tipoCarga;
-    PorPrefijo origen;
-    PorPrefijo destino;
-    PorNombre contenedor;
+    _ByName tipoCarga;
+    _StringPrefix origen;
+    _StringPrefix destino;
+    _ByName contenedor;
     int alto;
     int ancho;
     int largo;
@@ -38,7 +39,8 @@ class NewBooking {
     DateTime fechaSalida;
     bool aprobacion;
     bool cancelada;
-    PorNombre usuario;
+    _ByName usuario;
+    _ByName exportador;
     String descripcion;
     String id;
 
@@ -47,12 +49,12 @@ class NewBooking {
     String toJson() => json.encode(toMap());
 
     factory NewBooking.fromMap(Map<String, dynamic> json) => NewBooking(
-        aerolinea: PorNombre.fromMap(json["aerolinea"]),
+        aerolinea: _NumberPrefix.fromMap(json["aerolinea"]),
         awb: json["awb"],
-        tipoCarga: PorNombre.fromMap(json["tipoCarga"]),
-        origen: PorPrefijo.fromMap(json["origen"]),
-        destino: PorPrefijo.fromMap(json["destino"]),
-        contenedor: PorNombre.fromMap(json["contenedor"]),
+        tipoCarga: _ByName.fromMap(json["tipoCarga"]),
+        origen: _StringPrefix.fromMap(json["origen"]),
+        destino: _StringPrefix.fromMap(json["destino"]),
+        contenedor: _ByName.fromMap(json["contenedor"]),
         alto: json["alto"],
         ancho: json["ancho"],
         largo: json["largo"],
@@ -62,7 +64,8 @@ class NewBooking {
         fechaSalida: DateTime.parse(json["fechaSalida"]),
         aprobacion: json["aprobacion"],
         cancelada: json["cancelada"],
-        usuario: PorNombre.fromMap(json["usuario"]),
+        usuario: _ByName.fromMap(json["usuario"]),
+        exportador: _ByName.fromMap(json["exportador"]),
         descripcion: json["descripcion"],
         id: json["_id"],
     );
@@ -84,13 +87,38 @@ class NewBooking {
         "aprobacion": aprobacion,
         "cancelada": cancelada,
         "usuario": usuario.toMap(),
+        "exportador": exportador.toMap(),
         "descripcion": descripcion,
         "_id": id,
     };
 }
 
-class PorNombre {
-    PorNombre({
+class _NumberPrefix {
+    _NumberPrefix({
+        required this.id,
+        required this.prefijo,
+    });
+
+    String id;
+    int prefijo;
+
+    factory _NumberPrefix.fromJson(String str) => _NumberPrefix.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory _NumberPrefix.fromMap(Map<String, dynamic> json) => _NumberPrefix(
+        id: json["_id"],
+        prefijo: json["prefijo"],
+    );
+
+    Map<String, dynamic> toMap() => {
+        "_id": id,
+        "prefijo": prefijo,
+    };
+}
+
+class _ByName {
+    _ByName({
         required this.id,
         required this.nombre,
     });
@@ -98,11 +126,11 @@ class PorNombre {
     String id;
     String nombre;
 
-    factory PorNombre.fromJson(String str) => PorNombre.fromMap(json.decode(str));
+    factory _ByName.fromJson(String str) => _ByName.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
-    factory PorNombre.fromMap(Map<String, dynamic> json) => PorNombre(
+    factory _ByName.fromMap(Map<String, dynamic> json) => _ByName(
         id: json["_id"],
         nombre: json["nombre"],
     );
@@ -113,8 +141,8 @@ class PorNombre {
     };
 }
 
-class PorPrefijo {
-    PorPrefijo({
+class _StringPrefix {
+    _StringPrefix({
         required this.id,
         required this.prefijo,
     });
@@ -122,11 +150,11 @@ class PorPrefijo {
     String id;
     String prefijo;
 
-    factory PorPrefijo.fromJson(String str) => PorPrefijo.fromMap(json.decode(str));
+    factory _StringPrefix.fromJson(String str) => _StringPrefix.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
-    factory PorPrefijo.fromMap(Map<String, dynamic> json) => PorPrefijo(
+    factory _StringPrefix.fromMap(Map<String, dynamic> json) => _StringPrefix(
         id: json["_id"],
         prefijo: json["prefijo"],
     );

@@ -126,6 +126,34 @@ class Sidebar extends StatelessWidget {
               height: 30,
             ),
           ],
+          if (user.rol == analist) ...[
+            const TextSeparator(text: 'Analista'),
+            MenuItem(
+                isActive:
+                    sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
+                text: 'Dashboard',
+                icon: Icons.compass_calibration_outlined,
+                onPressed: () => navigateTo(Flurorouter.dashboardRoute)),
+            MenuItem(
+                isActive:
+                    sideMenuProvider.currentPage == Flurorouter.iconsRoute,
+                text: 'Iconos',
+                icon: Icons.list_alt_outlined,
+                onPressed: () => navigateTo(Flurorouter.iconsRoute)),
+            MenuItem(
+                isActive:
+                    sideMenuProvider.currentPage == Flurorouter.bookingsRoute,
+                text: 'Reservas',
+                icon: Icons.mark_email_read_outlined,
+                onPressed: () => navigateTo(Flurorouter.bookingsRoute)),
+            MenuItem(
+                text: 'Perfil',
+                icon: Icons.note_add_outlined,
+                onPressed: () {}),
+            const SizedBox(
+              height: 30,
+            ),
+          ],
           const TextSeparator(text: 'Exit'),
           MenuItem(
               text: 'Logout',

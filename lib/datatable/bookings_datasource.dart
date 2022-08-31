@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:ress_app/models/airline.dart';
 import 'package:ress_app/models/commodity.dart';
 import 'package:ress_app/models/container.dart';
 import 'package:ress_app/models/destination.dart';
 import 'package:ress_app/models/origin.dart';
-
-import 'package:ress_app/providers/airlines_provider.dart';
 
 import 'package:ress_app/models/booking.dart';
 import 'package:ress_app/providers/bookings_provider.dart';
@@ -29,15 +28,22 @@ class BookingsDTS extends DataTableSource {
     final reserva = reservas[index];
     return DataRow.byIndex(index: index, cells: [
       DataCell(Text(reserva.aerolinea.prefijo.toString())),
+      DataCell(Text(DateFormat('yyyy-MM-dd').format(reserva.fechaSalida))),
       DataCell(Text(reserva.awb.toString())),
-      DataCell(Text(reserva.origen.prefijo)),
       DataCell(Text(reserva.destino.prefijo)),
+      DataCell(Text(reserva.exportador.nombre)),
       DataCell(Text(reserva.usuario.nombre)),
-      DataCell((reserva.aprobacion == true) 
-                ? const Text('Aprobada', style: TextStyle(color: Colors.green),) 
-                : (reserva.cancelada == true) 
-                ? const Text('Cancelada', style: TextStyle(color: Colors.red),) 
-                : const Text('Pendiente')),
+      DataCell((reserva.aprobacion == true)
+          ? const Text(
+              'Aprobada',
+              style: TextStyle(color: Colors.green),
+            )
+          : (reserva.cancelada == true)
+              ? const Text(
+                  'Cancelada',
+                  style: TextStyle(color: Colors.red),
+                )
+              : const Text('Pendiente')),
       DataCell(Row(
         children: [
           IconButton(
@@ -75,7 +81,7 @@ class BookingsDTS extends DataTableSource {
                 ),
                 actions: [
                   TextButton(
-                    child:  const Text(
+                    child: const Text(
                       'No',
                       style: TextStyle(color: Colors.red),
                     ),
@@ -119,7 +125,7 @@ class BookingsDTS extends DataTableSource {
                 ),
                 actions: [
                   TextButton(
-                    child:  const Text(
+                    child: const Text(
                       'No',
                       style: TextStyle(color: Colors.red),
                     ),

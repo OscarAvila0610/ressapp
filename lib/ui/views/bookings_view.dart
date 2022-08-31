@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:ress_app/datatable/bookings_datasource.dart';
@@ -42,6 +43,7 @@ class _BookingsViewState extends State<BookingsView> {
     final tipos = Provider.of<CommoditiesProviders>(context).tipoCargas;
     final origenes = Provider.of<OriginsProviders>(context).origenes;
     final destinos = Provider.of<DestinationsProviders>(context).destinos;
+    final bookingsProvider = Provider.of<BookingsProvider>(context);
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: ListView(
@@ -55,15 +57,36 @@ class _BookingsViewState extends State<BookingsView> {
               height: 10,
             ),
             PaginatedDataTable(
+              sortAscending: bookingsProvider.ascending,
+              sortColumnIndex: bookingsProvider.sortColumnIndex,
               columnSpacing: 30,
-              columns: const [
-                DataColumn(label: Text('Aerolínea')),
-                DataColumn(label: Text('AWB')),
-                DataColumn(label: Text('Origen')),
-                DataColumn(label: Text('Destino')),
-                DataColumn(label: Text('Creado Por')),
-                DataColumn(label: Text('Estado')),
-                DataColumn(label: Text('Acciones')),
+              columns: [
+                const DataColumn(label: Text('Aerolínea')),
+                DataColumn(
+                    label: const Text('Salida'),
+                    onSort: (colIndex, _) {
+                      bookingsProvider.sortColumnIndex = colIndex;
+                      bookingsProvider.sort<String>((reserva) =>
+                          DateFormat('yyyy-MM-dd').format(reserva.fechaSalida));
+                    }),
+                const DataColumn(label: Text('AWB')),
+                const DataColumn(label: Text('Destino')),
+                DataColumn(
+                    label: const Text('Exportador'),
+                    onSort: (colIndex, _) {
+                      bookingsProvider.sortColumnIndex = colIndex;
+                      bookingsProvider
+                          .sort<String>((reserva) => reserva.exportador.nombre);
+                    }),
+                DataColumn(
+                    label: const Text('Creada Por'),
+                    onSort: (colIndex, _) {
+                      bookingsProvider.sortColumnIndex = colIndex;
+                      bookingsProvider
+                          .sort<String>((reserva) => reserva.usuario.nombre);
+                    }),
+                const DataColumn(label: Text('Estado')),
+                const DataColumn(label: Text('Acciones')),
               ],
               onRowsPerPageChanged: (value) {
                 setState(() {
