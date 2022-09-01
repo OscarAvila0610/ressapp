@@ -45,32 +45,6 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
-  register(String email, String password, String name, String rol,
-      String exportador) {
-    final data = {
-      'nombre': name,
-      'correo': email,
-      'password': password,
-      'rol': rol,
-      'exportador': exportador
-    };
-
-    RessApi.post('/usuarios', data).then((json) {
-      // print(json);
-      final authResponse = AuthResponse.fromMap(json);
-      user = authResponse.usuario;
-
-      authStatus = AuthStatus.authenticated;
-      LocalStorage.prefs.setString('x-token', authResponse.token);
-      NavigationService.replaceTo(Flurorouter.dashboardRoute);
-      RessApi.configureDio();
-      notifyListeners();
-    }).catchError((e) {
-      // print('error en: $e');
-      NotificationsService.showSnackbarError('USUARIO / PASSWORD NO VALIDOS');
-    });
-  }
-
   Future<bool> isAuthenticated() async {
     final token = LocalStorage.prefs.getString('x-token');
     if (token == null) {

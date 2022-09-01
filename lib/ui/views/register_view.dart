@@ -99,12 +99,12 @@ class RegisterView extends StatelessWidget {
                               final authProvider = Provider.of<AuthProvider>(
                                   context,
                                   listen: false);
-                              authProvider.register(
-                                  registerFormProvider.email,
-                                  registerFormProvider.password,
-                                  registerFormProvider.name,
-                                  'ANALIST_ROLE',
-                                  '62cd6c2bdaff5a21cc6158ac');
+                              // authProvider.register(
+                              //     registerFormProvider.email,
+                              //     registerFormProvider.password,
+                              //     registerFormProvider.name,
+                              //     'ANALIST_ROLE',
+                              //     '62cd6c2bdaff5a21cc6158ac');
                             },
                             text: 'Crear cuenta',
                           ),

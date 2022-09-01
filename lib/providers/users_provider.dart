@@ -36,6 +36,28 @@ class UsersProvider extends ChangeNotifier {
     }
   }
 
+  Future newUser(String email, String password, String name, String rol,
+      String exportador) async {
+    final data = {
+      'nombre': name,
+      'correo': email,
+      'password': password,
+      'rol': rol,
+      'exportador': exportador
+    };
+
+    try {
+      final json = await RessApi.post('/usuarios', data);
+      final newUser = Usuario.fromMap(json);
+
+      users.add(newUser);
+      notifyListeners();
+    } catch (e) {
+      print(e);
+      throw 'Error al crear Usuario';
+    }
+  }
+
   void sort<T>(Comparable<T> Function(Usuario user) getField) {
     users.sort((a, b) {
       final aValue = getField(a);

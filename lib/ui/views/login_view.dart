@@ -4,12 +4,12 @@ import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:ress_app/providers/auth_provider.dart';
 
-import 'package:ress_app/router/router.dart';
+// import 'package:ress_app/router/router.dart';
 
 import '../../providers/login_form_provider.dart';
 import '../buttons/custom_outlined_button.dart';
 import '../inputs/custom_inputs.dart';
-import 'package:ress_app/ui/buttons/link_text.dart';
+// import 'package:ress_app/ui/buttons/link_text.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -86,13 +86,13 @@ class LoginView extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          LinkText(
-                            text: 'Nueva Cuenta',
-                            onPressed: () {
-                              Navigator.pushReplacementNamed(
-                                  context, Flurorouter.registerRoute);
-                            },
-                          )
+                          // LinkText(
+                          //   text: 'Nueva Cuenta',
+                          //   onPressed: () {
+                          //     Navigator.pushReplacementNamed(
+                          //         context, Flurorouter.registerRoute);
+                          //   },
+                          // )
                         ],
                       ),
                     ),
