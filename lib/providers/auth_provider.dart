@@ -57,7 +57,7 @@ class AuthProvider extends ChangeNotifier {
       final resp = await RessApi.httpGet('/auth');
       final authResponse = AuthResponse.fromMap(resp);
       LocalStorage.prefs.setString('x-token', authResponse.token);
-      
+
       user = authResponse.usuario;
       authStatus = AuthStatus.authenticated;
       notifyListeners();
@@ -70,6 +70,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   logout() {
+    NavigationService.pop();
     LocalStorage.prefs.remove('x-token');
     authStatus = AuthStatus.notAuthenticated;
     notifyListeners();

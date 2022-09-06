@@ -31,9 +31,9 @@ class Navbar extends StatelessWidget {
           ),
 
           const Spacer(),
-          const NotificationIndicator(),
-          const SizedBox(width: 10,),
-          const NavbarAvatar(),
+          // const NotificationIndicator(),
+          // const SizedBox(width: 10,),
+          // const NavbarAvatar(),
           const SizedBox(width: 10,),
         ],
       ),

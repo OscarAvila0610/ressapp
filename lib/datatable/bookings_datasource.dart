@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
 import 'package:ress_app/models/airline.dart';
 import 'package:ress_app/models/commodity.dart';
 import 'package:ress_app/models/container.dart';
 import 'package:ress_app/models/destination.dart';
 import 'package:ress_app/models/origin.dart';
-
+import 'package:ress_app/models/user.dart';
 import 'package:ress_app/models/booking.dart';
 import 'package:ress_app/providers/bookings_provider.dart';
 
@@ -20,9 +21,10 @@ class BookingsDTS extends DataTableSource {
   final List<Tipo> tipos;
   final List<Origene> origenes;
   final List<Destino> destinos;
+  final Usuario user;
 
   BookingsDTS(this.reservas, this.context, this.aerolineas, this.contenedores,
-      this.tipos, this.origenes, this.destinos);
+      this.tipos, this.origenes, this.destinos, this.user);
   @override
   DataRow getRow(int index) {
     final reserva = reservas[index];
@@ -63,50 +65,52 @@ class BookingsDTS extends DataTableSource {
                       ));
             },
           ),
-          IconButton(
-            icon: Icon(
-              Icons.check_circle_outline,
-              color: Colors.green.withOpacity(0.9),
-            ),
-            onPressed: () {
-              final dialog = AlertDialog(
-                backgroundColor: const Color(0xff092044),
-                title: const Text(
-                  'Desea Aprobar la Reserva?',
-                  style: TextStyle(color: Colors.white),
-                ),
-                content: Text(
-                  'AWB ${reserva.awb} ?',
-                  style: const TextStyle(color: Colors.white),
-                ),
-                actions: [
-                  TextButton(
-                    child: const Text(
-                      'No',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
+          if (user.rol == 'ANALIST_ROLE') ...[
+            IconButton(
+              icon: Icon(
+                Icons.check_circle_outline,
+                color: Colors.green.withOpacity(0.9),
+              ),
+              onPressed: () {
+                final dialog = AlertDialog(
+                  backgroundColor: const Color(0xff092044),
+                  title: const Text(
+                    'Desea Aprobar la Reserva?',
+                    style: TextStyle(color: Colors.white),
                   ),
-                  TextButton(
-                    child: const Text(
-                      'Si',
-                      style: TextStyle(color: Colors.green),
-                    ),
-                    onPressed: () async {
-                      await Provider.of<BookingsProvider>(context,
-                              listen: false)
-                          .approveBooking(reserva.id);
-                      Navigator.of(context).pop();
-                    },
+                  content: Text(
+                    'AWB ${reserva.awb} ?',
+                    style: const TextStyle(color: Colors.white),
                   ),
-                ],
-              );
+                  actions: [
+                    TextButton(
+                      child: const Text(
+                        'No',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    TextButton(
+                      child: const Text(
+                        'Si',
+                        style: TextStyle(color: Colors.green),
+                      ),
+                      onPressed: () async {
+                        await Provider.of<BookingsProvider>(context,
+                                listen: false)
+                            .approveBooking(reserva.id);
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
 
-              showDialog(context: context, builder: (_) => dialog);
-            },
-          ),
+                showDialog(context: context, builder: (_) => dialog);
+              },
+            ),
+          ],
           IconButton(
             icon: Icon(
               Icons.delete_outline,

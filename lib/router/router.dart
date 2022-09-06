@@ -34,7 +34,7 @@ class Flurorouter {
 
     //Dashboard
     router.define(airlinesRoute, handler: DashboardHandlers.airlines, transitionType: TransitionType.fadeIn);
-    router.define(bookingsRoute, handler: DashboardHandlers.bookings, transitionType: TransitionType.fadeIn);
+    router.define(bookingsRoute, handler: DashboardHandlers.bookings, transitionType: TransitionType.none);
     router.define(blankRoute, handler: DashboardHandlers.blank, transitionType: TransitionType.fadeIn);
     router.define(dashboardRoute, handler: DashboardHandlers.dashboard, transitionType: TransitionType.fadeIn);
     router.define(destinationsRoute, handler: DashboardHandlers.destinations, transitionType: TransitionType.fadeIn);

@@ -52,7 +52,7 @@ class UserFormProvider extends ChangeNotifier {
       // print(resp);
       return true;
     } catch (e) {
-      print('error en updateUser $e');
+      print('error al actualizar Usuario $e');
       return false;
     }
   }

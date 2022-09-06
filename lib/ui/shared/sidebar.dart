@@ -113,9 +113,10 @@ class Sidebar extends StatelessWidget {
                 icon: Icons.mark_email_read_outlined,
                 onPressed: () => navigateTo(Flurorouter.bookingsRoute)),
             MenuItem(
+                isActive: sideMenuProvider.currentPage == Flurorouter.userRoute,
                 text: 'Perfil',
                 icon: Icons.note_add_outlined,
-                onPressed: () {}),
+                onPressed: () => navigateTo('/dashboard/users/${user.uid}')),
             MenuItem(
                 isActive:
                     sideMenuProvider.currentPage == Flurorouter.blankRoute,
@@ -147,9 +148,10 @@ class Sidebar extends StatelessWidget {
                 icon: Icons.mark_email_read_outlined,
                 onPressed: () => navigateTo(Flurorouter.bookingsRoute)),
             MenuItem(
+                isActive: sideMenuProvider.currentPage == Flurorouter.userRoute,
                 text: 'Perfil',
                 icon: Icons.note_add_outlined,
-                onPressed: () {}),
+                onPressed: () => navigateTo('/dashboard/users/${user.uid}')),
             const SizedBox(
               height: 30,
             ),

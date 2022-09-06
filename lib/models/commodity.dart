@@ -13,7 +13,7 @@ class Tipo {
     String prefijo;
     String nombre;
     bool peligroso;
-    Usuario usuario;
+    _Usuario usuario;
 
     factory Tipo.fromJson(String str) => Tipo.fromMap(json.decode(str));
 
@@ -24,7 +24,7 @@ class Tipo {
         prefijo: json["prefijo"],
         nombre: json["nombre"],
         peligroso: json["peligroso"],
-        usuario: Usuario.fromMap(json["usuario"]),
+        usuario: _Usuario.fromMap(json["usuario"]),
     );
 
     Map<String, dynamic> toMap() => {
@@ -36,8 +36,8 @@ class Tipo {
     };
 }
 
-class Usuario {
-    Usuario({
+class _Usuario {
+    _Usuario({
         required this.id,
         required this.nombre,
     });
@@ -45,11 +45,11 @@ class Usuario {
     String id;
     String nombre;
 
-    factory Usuario.fromJson(String str) => Usuario.fromMap(json.decode(str));
+    factory _Usuario.fromJson(String str) => _Usuario.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
-    factory Usuario.fromMap(Map<String, dynamic> json) => Usuario(
+    factory _Usuario.fromMap(Map<String, dynamic> json) => _Usuario(
         id: json["_id"],
         nombre: json["nombre"],
     );

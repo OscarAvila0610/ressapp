@@ -12,6 +12,7 @@ class BookingsProvider extends ChangeNotifier {
   int? sortColumnIndex;
 
   getBookings(Usuario user) async {
+    reservas = [];
     if (user.rol != 'USER_ROLE') {
       final resp = await RessApi.httpGet('/reservas');
       final bookingsResp = BookingsResponse.fromMap(resp);

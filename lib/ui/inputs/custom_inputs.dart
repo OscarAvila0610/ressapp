@@ -49,5 +49,3 @@ class CustomInputs {
         labelStyle: const TextStyle(color: Colors.grey));
   }
 }
-
-
