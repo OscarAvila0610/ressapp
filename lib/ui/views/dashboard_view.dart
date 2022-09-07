@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:ress_app/providers/auth_provider.dart';
+import 'package:ress_app/providers/providers.dart';
+import 'package:ress_app/ui/cards/white_card.dart';
+import 'package:ress_app/ui/charts/bar_chart.dart';
 
-import 'package:ress_app/ui/labels/custom_labels.dart';
-
-import '../cards/white_card.dart';
-
-class DashboardView extends StatelessWidget {
+class DashboardView extends StatefulWidget {
   const DashboardView({Key? key}) : super(key: key);
+
+  @override
+  State<DashboardView> createState() => _DashboardViewState();
+}
+
+class _DashboardViewState extends State<DashboardView> {
+  @override
+  void initState() {
+    Provider.of<AdminProvider>(context, listen: false).getKgsByExporter();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AuthProvider>(context).user!;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: ListView(
-      physics: const ClampingScrollPhysics(),
+    final kgs = Provider.of<AdminProvider>(context).listaFinal;
+    return Column(
       children: [
-        Text(
-          'Dashboard View',
-          style: CustomLabels.h1,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
+        WhiteCard(title: user.nombre, child: Text(user.correo)),
         WhiteCard(
-          title: user.nombre,
-          child: Text(user.correo),
-        ),
+            title: 'Total Kgs por Exportador',
+            child: KgsBarChart(totalesKgs: kgs)),
       ],
-    ));
+    );
   }
 }
