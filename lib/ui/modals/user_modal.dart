@@ -37,7 +37,9 @@ class _UserModalState extends State<UserModal> {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UsersProvider>(context,);
+    final userProvider = Provider.of<UsersProvider>(
+      context,
+    );
     return ChangeNotifierProvider(
         create: (_) => RegisterFormProvider(),
         child: Builder(

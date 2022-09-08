@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:ress_app/providers/providers.dart';
 
 import 'package:ress_app/router/router.dart';
+import 'package:ress_app/ui/views/calculator_view.dart';
 
 import 'package:ress_app/ui/views/views.dart';
 
@@ -24,6 +25,16 @@ class DashboardHandlers {
         .setCurrentPageUrl(Flurorouter.iconsRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
       return const IconsView();
+    } else {
+      return const LoginView();
+    }
+  });
+  static Handler calculator = Handler(handlerFunc: (context, params) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.calculatorRoute);
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      return const CalculatorView();
     } else {
       return const LoginView();
     }

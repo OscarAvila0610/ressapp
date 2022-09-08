@@ -22,13 +22,18 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AuthProvider>(context).user!;
-    final kgs = Provider.of<AdminProvider>(context).listaFinal;
+    final kgs = Provider.of<AdminProvider>(context);
     return Column(
       children: [
         WhiteCard(title: user.nombre, child: Text(user.correo)),
-        WhiteCard(
-            title: 'Total Kgs por Exportador',
-            child: KgsBarChart(totalesKgs: kgs)),
+        if (user.rol == 'ADMIN_ROLE') ...[
+          WhiteCard(
+              title: 'Total Kgs por Exportador',
+              child: KgsBarChart(
+                totalesKgs: kgs.listaFinal,
+                registros: kgs.kgsExporter,
+              )),
+        ]
       ],
     );
   }

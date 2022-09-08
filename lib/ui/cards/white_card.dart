@@ -14,7 +14,7 @@ class WhiteCard extends StatelessWidget {
     return Container(
       width: width != null ? width : null,
       margin: const EdgeInsets.all(8),
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(8),
       decoration: buildBoxDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,10 +25,10 @@ class WhiteCard extends StatelessWidget {
               child: Text(
                 title!,
                 style: GoogleFonts.roboto(
-                    fontSize: 15, fontWeight: FontWeight.bold),
+                    fontSize: 12, fontWeight: FontWeight.bold),
               ),
             ),
-            const Divider()
+            const Divider(),
           ],
           child
         ],

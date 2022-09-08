@@ -57,82 +57,81 @@ class _BookingsViewState extends State<BookingsView> {
             const SizedBox(
               height: 10,
             ),
-            if (reservas.isEmpty)
-              WhiteCard(
-                  child: Container(
-                alignment: Alignment.center,
-                height: 300,
-                child: const CircularProgressIndicator(),
-              )),
-            if (reservas.isNotEmpty)
-              PaginatedDataTable(
-                sortAscending: bookingsProvider.ascending,
-                sortColumnIndex: bookingsProvider.sortColumnIndex,
-                columnSpacing: 30,
-                columns: [
-                  const DataColumn(label: Text('Aerolínea')),
-                  DataColumn(
-                      label: const Text('Salida'),
-                      onSort: (colIndex, _) {
-                        bookingsProvider.sortColumnIndex = colIndex;
-                        bookingsProvider.sort<String>((reserva) =>
-                            DateFormat('yyyy-MM-dd')
-                                .format(reserva.fechaSalida));
-                      }),
-                  const DataColumn(label: Text('AWB')),
-                  const DataColumn(label: Text('Destino')),
-                  DataColumn(
-                      label: const Text('Exportador'),
-                      onSort: (colIndex, _) {
-                        bookingsProvider.sortColumnIndex = colIndex;
-                        bookingsProvider.sort<String>(
-                            (reserva) => reserva.exportador.nombre);
-                      }),
-                  DataColumn(
-                      label: const Text('Creada Por'),
-                      onSort: (colIndex, _) {
-                        bookingsProvider.sortColumnIndex = colIndex;
-                        bookingsProvider
-                            .sort<String>((reserva) => reserva.usuario.nombre);
-                      }),
-                  const DataColumn(label: Text('Estado')),
-                  const DataColumn(label: Text('Acciones')),
-                ],
-                onRowsPerPageChanged: (value) {
-                  setState(() {
-                    _rowsPerPage = value ?? 10;
-                  });
-                },
-                rowsPerPage: _rowsPerPage,
-                source: BookingsDTS(reservas, context, aerolineas, contenedores,
-                    tipos, origenes, destinos, widget.user),
-                header: const Text(
-                  'Reservas realizadas: ',
-                  maxLines: 2,
-                ),
-                actions: [
-                  if (widget.user.rol == 'USER_ROLE') ...[
-                    CustomIconButton(
-                      onPressed: () {
-                        showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (_) => BookingModal(
-                                  reserva: null,
-                                  aerolineas: aerolineas,
-                                  contenedores: contenedores,
-                                  tipos: tipos,
-                                  origenes: origenes,
-                                  destinos: destinos,
-                                ));
-                      },
-                      text: 'Crear',
-                      icon: Icons.add_outlined,
-                    )
-                  ]
-                ],
+            // if (reservas.isEmpty)
+            //   WhiteCard(
+            //       child: Container(
+            //     alignment: Alignment.center,
+            //     height: 300,
+            //     child: const CircularProgressIndicator(),
+            //   )),
+            // if (reservas.isNotEmpty)
+            PaginatedDataTable(
+              sortAscending: bookingsProvider.ascending,
+              sortColumnIndex: bookingsProvider.sortColumnIndex,
+              columnSpacing: 30,
+              columns: [
+                const DataColumn(label: Text('Aerolínea')),
+                DataColumn(
+                    label: const Text('Salida'),
+                    onSort: (colIndex, _) {
+                      bookingsProvider.sortColumnIndex = colIndex;
+                      bookingsProvider.sort<String>((reserva) =>
+                          DateFormat('yyyy-MM-dd').format(reserva.fechaSalida));
+                    }),
+                const DataColumn(label: Text('AWB')),
+                const DataColumn(label: Text('Destino')),
+                DataColumn(
+                    label: const Text('Exportador'),
+                    onSort: (colIndex, _) {
+                      bookingsProvider.sortColumnIndex = colIndex;
+                      bookingsProvider
+                          .sort<String>((reserva) => reserva.exportador.nombre);
+                    }),
+                DataColumn(
+                    label: const Text('Creada Por'),
+                    onSort: (colIndex, _) {
+                      bookingsProvider.sortColumnIndex = colIndex;
+                      bookingsProvider
+                          .sort<String>((reserva) => reserva.usuario.nombre);
+                    }),
+                const DataColumn(label: Text('Estado')),
+                const DataColumn(label: Text('Acciones')),
+              ],
+              onRowsPerPageChanged: (value) {
+                setState(() {
+                  _rowsPerPage = value ?? 10;
+                });
+              },
+              rowsPerPage: _rowsPerPage,
+              source: BookingsDTS(reservas, context, aerolineas, contenedores,
+                  tipos, origenes, destinos, widget.user),
+              header: const Text(
+                'Reservas realizadas: ',
+                maxLines: 2,
               ),
+              actions: [
+                if (widget.user.rol == 'USER_ROLE') ...[
+                  CustomIconButton(
+                    onPressed: () {
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (_) => BookingModal(
+                                reserva: null,
+                                aerolineas: aerolineas,
+                                contenedores: contenedores,
+                                tipos: tipos,
+                                origenes: origenes,
+                                destinos: destinos,
+                              ));
+                    },
+                    text: 'Crear',
+                    icon: Icons.add_outlined,
+                  )
+                ]
+              ],
+            ),
           ],
         ));
   }

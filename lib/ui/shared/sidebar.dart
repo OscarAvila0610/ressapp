@@ -119,10 +119,10 @@ class Sidebar extends StatelessWidget {
                 onPressed: () => navigateTo('/dashboard/users/${user.uid}')),
             MenuItem(
                 isActive:
-                    sideMenuProvider.currentPage == Flurorouter.blankRoute,
+                    sideMenuProvider.currentPage == Flurorouter.calculatorRoute,
                 text: 'Calculadora',
-                icon: Icons.post_add_outlined,
-                onPressed: () => navigateTo(Flurorouter.blankRoute)),
+                icon: Icons.calculate_outlined,
+                onPressed: () => navigateTo(Flurorouter.calculatorRoute)),
             const SizedBox(
               height: 30,
             ),

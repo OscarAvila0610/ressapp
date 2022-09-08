@@ -3,6 +3,7 @@ export 'package:ress_app/providers/airlines_provider.dart';
 export 'package:ress_app/providers/bookings_provider.dart';
 export 'package:ress_app/providers/auth_provider.dart';
 export 'package:ress_app/providers/containers_provider.dart';
+export 'package:ress_app/providers/calculator_provider.dart';
 export 'package:ress_app/providers/commodities_provider.dart';
 export 'package:ress_app/providers/roles_provider.dart';
 export 'package:ress_app/providers/destinations_provider.dart';
