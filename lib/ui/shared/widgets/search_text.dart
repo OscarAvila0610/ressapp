@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ress_app/services/navigation_service.dart';
 import 'package:ress_app/ui/inputs/custom_inputs.dart';
 
 class SearchText extends StatelessWidget {
@@ -9,8 +10,11 @@ class SearchText extends StatelessWidget {
     return Container(
       height: 40,
       decoration: buildBoxDecoration(),
-      child: TextField(
-        decoration: CustomInputs.searchInputDecoration(hint: 'Buscar', icon: Icons.search_outlined),
+      child: TextFormField(
+        onFieldSubmitted: (awb) =>
+            NavigationService.navigateTo('/dashboard/reservas/awb/$awb'),
+        decoration: CustomInputs.searchInputDecoration(
+            hint: 'Buscar', icon: Icons.search_outlined),
       ),
     );
   }

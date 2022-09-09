@@ -27,6 +27,20 @@ class BookingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  getBookingByAwb(String awb) async {
+    reservas = [];
+
+    try {
+      final resp = await RessApi.httpGet('/reservas/awb/$awb');
+      final bookingsResp = BookingsResponse.fromMap(resp);
+      reservas = [...bookingsResp.reservas];
+    } catch (e) {
+      throw 'Error en el Get por AWB';
+    }
+
+    notifyListeners();
+  }
+
   Future newBooking(
       String airline,
       int awb,

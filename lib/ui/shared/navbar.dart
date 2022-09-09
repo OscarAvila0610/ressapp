@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:ress_app/providers/auth_provider.dart';
 import 'package:ress_app/providers/sidemenu_provider.dart';
+import 'package:ress_app/router/router.dart';
+import 'package:ress_app/ui/cards/white_card.dart';
 
 import 'package:ress_app/ui/shared/widgets/search_text.dart';
 
@@ -9,6 +14,8 @@ class Navbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final sideMenuProvider = Provider.of<SideMenuProvider>(context);
+    final user = Provider.of<AuthProvider>(context).user;
 
     return Container(
       width: double.infinity,
@@ -25,14 +32,21 @@ class Navbar extends StatelessWidget {
           const SizedBox(
             width: 5,
           ),
-
-          if (size.width > 390)
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 250),
-              child: const SearchText(),
-            ),
+          if (sideMenuProvider.currentPage == Flurorouter.bookingsRoute ||
+              sideMenuProvider.currentPage == Flurorouter.awbRoute)
+            if (size.width > 390)
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 250),
+                child: const SearchText(),
+              ),
 
           const Spacer(),
+          WhiteCard(
+              child: Text(
+            user!.correo,
+            style:
+                GoogleFonts.roboto(fontSize: 15, fontWeight: FontWeight.bold),
+          )),
           // const NotificationIndicator(),
           // const SizedBox(width: 10,),
           // const NavbarAvatar(),
