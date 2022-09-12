@@ -11,8 +11,10 @@ class SearchText extends StatelessWidget {
       height: 40,
       decoration: buildBoxDecoration(),
       child: TextFormField(
-        onFieldSubmitted: (awb) =>
-            NavigationService.navigateTo('/dashboard/reservas/awb/$awb'),
+        onFieldSubmitted: (awb) {
+          NavigationService.navigateTo('/dashboard/reservas/awb/$awb');
+          awb = '';
+        },
         decoration: CustomInputs.searchInputDecoration(
             hint: 'Buscar', icon: Icons.search_outlined),
       ),

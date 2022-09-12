@@ -5,6 +5,8 @@ import 'package:ress_app/providers/providers.dart';
 import 'package:ress_app/router/router.dart';
 import 'package:ress_app/ui/views/bookings_view_find.dart';
 import 'package:ress_app/ui/views/calculator_view.dart';
+import 'package:ress_app/ui/views/dashboard_analist_view.dart';
+import 'package:ress_app/ui/views/dashboard_user_view.dart';
 
 import 'package:ress_app/ui/views/views.dart';
 
@@ -19,6 +21,30 @@ class DashboardHandlers {
       return const LoginView();
     }
   });
+
+  static Handler dashboardUser = Handler(handlerFunc: (context, params) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.dashboardRoute);
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      return DashboardUserView(user: authProvider.user!,);
+    } else {
+      return const LoginView();
+    }
+  });
+
+  static Handler dashboardAnalist = Handler(handlerFunc: (context, params) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.dashboardRoute);
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      return DashboardAnalistView(user: authProvider.user!,);
+    } else {
+      return const LoginView();
+    }
+  });
+
+  
 
   static Handler icons = Handler(handlerFunc: (context, params) {
     final authProvider = Provider.of<AuthProvider>(context!);

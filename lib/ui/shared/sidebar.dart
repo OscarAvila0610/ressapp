@@ -99,7 +99,7 @@ class Sidebar extends StatelessWidget {
                     sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
                 text: 'Dashboard',
                 icon: Icons.compass_calibration_outlined,
-                onPressed: () => navigateTo(Flurorouter.dashboardRoute)),
+                onPressed: () => navigateTo(Flurorouter.dashboardUserRoute)),
             MenuItem(
                 isActive:
                     sideMenuProvider.currentPage == Flurorouter.iconsRoute,
@@ -134,7 +134,7 @@ class Sidebar extends StatelessWidget {
                     sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
                 text: 'Dashboard',
                 icon: Icons.compass_calibration_outlined,
-                onPressed: () => navigateTo(Flurorouter.dashboardRoute)),
+                onPressed: () => navigateTo(Flurorouter.dashboardAnalistRoute)),
             MenuItem(
                 isActive:
                     sideMenuProvider.currentPage == Flurorouter.iconsRoute,

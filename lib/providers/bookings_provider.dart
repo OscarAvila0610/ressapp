@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:ress_app/api/ress_api.dart';
 
@@ -8,11 +9,19 @@ import 'package:ress_app/models/user.dart';
 
 class BookingsProvider extends ChangeNotifier {
   List<Reserva> reservas = [];
+  List<Reserva> planVuelo = [];
   bool ascending = true;
   int? sortColumnIndex;
+  int aprobadas = 0;
+  int canceladas = 0;
+  int pendientes = 0;
 
   getBookings(Usuario user) async {
     reservas = [];
+    planVuelo = [];
+    aprobadas = 0;
+    canceladas = 0;
+    pendientes = 0;
     if (user.rol != 'USER_ROLE') {
       final resp = await RessApi.httpGet('/reservas');
       final bookingsResp = BookingsResponse.fromMap(resp);
@@ -23,7 +32,18 @@ class BookingsProvider extends ChangeNotifier {
 
       reservas = [...bookingsResp.reservas];
     }
-
+    for (var i = 0; i < reservas.length; i++) {
+      (reservas[i].aprobacion)
+          ? aprobadas = aprobadas + 1
+          : (reservas[i].cancelada)
+              ? canceladas = canceladas + 1
+              : pendientes = pendientes + 1;
+      DateTime today = DateTime.now();
+      if (DateFormat('yyyy-MM-dd').format(reservas[i].fechaSalida) ==
+          DateFormat('yyyy-MM-dd').format(today)) {
+        planVuelo.add(reservas[i]);
+      }
+    }
     notifyListeners();
   }
 

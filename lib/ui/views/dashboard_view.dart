@@ -25,14 +25,12 @@ class _DashboardViewState extends State<DashboardView> {
     final kgs = Provider.of<AdminProvider>(context);
     return Column(
       children: [
-        if (user.rol == 'ADMIN_ROLE') ...[
           WhiteCard(
               title: 'Total Kgs por Exportador',
               child: KgsBarChart(
                 totalesKgs: kgs.listaFinal,
                 registros: kgs.kgsExporter,
               )),
-        ]
       ],
     );
   }

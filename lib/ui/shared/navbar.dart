@@ -34,19 +34,22 @@ class Navbar extends StatelessWidget {
           ),
           if (sideMenuProvider.currentPage == Flurorouter.bookingsRoute ||
               sideMenuProvider.currentPage == Flurorouter.awbRoute)
-            if (size.width > 390)
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 250),
-                child: const SearchText(),
-              ),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 250),
+              child: const SearchText(),
+            ),
 
           const Spacer(),
-          WhiteCard(
-              child: Text(
-            user!.correo,
-            style:
-                GoogleFonts.roboto(fontSize: 15, fontWeight: FontWeight.bold),
-          )),
+          if (size.width > 525)
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 250),
+              child: WhiteCard(
+                  child: Text(
+                user!.correo,
+                style: GoogleFonts.roboto(
+                    fontSize: 13, fontWeight: FontWeight.bold),
+              )),
+            ),
           // const NotificationIndicator(),
           // const SizedBox(width: 10,),
           // const NavbarAvatar(),

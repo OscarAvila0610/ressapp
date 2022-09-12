@@ -34,6 +34,7 @@ class KgsBarChart extends StatelessWidget {
               animate: true,
             )),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 for (var i = 0; i < registros.length; i++) ...[
                   WhiteCard(

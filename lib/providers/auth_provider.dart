@@ -35,7 +35,7 @@ class AuthProvider extends ChangeNotifier {
 
       authStatus = AuthStatus.authenticated;
       LocalStorage.prefs.setString('x-token', authResponse.token);
-      NavigationService.replaceTo(Flurorouter.dashboardRoute);
+      NavigationService.replaceTo(Flurorouter.blankRoute);
 
       RessApi.configureDio();
       notifyListeners();

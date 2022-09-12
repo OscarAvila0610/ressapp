@@ -36,8 +36,12 @@ dependencies:
     sdk: flutter
   google_fonts: ^3.0.1
   intl: ^0.17.0
+  open_file: ^3.2.1
+  path_provider: ^2.0.11
   provider: ^6.0.3
   shared_preferences: ^2.0.15
+  syncfusion_flutter_pdf: ^20.2.48
+  universal_html: ^2.0.8
 
 dev_dependencies:
   flutter_lints: ^1.0.0
