@@ -43,6 +43,10 @@ class BookingsProvider extends ChangeNotifier {
           DateFormat('yyyy-MM-dd').format(today)) {
         planVuelo.add(reservas[i]);
       }
+
+      if (reservas[i].fechaSalida.isBefore(today)) {
+        reservas.remove(reservas[i]);
+      }
     }
     notifyListeners();
   }
@@ -56,6 +60,21 @@ class BookingsProvider extends ChangeNotifier {
       reservas = [...bookingsResp.reservas];
     } catch (e) {
       throw 'Error en el Get por AWB';
+    }
+
+    notifyListeners();
+  }
+
+  getBookingByDate(String fechaInicial, String fechaFinal) async {
+    reservas = [];
+    final data = {"fecha_inicial": fechaInicial, "fecha_final": fechaFinal};
+
+    try {
+      final resp = await RessApi.post('/reservas/totalAwbsFecha', data);
+      final bookingsResp = BookingsResponse.fromMap(resp);
+      reservas = [...bookingsResp.reservas];
+    } catch (e) {
+      throw 'Error al obtener rango de fecha';
     }
 
     notifyListeners();

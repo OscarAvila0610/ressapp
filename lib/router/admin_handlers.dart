@@ -13,7 +13,7 @@ class AdminHandlers {
     if (authProvider.authStatus == AuthStatus.notAuthenticated) {
       return const LoginView();
     } else {
-      return const DashboardView();
+      return  DashboardView(user: authProvider.user!);
     }
   });
 
@@ -23,7 +23,7 @@ class AdminHandlers {
     if (authProvider.authStatus == AuthStatus.notAuthenticated) {
       return const RegisterView();
     } else {
-      return const DashboardView();
+      return  DashboardView(user: authProvider.user!);
     }
   });
 }

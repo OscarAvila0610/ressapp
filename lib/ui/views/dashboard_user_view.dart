@@ -72,7 +72,7 @@ class _DashboardUserViewState extends State<DashboardUserView> {
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 200),
           child: ElevatedButton(
-            onPressed: () => _generateFlyPlan(reservas.planVuelo),
+            onPressed: () => _generateFlyPlan(reservas.planVuelo, user),
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.indigo),
                 shadowColor: MaterialStateProperty.all(Colors.transparent)),
@@ -91,7 +91,7 @@ class _DashboardUserViewState extends State<DashboardUserView> {
     );
   }
 
-  Future _generateFlyPlan(List<Reserva> reservas) async {
+  Future _generateFlyPlan(List<Reserva> reservas, Usuario user) async {
     PdfDocument flyPlan = PdfDocument();
     final page = flyPlan.pages.add();
     DateTime today = DateTime.now();
@@ -133,11 +133,17 @@ class _DashboardUserViewState extends State<DashboardUserView> {
 
     grid.draw(page: page, bounds: const Rect.fromLTWH(0, 200, 0, 0));
 
+    page.graphics.drawString('____________________________\n${user.nombre}',
+        PdfStandardFont(PdfFontFamily.timesRoman, 13, style: PdfFontStyle.bold),
+        format: PdfStringFormat(alignment: PdfTextAlignment.left),
+        bounds: Rect.fromLTWH(0, pageSize.height - 150, 0, 0));
+
     page.graphics.drawString(
         'Toda la Información contenida en el plan de vuelo ha sido revisada por \nnuestros analistas, por lo que se confirma que los kilos descritos seran despachados',
-        PdfStandardFont(PdfFontFamily.helvetica, 9),
+        PdfStandardFont(PdfFontFamily.timesRoman, 9),
         format: PdfStringFormat(alignment: PdfTextAlignment.left),
         bounds: Rect.fromLTWH(0, pageSize.height - 70, 0, 0));
+
     List<int> bytes = await flyPlan.save();
     flyPlan.dispose();
     saveAndLaunchFile(bytes, 'PlanDeVuelo.pdf');

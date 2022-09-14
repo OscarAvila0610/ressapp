@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class NavigationService {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -12,7 +13,7 @@ class NavigationService {
   }
 
   static pop() async {
-    navigatorKey.currentState!
-    .pushNamedAndRemoveUntil('/auth/login', (Route<dynamic> route) => false);
+    navigatorKey.currentState!.pushNamedAndRemoveUntil(
+        '/auth/login', (Route<dynamic> route) => false);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:universal_html/html.dart' as html;
 
 import 'package:ress_app/api/ress_api.dart';
 import 'package:ress_app/models/http/auth_response.dart';
@@ -69,10 +70,11 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  logout() {
-    NavigationService.pop();
+  logout() async {
+    await NavigationService.pop();
     LocalStorage.prefs.remove('x-token');
     authStatus = AuthStatus.notAuthenticated;
     notifyListeners();
+    html.window.location.reload();
   }
 }

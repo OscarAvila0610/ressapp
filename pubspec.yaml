@@ -41,6 +41,7 @@ dependencies:
   provider: ^6.0.3
   shared_preferences: ^2.0.15
   syncfusion_flutter_pdf: ^20.2.48
+  syncfusion_flutter_xlsio: ^20.2.49-beta
   universal_html: ^2.0.8
 
 dev_dependencies:

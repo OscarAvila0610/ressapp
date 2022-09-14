@@ -16,7 +16,7 @@ class DashboardHandlers {
     Provider.of<SideMenuProvider>(context, listen: false)
         .setCurrentPageUrl(Flurorouter.dashboardRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
-      return const DashboardView();
+      return DashboardView(user: authProvider.user!);
     } else {
       return const LoginView();
     }
@@ -27,7 +27,9 @@ class DashboardHandlers {
     Provider.of<SideMenuProvider>(context, listen: false)
         .setCurrentPageUrl(Flurorouter.dashboardRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
-      return DashboardUserView(user: authProvider.user!,);
+      return DashboardUserView(
+        user: authProvider.user!,
+      );
     } else {
       return const LoginView();
     }
@@ -38,13 +40,13 @@ class DashboardHandlers {
     Provider.of<SideMenuProvider>(context, listen: false)
         .setCurrentPageUrl(Flurorouter.dashboardRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
-      return DashboardAnalistView(user: authProvider.user!,);
+      return DashboardAnalistView(
+        user: authProvider.user!,
+      );
     } else {
       return const LoginView();
     }
   });
-
-  
 
   static Handler icons = Handler(handlerFunc: (context, params) {
     final authProvider = Provider.of<AuthProvider>(context!);
@@ -86,7 +88,7 @@ class DashboardHandlers {
       if (authProvider.user!.rol != 'ADMIN_ROLE') {
         Provider.of<SideMenuProvider>(context, listen: false)
             .setCurrentPageUrl(Flurorouter.dashboardRoute);
-        return const DashboardView();
+        return DashboardView(user: authProvider.user!);
       }
       return const AirlinesView();
     } else {
@@ -112,8 +114,8 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       if (authProvider.user!.rol != 'ADMIN_ROLE') {
         Provider.of<SideMenuProvider>(context, listen: false)
-            .setCurrentPageUrl(Flurorouter.dashboardRoute);
-        return const DashboardView();
+            .setCurrentPageUrl(Flurorouter.blankRoute);
+        return const BlankView();
       }
       return const DestinationsView();
     } else {
@@ -128,8 +130,8 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       if (authProvider.user!.rol != 'ADMIN_ROLE') {
         Provider.of<SideMenuProvider>(context, listen: false)
-            .setCurrentPageUrl(Flurorouter.dashboardRoute);
-        return const DashboardView();
+            .setCurrentPageUrl(Flurorouter.blankRoute);
+        return const BlankView();
       }
       return const ContainersView();
     } else {
@@ -144,8 +146,8 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       if (authProvider.user!.rol != 'ADMIN_ROLE') {
         Provider.of<SideMenuProvider>(context, listen: false)
-            .setCurrentPageUrl(Flurorouter.dashboardRoute);
-        return const DashboardView();
+            .setCurrentPageUrl(Flurorouter.blankRoute);
+        return const BlankView();
       }
       return const CommoditiesView();
     } else {
@@ -160,8 +162,8 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       if (authProvider.user!.rol != 'ADMIN_ROLE') {
         Provider.of<SideMenuProvider>(context, listen: false)
-            .setCurrentPageUrl(Flurorouter.dashboardRoute);
-        return const DashboardView();
+            .setCurrentPageUrl(Flurorouter.blankRoute);
+        return const BlankView();
       }
       return const OriginsView();
     } else {
@@ -176,8 +178,8 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       if (authProvider.user!.rol != 'ADMIN_ROLE') {
         Provider.of<SideMenuProvider>(context, listen: false)
-            .setCurrentPageUrl(Flurorouter.dashboardRoute);
-        return const DashboardView();
+            .setCurrentPageUrl(Flurorouter.blankRoute);
+        return const BlankView();
       }
       return const ExportersView();
     } else {
@@ -192,8 +194,8 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       if (authProvider.user!.rol != 'ADMIN_ROLE') {
         Provider.of<SideMenuProvider>(context, listen: false)
-            .setCurrentPageUrl(Flurorouter.dashboardRoute);
-        return const DashboardView();
+            .setCurrentPageUrl(Flurorouter.blankRoute);
+        return const BlankView();
       }
       return const UsersView();
     } else {
@@ -220,7 +222,10 @@ class DashboardHandlers {
         .setCurrentPageUrl(Flurorouter.awbRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
       if (params['awb']?.first != null) {
-        return BookingsViewFind(awb: params['awb']!.first, user: authProvider.user!,);
+        return BookingsViewFind(
+          awb: params['awb']!.first,
+          user: authProvider.user!,
+        );
       } else {
         return const UsersView();
       }
