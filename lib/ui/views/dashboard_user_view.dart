@@ -100,9 +100,12 @@ class _DashboardUserViewState extends State<DashboardUserView> {
         const Rect.fromLTWH(400, 10, 100, 50));
 
     page.graphics.drawString(
-        '\n\n\n\n\tGuatemala, ${today.day}/${today.month}/${today.year}\n\n\n\tPlan de Vuelo: ',
+        '\n\n\n\n\tGuatemala, ${today.day}/${today.month}/${today.year}\n\n\n\tEstimados señores Operaciones:',
         PdfStandardFont(PdfFontFamily.timesRoman, 15,
             style: PdfFontStyle.bold));
+    page.graphics.drawString(
+        '\n\n\n\n\n\n\n\n\n\n\tEn la presente se encuentra la informacion correspondiente al vuelo IB6342 \n\tdel día de hoy.',
+        PdfStandardFont(PdfFontFamily.timesRoman, 15));
 
     final PdfGrid grid = PdfGrid();
     grid.style = PdfGridStyle(
@@ -131,7 +134,7 @@ class _DashboardUserViewState extends State<DashboardUserView> {
           grid);
     }
 
-    grid.draw(page: page, bounds: const Rect.fromLTWH(0, 200, 0, 0));
+    grid.draw(page: page, bounds: const Rect.fromLTWH(0, 220, 0, 0));
 
     page.graphics.drawString('____________________________\n${user.nombre}',
         PdfStandardFont(PdfFontFamily.timesRoman, 13, style: PdfFontStyle.bold),

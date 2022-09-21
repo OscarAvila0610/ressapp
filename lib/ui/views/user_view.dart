@@ -10,8 +10,6 @@ import 'package:ress_app/services/notifications_service.dart';
 
 import 'package:ress_app/ui/inputs/custom_inputs.dart';
 
-import 'package:ress_app/ui/labels/custom_labels.dart';
-
 import '../cards/white_card.dart';
 
 class UserView extends StatefulWidget {
@@ -59,13 +57,6 @@ class _UserViewState extends State<UserView> {
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
-            Text(
-              'Usuario',
-              style: CustomLabels.h1,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
             if (user == null)
               WhiteCard(
                   child: Container(
@@ -73,7 +64,7 @@ class _UserViewState extends State<UserView> {
                 height: 300,
                 child: const CircularProgressIndicator(),
               )),
-            if (user != null) _UserViewBody()
+            if (user != null) const _UserViewBody()
           ],
         ));
   }
@@ -90,7 +81,7 @@ class _UserViewBody extends StatelessWidget {
       child: Table(
         columnWidths: const {0: FixedColumnWidth(250)},
         children: const [
-          TableRow(children: [_AvatarContainer(), _UserViewForm()])
+          TableRow(children: [_UserViewForm()])
         ],
       ),
     );
@@ -106,11 +97,13 @@ class _UserViewForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final userFormProvider = Provider.of<UserFormProvider>(context);
     final user = userFormProvider.user!;
+    String oldPass = '';
+    String newPass = '';
+    String confPass = '';
     return WhiteCard(
         title: 'Informacion general',
         child: Form(
           key: userFormProvider.formKey,
-          autovalidateMode: AutovalidateMode.always,
           child: Column(
             children: [
               TextFormField(
@@ -152,11 +145,78 @@ class _UserViewForm extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
+              TextFormField(
+                onChanged: (value) => oldPass = value,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ingrese su contraseña actual';
+                  }
+                  if (value.length < 8) {
+                    return 'La contraseña debe de ser de 8 caracteres';
+                  }
+                  return null;
+                },
+                obscureText: true,
+                style: const TextStyle(color: Colors.black),
+                decoration: CustomInputs.formInputDecoration(
+                    hint: '***********',
+                    label: 'Contraseña Actual',
+                    icon: Icons.lock_outline),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                onChanged: (value) => newPass = value,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ingrese su nueva contraseña';
+                  }
+                  if (value.length < 8) {
+                    return 'La contraseña debe de ser de al menos 8 caracteres';
+                  }
+                  return null;
+                },
+                obscureText: true,
+                style: const TextStyle(color: Colors.black),
+                decoration: CustomInputs.formInputDecoration(
+                    hint: '***********',
+                    label: 'Nueva Contraseña',
+                    icon: Icons.lock_outline),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                onChanged: (value) => confPass = value,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Ingrese su nueva contraseña para confirmar';
+                  }
+                  if (value.length < 6) {
+                    return 'La contraseña debe de ser de 6 caracteres';
+                  }
+                  if (newPass != confPass) {
+                    return 'Las contraseñas no coinciden';
+                  }
+                  return null;
+                },
+                obscureText: true,
+                style: const TextStyle(color: Colors.black),
+                decoration: CustomInputs.formInputDecoration(
+                    hint: '***********',
+                    label: 'Confimar Contraseña',
+                    icon: Icons.lock_outline),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 110),
                 child: ElevatedButton(
                   onPressed: () async {
-                    final saved = await userFormProvider.updateUser();
+                    final saved =
+                        await userFormProvider.updateUser(oldPass, newPass);
                     if (saved) {
                       NotificationsService.showSnackbar('Usuario Actualizado');
                       Provider.of<UsersProvider>(context, listen: false)
@@ -181,78 +241,6 @@ class _UserViewForm extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
-          ),
-        ));
-  }
-}
-
-class _AvatarContainer extends StatelessWidget {
-  const _AvatarContainer({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final userFormProvider = Provider.of<UserFormProvider>(context);
-    final user = userFormProvider.user!;
-    return WhiteCard(
-        width: 250,
-        child: Container(
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'Perfil',
-                style: CustomLabels.h2,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                width: 150,
-                height: 160,
-                child: Stack(
-                  children: [
-                    const ClipOval(
-                      child: Image(
-                        image: AssetImage('no-image.jpg'),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 5,
-                      right: 5,
-                      child: Container(
-                        width: 45,
-                        height: 45,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            border: Border.all(color: Colors.white, width: 5)),
-                        child: FloatingActionButton(
-                          backgroundColor: Colors.indigo,
-                          elevation: 0,
-                          child: const Icon(
-                            Icons.camera_alt_outlined,
-                            size: 20,
-                          ),
-                          onPressed: () {},
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                user.nombre,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              )
             ],
           ),
         ));

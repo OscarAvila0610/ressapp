@@ -36,7 +36,7 @@ class UserFormProvider extends ChangeNotifier {
     return formKey.currentState!.validate();
   }
 
-  Future updateUser() async {
+  Future updateUser(String oldPass, String newPass) async {
     if (!_validForm()) {
       return false;
     }
@@ -44,6 +44,8 @@ class UserFormProvider extends ChangeNotifier {
     final data = {
       'nombre': user!.nombre,
       'correo': user!.correo,
+      'oldPassword': oldPass,
+      'newPassword': newPass,
       'rol': user!.rol
     };
 

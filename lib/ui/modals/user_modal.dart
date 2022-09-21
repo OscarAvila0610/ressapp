@@ -113,83 +113,56 @@ class _UserModalState extends State<UserModal> {
                     const SizedBox(
                       height: 20,
                     ),
-                    TextFormField(
-                      initialValue: '',
-                      onChanged: (value) =>
-                          registerFormProvider.password = value,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Ingrese su contraseña';
-                        }
-                        if (value.length < 6) {
-                          return 'La contraseña debe de ser de 6 caracteres';
-                        }
-                        return null;
-                      },
-                      obscureText: true,
-                      decoration: CustomInputs.loginInputDecoration(
-                          hint: 'Contraseña del Usuario',
-                          label: 'Contraseña',
-                          icon: Icons.airplanemode_active),
-                      style: const TextStyle(color: Colors.white),
+                    Container(
+                      width: 250,
+                      child: DropdownButtonFormField(
+                        decoration: CustomInputs.loginInputDecoration(
+                            label: 'Exportadores',
+                            hint: '',
+                            icon: Icons.explore_outlined),
+                        dropdownColor: const Color(0xff0F2039),
+                        value: exportador,
+                        style: const TextStyle(color: Colors.white),
+                        onChanged: (String? value) {
+                          setState(() {
+                            exportador = value!;
+                          });
+                        },
+                        items: widget.exportadores
+                            .map<DropdownMenuItem<String>>((value) {
+                          return DropdownMenuItem<String>(
+                              value: value.id, child: Text(value.nombre));
+                        }).toList(),
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: 250,
-                            child: DropdownButtonFormField(
-                              decoration: CustomInputs.loginInputDecoration(
-                                  label: 'Exportadores',
-                                  hint: '',
-                                  icon: Icons.explore_outlined),
-                              dropdownColor: const Color(0xff0F2039),
-                              value: exportador,
-                              style: const TextStyle(color: Colors.white),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  exportador = value!;
-                                });
-                              },
-                              items: widget.exportadores
-                                  .map<DropdownMenuItem<String>>((value) {
-                                return DropdownMenuItem<String>(
-                                    value: value.id, child: Text(value.nombre));
-                              }).toList(),
-                            ),
-                          ),
-                          Container(
-                            width: 250,
-                            child: DropdownButtonFormField(
-                              decoration: CustomInputs.loginInputDecoration(
-                                  label: 'Roles',
-                                  hint: '',
-                                  icon: Icons.explore_outlined),
-                              dropdownColor: const Color(0xff0F2039),
-                              value: rol,
-                              style: const TextStyle(color: Colors.white),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  rol = value!;
-                                });
-                              },
-                              items: widget.roles
-                                  .map<DropdownMenuItem<String>>((value) {
-                                return DropdownMenuItem<String>(
-                                    value: value.rol,
-                                    child: (value.rol == 'ADMIN_ROLE')
-                                        ? const Text('Administrador')
-                                        : (value.rol == 'USER_ROLE')
-                                            ? const Text('Usuario')
-                                            : const Text('Analista'));
-                              }).toList(),
-                            ),
-                          ),
-                        ],
+                      width: 250,
+                      child: DropdownButtonFormField(
+                        decoration: CustomInputs.loginInputDecoration(
+                            label: 'Roles',
+                            hint: '',
+                            icon: Icons.explore_outlined),
+                        dropdownColor: const Color(0xff0F2039),
+                        value: rol,
+                        style: const TextStyle(color: Colors.white),
+                        onChanged: (String? value) {
+                          setState(() {
+                            rol = value!;
+                          });
+                        },
+                        items:
+                            widget.roles.map<DropdownMenuItem<String>>((value) {
+                          return DropdownMenuItem<String>(
+                              value: value.rol,
+                              child: (value.rol == 'ADMIN_ROLE')
+                                  ? const Text('Administrador')
+                                  : (value.rol == 'USER_ROLE')
+                                      ? const Text('Usuario')
+                                      : const Text('Analista'));
+                        }).toList(),
                       ),
                     ),
                     const SizedBox(
@@ -205,7 +178,6 @@ class _UserModalState extends State<UserModal> {
                           try {
                             await userProvider.newUser(
                                 registerFormProvider.email,
-                                registerFormProvider.password,
                                 registerFormProvider.name,
                                 rol,
                                 exportador);

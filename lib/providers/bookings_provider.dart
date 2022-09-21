@@ -32,20 +32,16 @@ class BookingsProvider extends ChangeNotifier {
 
       reservas = [...bookingsResp.reservas];
     }
+    DateTime today = DateTime.now();
     for (var i = 0; i < reservas.length; i++) {
       (reservas[i].aprobacion)
           ? aprobadas = aprobadas + 1
           : (reservas[i].cancelada)
               ? canceladas = canceladas + 1
               : pendientes = pendientes + 1;
-      DateTime today = DateTime.now();
       if (DateFormat('yyyy-MM-dd').format(reservas[i].fechaSalida) ==
           DateFormat('yyyy-MM-dd').format(today)) {
         planVuelo.add(reservas[i]);
-      }
-
-      if (reservas[i].fechaSalida.isBefore(today)) {
-        reservas.remove(reservas[i]);
       }
     }
     notifyListeners();

@@ -103,8 +103,11 @@ class _CalculatorModalState extends State<CalculatorModal> {
                 hint: 'IVA', label: 'IVA', icon: Icons.airplanemode_active),
             style: const TextStyle(color: Colors.white),
           ),
+          const SizedBox(
+            height: 10,
+          ),
           TextFormField(
-            initialValue: total.toStringAsFixed(2),
+            initialValue: 'USD ${total.toStringAsFixed(2)}',
             enabled: false,
             decoration: CustomInputs.loginInputDecoration(
                 hint: 'Total', label: 'Total', icon: Icons.airplanemode_active),

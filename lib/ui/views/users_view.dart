@@ -27,7 +27,7 @@ class _UsersViewState extends State<UsersView> {
   @override
   Widget build(BuildContext context) {
     final usersProvider = Provider.of<UsersProvider>(context);
-    final usersDataSource = UsersDTS(usersProvider.users);
+    final usersDataSource = UsersDTS(usersProvider.users, context);
     final exportadores = Provider.of<ExportersProviders>(context).exportadores;
     final roles = Provider.of<RolesProvider>(context).roles;
 
@@ -40,7 +40,12 @@ class _UsersViewState extends State<UsersView> {
               sortAscending: usersProvider.ascending,
               sortColumnIndex: usersProvider.sortColumnIndex,
               columns: [
-                const DataColumn(label: Text('Avatar')),
+                DataColumn(
+                    label: const Text('Rol'),
+                    onSort: (colIndex, _) {
+                      usersProvider.sortColumnIndex = colIndex;
+                      usersProvider.sort<String>((user) => user.rol);
+                    }),
                 DataColumn(
                     label: const Text('Nombre'),
                     onSort: (colIndex, _) {

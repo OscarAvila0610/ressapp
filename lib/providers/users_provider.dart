@@ -36,12 +36,11 @@ class UsersProvider extends ChangeNotifier {
     }
   }
 
-  Future newUser(String email, String password, String name, String rol,
+  Future newUser(String email,String name, String rol,
       String exportador) async {
     final data = {
       'nombre': name,
       'correo': email,
-      'password': password,
       'rol': rol,
       'exportador': exportador
     };
@@ -69,6 +68,18 @@ class UsersProvider extends ChangeNotifier {
 
     ascending = !ascending;
     notifyListeners();
+  }
+
+  Future deleteUser(String id) async {
+    try {
+      await RessApi.delete('/usuarios/$id', {});
+
+      users.removeWhere((user) => user.uid == id);
+
+      notifyListeners();
+    } catch (e) {
+      throw 'Error al eliminar usuario';
+    }
   }
 
   void refreshUser(Usuario newUser) {

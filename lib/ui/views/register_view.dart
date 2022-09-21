@@ -69,28 +69,6 @@ class RegisterView extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          TextFormField(
-                            onChanged: (value) =>
-                                registerFormProvider.password = value,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Ingrese su contraseña';
-                              }
-                              if (value.length < 6) {
-                                return 'La contraseña debe de ser de 6 caracteres';
-                              }
-                              return null;
-                            },
-                            obscureText: true,
-                            style: const TextStyle(color: Colors.white),
-                            decoration: CustomInputs.loginInputDecoration(
-                                hint: '***********',
-                                label: 'Contraseña',
-                                icon: Icons.lock_outline),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
                           CustomOutlinedButton(
                             onPressed: () {
                               final validForm =
