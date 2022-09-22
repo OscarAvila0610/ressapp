@@ -7,6 +7,7 @@ import 'package:ress_app/models/http/destinations_response.dart';
 
 class DestinationsProviders extends ChangeNotifier {
   List<Destino> destinos = [];
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   getDestinations() async {
     final resp = await RessApi.httpGet('/destinos');
@@ -62,5 +63,9 @@ class DestinationsProviders extends ChangeNotifier {
     } catch (e) {
       throw 'Error al eliminar destino';
     }
+  }
+
+  bool validForm() {
+    return formKey.currentState!.validate();
   }
 }

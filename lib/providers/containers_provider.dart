@@ -8,6 +8,7 @@ import 'package:ress_app/models/http/containers_response.dart';
 
 class ContainersProviders extends ChangeNotifier {
   List<Contenedore> contenedores = [];
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   getContainers() async {
     final resp = await RessApi.httpGet('/contenedores');
@@ -62,5 +63,9 @@ class ContainersProviders extends ChangeNotifier {
     } catch (e) {
       throw 'Error al eliminar contenedor';
     }
+  }
+
+  bool validForm() {
+    return formKey.currentState!.validate();
   }
 }

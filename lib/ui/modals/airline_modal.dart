@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:ress_app/providers/airlines_provider.dart';
@@ -45,90 +46,124 @@ class _AirlineModalState extends State<AirlineModal> {
       height: 500,
       width: 300, //Expanded
       decoration: buildBoxDecoration(),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                widget.aerolinea?.nombre ?? 'Nueva Aerolínea',
-                style: CustomLabels.h1.copyWith(color: Colors.white),
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.close_outlined,
-                  color: Colors.white,
+      child: Form(
+        key: airlineProvider.formKey,
+        child: ListView(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.aerolinea?.nombre ?? 'Nueva Aerolínea',
+                  style: CustomLabels.h1.copyWith(color: Colors.white),
                 ),
-                onPressed: () => Navigator.of(context).pop(),
-              )
-            ],
-          ),
-          Divider(
-            color: Colors.white.withOpacity(0.3),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          TextFormField(
-            initialValue: widget.aerolinea ?.prefijo.toString() ?? '',
-            onChanged: (value) => prefijo = int.parse(value),
-            decoration: CustomInputs.loginInputDecoration(
-                hint: 'Prefijo de la Aerolínea',
-                label: 'Prefijo',
-                icon: Icons.airplanemode_active),
-            style: const TextStyle(color: Colors.white),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            initialValue: widget.aerolinea?.nombre ?? '',
-            onChanged: (value) => nombre = value,
-            decoration: CustomInputs.loginInputDecoration(
-                hint: 'Nombre de la Aerolínea',
-                label: 'Aerolínea',
-                icon: Icons.airplanemode_active),
-            style: const TextStyle(color: Colors.white),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            initialValue: widget.aerolinea?.estacion ?? '',
-            onChanged: (value) => estacion = value,
-            decoration: CustomInputs.loginInputDecoration(
-                hint: 'Nombre de la estación',
-                label: 'Estacíon',
-                icon: Icons.airplanemode_active),
-            style: const TextStyle(color: Colors.white),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 30),
-            alignment: Alignment.center,
-            child: CustomOutlinedButton(
-              onPressed: () async {
-                try {
-                  if (id == null) {
-                    await airlineProvider.newAirline(
-                        prefijo, nombre, estacion);
-                    NotificationsService.showSnackbar('$nombre creado');
-                  } else {
-                    await airlineProvider.updateAirline(
-                        id!, prefijo, nombre, estacion);
-                    NotificationsService.showSnackbar('$nombre actualizado');
-                  }
-                  Navigator.of(context).pop();
-                } catch (e) {
-                  Navigator.of(context).pop();
-                  NotificationsService.showSnackbarError(
-                      'No se pudo guardar aerolinea');
-                }
-              },
-              text: 'Guardar',
-              color: Colors.white,
+                IconButton(
+                  icon: const Icon(
+                    Icons.close_outlined,
+                    color: Colors.white,
+                  ),
+                  onPressed: () => Navigator.of(context).pop(),
+                )
+              ],
             ),
-          )
-        ],
+            Divider(
+              color: Colors.white.withOpacity(0.3),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(3),
+              ],
+              initialValue: widget.aerolinea?.prefijo.toString() ?? '',
+              onChanged: (value) {
+                if (value.isEmpty) {
+                  value = '0';
+                }
+                prefijo = int.parse(value);
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'El prefijo es obligatorio';
+                }
+                return null;
+              },
+              decoration: CustomInputs.loginInputDecoration(
+                  hint: 'Prefijo de la Aerolínea',
+                  label: 'Prefijo',
+                  icon: Icons.airplanemode_active),
+              style: const TextStyle(color: Colors.white),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              initialValue: widget.aerolinea?.nombre ?? '',
+              onChanged: (value) => nombre = value,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor ingresar país';
+                }
+                return null;
+              },
+              decoration: CustomInputs.loginInputDecoration(
+                  hint: 'Nombre de la Aerolínea',
+                  label: 'Aerolínea',
+                  icon: Icons.airplanemode_active),
+              style: const TextStyle(color: Colors.white),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              initialValue: widget.aerolinea?.estacion ?? '',
+              onChanged: (value) => estacion = value,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'La estacíon es obligatoria';
+                }
+                return null;
+              },
+              decoration: CustomInputs.loginInputDecoration(
+                  hint: 'Nombre de la estación',
+                  label: 'Estacíon',
+                  icon: Icons.airplanemode_active),
+              style: const TextStyle(color: Colors.white),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 30),
+              alignment: Alignment.center,
+              child: CustomOutlinedButton(
+                onPressed: () async {
+                  if (airlineProvider.validForm()) {
+                    try {
+                      if (id == null) {
+                        await airlineProvider.newAirline(
+                            prefijo, nombre, estacion);
+                        NotificationsService.showSnackbar('$nombre creado');
+                      } else {
+                        await airlineProvider.updateAirline(
+                            id!, prefijo, nombre, estacion);
+                        NotificationsService.showSnackbar(
+                            '$nombre actualizado');
+                      }
+                      Navigator.of(context).pop();
+                    } catch (e) {
+                      Navigator.of(context).pop();
+                      NotificationsService.showSnackbarError(
+                          'No se pudo guardar aerolinea');
+                    }
+                  }
+                },
+                text: 'Guardar',
+                color: Colors.white,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

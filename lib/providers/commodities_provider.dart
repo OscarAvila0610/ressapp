@@ -8,6 +8,7 @@ import 'package:ress_app/models/http/commodities_response.dart';
 
 class CommoditiesProviders extends ChangeNotifier {
   List<Tipo> tipoCargas = [];
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   getCommodities() async {
     final resp = await RessApi.httpGet('/tipoCargas');
@@ -61,5 +62,9 @@ class CommoditiesProviders extends ChangeNotifier {
     } catch (e) {
       throw 'Error al eliminar Tipo de Carga';
     }
+  }
+
+  bool validForm() {
+    return formKey.currentState!.validate();
   }
 }

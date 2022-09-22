@@ -7,6 +7,7 @@ import 'package:ress_app/models/http/origins_response.dart';
 
 class OriginsProviders extends ChangeNotifier {
   List<Origene> origenes = [];
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   getOrigins() async {
     final resp = await RessApi.httpGet('/origenes');
@@ -62,5 +63,9 @@ class OriginsProviders extends ChangeNotifier {
     } catch (e) {
       throw 'Error al eliminar Origen';
     }
+  }
+
+  bool validForm() {
+    return formKey.currentState!.validate();
   }
 }

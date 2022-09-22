@@ -53,7 +53,7 @@ class _UserModalState extends State<UserModal> {
               decoration: buildBoxDecoration(),
               child: Form(
                 key: registerFormProvider.formKey,
-                child: Column(
+                child: ListView(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,7 +100,7 @@ class _UserModalState extends State<UserModal> {
                       onChanged: (value) => registerFormProvider.email = value,
                       validator: (value) {
                         if (!EmailValidator.validate(value ?? '')) {
-                          return 'Email no valido';
+                          return 'Email no valido ejemplo@email.com';
                         }
                         return null;
                       },

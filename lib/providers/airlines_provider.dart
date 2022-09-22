@@ -7,6 +7,7 @@ import 'package:ress_app/models/http/airlines_response.dart';
 
 class AirlinesProvider extends ChangeNotifier {
   List<Aerolinea> aerolineas = [];
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   getAirlines() async {
     final resp = await RessApi.httpGet('/aerolineas');
@@ -62,5 +63,9 @@ class AirlinesProvider extends ChangeNotifier {
     } catch (e) {
       throw 'Error al eliminar aerolinea';
     }
+  }
+
+  bool validForm() {
+    return formKey.currentState!.validate();
   }
 }

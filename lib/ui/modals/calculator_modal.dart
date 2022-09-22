@@ -38,7 +38,7 @@ class _CalculatorModalState extends State<CalculatorModal> {
       height: 500,
       width: 300, //Expanded
       decoration: buildBoxDecoration(),
-      child: Column(
+      child: ListView(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

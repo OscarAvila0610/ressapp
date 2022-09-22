@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:ress_app/models/http/kgs_by_exporters.dart';
-import 'package:ress_app/ui/cards/white_card.dart';
 
 class KgsBarChart extends StatefulWidget {
   const KgsBarChart(
@@ -25,7 +24,7 @@ class _KgsBarChartState extends State<KgsBarChart> {
           domainFn: (Totaleskg series, _) => series.id,
           measureFn: (Totaleskg series, _) => series.totalVolumen,
           labelAccessorFn: (Totaleskg series, _) =>
-              series.totalVolumen.toString(),
+              '${series.totalVolumen.toString()} kgs',
           colorFn: (Totaleskg series, _) =>
               charts.MaterialPalette.indigo.shadeDefault)
     ];
@@ -38,21 +37,9 @@ class _KgsBarChartState extends State<KgsBarChart> {
                 child: charts.BarChart(
               series,
               animate: true,
+              barRendererDecorator: charts.BarLabelDecorator<String>(),
+              domainAxis: const charts.OrdinalAxisSpec(),
             )),
-            if (size.height > 629)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  for (var i = 0; i < widget.registros.length; i++) ...[
-                    WhiteCard(
-                        title: widget.totalesKgs[i].id,
-                        child: FittedBox(
-                            fit: BoxFit.contain,
-                            child: Text(
-                                '${widget.totalesKgs[i].totalVolumen} kgs'))),
-                  ],
-                ],
-              ),
           ]),
         ));
   }

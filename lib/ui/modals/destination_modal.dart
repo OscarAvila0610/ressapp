@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:ress_app/providers/destinations_provider.dart';
@@ -45,90 +46,123 @@ class _DestinationModalState extends State<DestinationModal> {
       height: 500,
       width: 300, //Expanded
       decoration: buildBoxDecoration(),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                widget.destino?.nombre ?? 'Nuevo Destino',
-                style: CustomLabels.h1.copyWith(color: Colors.white),
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.close_outlined,
-                  color: Colors.white,
+      child: Form(
+        key: destinationProvider.formKey,
+        child: ListView(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.destino?.nombre ?? 'Nuevo Destino',
+                  style: CustomLabels.h1.copyWith(color: Colors.white),
                 ),
-                onPressed: () => Navigator.of(context).pop(),
-              )
-            ],
-          ),
-          Divider(
-            color: Colors.white.withOpacity(0.3),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          TextFormField(
-            initialValue: widget.destino?.prefijo ?? '',
-            onChanged: (value) => prefijo = value,
-            decoration: CustomInputs.loginInputDecoration(
-                hint: 'Prefijo del destino',
-                label: 'Prefijo',
-                icon: Icons.airplanemode_active),
-            style: const TextStyle(color: Colors.white),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            initialValue: widget.destino?.pais ?? '',
-            onChanged: (value) => pais = value,
-            decoration: CustomInputs.loginInputDecoration(
-                hint: 'País del destino',
-                label: 'País',
-                icon: Icons.airplanemode_active),
-            style: const TextStyle(color: Colors.white),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            initialValue: widget.destino?.nombre ?? '',
-            onChanged: (value) => nombre = value,
-            decoration: CustomInputs.loginInputDecoration(
-                hint: 'Nombre del destino',
-                label: 'Nombre',
-                icon: Icons.airplanemode_active),
-            style: const TextStyle(color: Colors.white),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 30),
-            alignment: Alignment.center,
-            child: CustomOutlinedButton(
-              onPressed: () async {
-                try {
-                  if (id == null) {
-                    await destinationProvider.newDestination(
-                        prefijo, pais, nombre);
-                    NotificationsService.showSnackbar('$nombre creado');
-                  } else {
-                    await destinationProvider.updateDestination(
-                        id!, prefijo, pais, nombre);
-                    NotificationsService.showSnackbar('$nombre actualizado');
-                  }
-                  Navigator.of(context).pop();
-                } catch (e) {
-                  Navigator.of(context).pop();
-                  NotificationsService.showSnackbarError(
-                      'No se pudo guardar el destino');
-                }
-              },
-              text: 'Guardar',
-              color: Colors.white,
+                IconButton(
+                  icon: const Icon(
+                    Icons.close_outlined,
+                    color: Colors.white,
+                  ),
+                  onPressed: () => Navigator.of(context).pop(),
+                )
+              ],
             ),
-          )
-        ],
+            Divider(
+              color: Colors.white.withOpacity(0.3),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              initialValue: widget.destino?.prefijo ?? '',
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp("[A-Z]")),
+                LengthLimitingTextInputFormatter(3),
+              ],
+              onChanged: (value) {
+                if (value.isEmpty) {
+                  value = '';
+                }
+                prefijo = value;
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'El prefijo es obligatorio Mayúscula';
+                }
+                return null;
+              },
+              decoration: CustomInputs.loginInputDecoration(
+                  hint: 'Prefijo del destino Mayúscula',
+                  label: 'Prefijo',
+                  icon: Icons.airplanemode_active),
+              style: const TextStyle(color: Colors.white),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              initialValue: widget.destino?.pais ?? '',
+              onChanged: (value) => pais = value,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'El país es obligatorio';
+                }
+                return null;
+              },
+              decoration: CustomInputs.loginInputDecoration(
+                  hint: 'País del destino',
+                  label: 'País',
+                  icon: Icons.airplanemode_active),
+              style: const TextStyle(color: Colors.white),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              initialValue: widget.destino?.nombre ?? '',
+              onChanged: (value) => nombre = value,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'El nombre es obligatorio';
+                }
+                return null;
+              },
+              decoration: CustomInputs.loginInputDecoration(
+                  hint: 'Nombre del destino',
+                  label: 'Nombre',
+                  icon: Icons.airplanemode_active),
+              style: const TextStyle(color: Colors.white),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 30),
+              alignment: Alignment.center,
+              child: CustomOutlinedButton(
+                onPressed: () async {
+                  if (destinationProvider.validForm()) {
+                    try {
+                      if (id == null) {
+                        await destinationProvider.newDestination(
+                            prefijo, pais, nombre);
+                        NotificationsService.showSnackbar('$nombre creado');
+                      } else {
+                        await destinationProvider.updateDestination(
+                            id!, prefijo, pais, nombre);
+                        NotificationsService.showSnackbar(
+                            '$nombre actualizado');
+                      }
+                      Navigator.of(context).pop();
+                    } catch (e) {
+                      Navigator.of(context).pop();
+                      NotificationsService.showSnackbarError(
+                          'No se pudo guardar el destino');
+                    }
+                  }
+                },
+                text: 'Guardar',
+                color: Colors.white,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

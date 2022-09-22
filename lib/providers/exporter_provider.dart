@@ -7,6 +7,7 @@ import 'package:ress_app/models/http/exporters_response.dart';
 
 class ExportersProviders extends ChangeNotifier {
   List<Exportadore> exportadores = [];
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   getExporters() async {
     final resp = await RessApi.httpGet('/exportadores');
@@ -63,5 +64,9 @@ class ExportersProviders extends ChangeNotifier {
     } catch (e) {
       throw 'Error al eliminar exportador';
     }
+  }
+  
+  bool validForm() {
+    return formKey.currentState!.validate();
   }
 }
