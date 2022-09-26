@@ -27,9 +27,9 @@ class BookingsProvider extends ChangeNotifier {
       final bookingsResp = BookingsResponse.fromMap(resp);
       reservas = [...bookingsResp.reservas];
     } else {
+
       final resp = await RessApi.httpGet('/reservas/${user.uid}');
       final bookingsResp = BookingsResponse.fromMap(resp);
-
       reservas = [...bookingsResp.reservas];
     }
     DateTime today = DateTime.now();
@@ -77,35 +77,17 @@ class BookingsProvider extends ChangeNotifier {
   }
 
   Future newBooking(
-      String airline,
-      int awb,
-      String commodity,
-      String origin,
-      String dest,
-      String cont,
-      String exp,
-      int alt,
-      int anch,
-      int lar,
-      int fis,
-      int vol,
-      String date,
-      String descrip) async {
-    final data = {
-      "aerolinea": airline,
-      "awb": awb,
-      "tipoCarga": commodity,
-      "origen": origin,
-      "destino": dest,
-      "contenedor": cont,
-      "exportador": exp,
-      "alto": alt,
-      "ancho": anch,
-      "largo": lar,
-      "pesoFisico": fis,
-      "pesoVolumetrico": vol,
-      "fecha": date,
-      "descripcion": descrip
+      String airline,int awb, String commodity,
+      String origin, String dest, String cont,
+      String exp,int alt, int anch,
+      int lar, int fis,
+      int vol, String date, String descrip) async {
+      final data = {
+      "aerolinea": airline, "awb": awb, "tipoCarga": commodity,
+      "origen": origin, "destino": dest, "contenedor": cont,
+      "exportador": exp, "alto": alt, "ancho": anch,
+      "largo": lar, "pesoFisico": fis, "pesoVolumetrico": vol,
+      "fecha": date, "descripcion": descrip
     };
 
     try {
@@ -147,7 +129,9 @@ class BookingsProvider extends ChangeNotifier {
       "pesoFisico": fis,
       "pesoVolumetrico": vol,
       "fecha": date,
-      "descripcion": descrip
+      "descripcion": descrip,
+      "aprobacion": false,
+      "cancelada": false
     };
 
     try {
@@ -167,12 +151,13 @@ class BookingsProvider extends ChangeNotifier {
         reserva.pesoFisico = fis;
         reserva.pesoVolumetrico = vol;
         reserva.descripcion = descrip;
+        reserva.cancelada = false;
+        reserva.aprobacion = false;
         return reserva;
       }).toList();
 
       notifyListeners();
     } catch (e) {
-      print(e);
       throw 'Error al actualizar Reserva';
     }
   }

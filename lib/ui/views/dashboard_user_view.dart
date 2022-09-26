@@ -31,63 +31,68 @@ class _DashboardUserViewState extends State<DashboardUserView> {
   Widget build(BuildContext context) {
     final user = Provider.of<AuthProvider>(context).user!;
     final reservas = Provider.of<BookingsProvider>(context);
-    return Column(
-      children: [
-        WhiteCard(title: 'Dashboard Usuario', child: Text(user.nombre)),
-        const SizedBox(
-          height: 10,
-        ),
-        WhiteCard(
-            title: 'Resumen Reservas',
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                WhiteCard(
-                    title: 'Reservas Aprobadas',
-                    child: Text(
-                      reservas.aprobadas.toString(),
-                      style: const TextStyle(color: Colors.green),
-                    )),
-                const SizedBox(
-                  height: 10,
-                ),
-                WhiteCard(
-                    title: 'Reservas Canceladas',
-                    child: Text(reservas.canceladas.toString(),
-                        style: const TextStyle(color: Colors.red))),
-                const SizedBox(
-                  height: 10,
-                ),
-                WhiteCard(
-                    title: 'Reservas Pendientes',
-                    child: Text(reservas.pendientes.toString())),
-                const SizedBox(
-                  height: 10,
-                ),
-              ],
-            )),
-        const SizedBox(
-          height: 20,
-        ),
-        ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 200),
-          child: ElevatedButton(
-            onPressed: () => _generateFlyPlan(reservas.planVuelo, user),
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.indigo),
-                shadowColor: MaterialStateProperty.all(Colors.transparent)),
-            child: Row(
-              children: const [
-                Icon(
-                  Icons.airplanemode_active_outlined,
-                  size: 20,
-                ),
-                Text(' Generar Plan de Vuelo')
-              ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          WhiteCard(title: 'Dashboard Usuario', child: Text(user.nombre)),
+          const SizedBox(
+            height: 10,
+          ),
+          WhiteCard(
+              title: 'Resumen Reservas',
+              child: Wrap(
+                spacing: 75,
+                children: [
+                  WhiteCard(
+                    width: 170,
+                      title: 'Reservas Aprobadas',
+                      child: Text(
+                        reservas.aprobadas.toString(),
+                        style: const TextStyle(color: Colors.green),
+                      )),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  WhiteCard(
+                    width: 170,
+                      title: 'Reservas Canceladas',
+                      child: Text(reservas.canceladas.toString(),
+                          style: const TextStyle(color: Colors.red))),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  WhiteCard(
+                    width: 170,
+                      title: 'Reservas Pendientes',
+                      child: Text(reservas.pendientes.toString())),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              )),
+          const SizedBox(
+            height: 20,
+          ),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 200),
+            child: ElevatedButton(
+              onPressed: () => _generateFlyPlan(reservas.planVuelo, user),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.indigo),
+                  shadowColor: MaterialStateProperty.all(Colors.transparent)),
+              child: Row(
+                children: const [
+                  Icon(
+                    Icons.airplanemode_active_outlined,
+                    size: 20,
+                  ),
+                  Text(' Generar Plan de Vuelo')
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

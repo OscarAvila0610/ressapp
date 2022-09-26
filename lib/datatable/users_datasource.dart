@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ress_app/models/user.dart';
 import 'package:ress_app/providers/users_provider.dart';
-import 'package:ress_app/services/navigation_service.dart';
 
 class UsersDTS extends DataTableSource {
   final List<Usuario> users;

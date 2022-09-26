@@ -50,9 +50,6 @@ class Navbar extends StatelessWidget {
                     fontSize: 13, fontWeight: FontWeight.bold),
               )),
             ),
-          // const NotificationIndicator(),
-          // const SizedBox(width: 10,),
-          // const NavbarAvatar(),
           const SizedBox(
             width: 10,
           ),

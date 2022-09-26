@@ -32,6 +32,7 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     final kgs = Provider.of<AdminProvider>(context);
+    RegExp regexp = RegExp(r'(\d{4}-\d{2}-\d{2})');
     return ListView(children: [
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,88 +44,100 @@ class _DashboardViewState extends State<DashboardView> {
                 registros: kgs.kgsExporter,
               )),
           WhiteCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 200),
-                  child: TextFormField(
-                    keyboardType: TextInputType.datetime,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(RegExp("[0-9-]")),
-                      LengthLimitingTextInputFormatter(10),
-                    ],
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Fecha obligatoria';
-                      }
-                      return null;
-                    },
-                    initialValue: '',
-                    onChanged: (value) {
-                      fechaInicial = value;
-                    },
-                    decoration: CustomInputs.loginInputDecoration(
-                        hint: 'Año-Mes-Día',
-                        label: 'Fecha de Inicio',
-                        icon: Icons.date_range_outlined),
-                    style: const TextStyle(color: Colors.indigo),
-                  ),
-                ),
-                ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 200),
-                  child: TextFormField(
-                    keyboardType: TextInputType.datetime,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(RegExp("[0-9-]")),
-                      LengthLimitingTextInputFormatter(10),
-                    ],
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Fecha obligatoria';
-                      }
-                      return null;
-                    },
-                    initialValue: '',
-                    onChanged: (value) {
-                      fechaFinal = value;
-                    },
-                    decoration: CustomInputs.loginInputDecoration(
-                        hint: 'Año-Mes-Día',
-                        label: 'Fecha de Fin',
-                        icon: Icons.date_range_outlined),
-                    style: const TextStyle(color: Colors.indigo),
-                  ),
-                ),
-                ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 200),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await Provider.of<BookingsProvider>(context,
-                              listen: false)
-                          .getBookingByDate(fechaInicial, fechaFinal);
-                      final reservas =
-                          Provider.of<BookingsProvider>(context, listen: false)
-                              .reservas;
-                      generarLista(reservas);
-                    },
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.indigo),
-                        shadowColor:
-                            MaterialStateProperty.all(Colors.transparent)),
-                    child: Row(
-                      children: const [
-                        Icon(
-                          Icons.list_alt_outlined,
-                          size: 20,
-                        ),
-                        Text(' Generar lista de AWBs')
+            child: Form(
+              key: kgs.formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 200),
+                    child: TextFormField(
+                      keyboardType: TextInputType.datetime,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp("[0-9-]")),
+                        LengthLimitingTextInputFormatter(10),
                       ],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Fecha Inicio obligatoria';
+                        }
+                        return null;
+                      },
+                      initialValue: '',
+                      onChanged: (value) {
+                        fechaInicial = value;
+                      },
+                      decoration: CustomInputs.loginInputDecoration(
+                          hint: 'Año-Mes-Día',
+                          label: 'Fecha de Inicio',
+                          icon: Icons.date_range_outlined),
+                      style: const TextStyle(color: Colors.indigo),
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 200),
+                    child: TextFormField(
+                      keyboardType: TextInputType.datetime,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp("[0-9-]")),
+                        LengthLimitingTextInputFormatter(10),
+                      ],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Fecha Final obligatoria';
+                        }
+                        return null;
+                      },
+                      initialValue: '',
+                      onChanged: (value) {
+                        fechaFinal = value;
+                      },
+                      decoration: CustomInputs.loginInputDecoration(
+                          hint: 'Año-Mes-Día',
+                          label: 'Fecha de Fin',
+                          icon: Icons.date_range_outlined),
+                      style: const TextStyle(color: Colors.indigo),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 200),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (kgs.validForm()) {
+                          await Provider.of<BookingsProvider>(context,
+                                  listen: false)
+                              .getBookingByDate(fechaInicial, fechaFinal);
+                          final reservas = Provider.of<BookingsProvider>(
+                                  context,
+                                  listen: false)
+                              .reservas;
+                          generarLista(reservas);
+                        }
+                      },
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.indigo),
+                          shadowColor:
+                              MaterialStateProperty.all(Colors.transparent)),
+                      child: Row(
+                        children: const [
+                          Icon(
+                            Icons.list_alt_outlined,
+                            size: 20,
+                          ),
+                          Text(' Generar lista de AWBs')
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -150,12 +163,13 @@ class _DashboardViewState extends State<DashboardView> {
     awbs.getRangeByName('I1').setText('Estado');
     awbs.getRangeByName('J1').setText('Fecha Solicitud');
     awbs.getRangeByName('K1').setText('Fecha Resolución');
-    awbs.getRangeByName('A1:K1').columnWidth = 20;
-    awbs.getRangeByName('A1:K1').cellStyle.bold = true;
-    awbs.getRangeByName('A1:K1').cellStyle.hAlign = xls.HAlignType.center;
-    awbs.getRangeByName('A1:K1').cellStyle.backColor = '#000000';
-    awbs.getRangeByName('A1:K1').cellStyle.fontColor = '#FFFFFF';
-    awbs.getRangeByName('A1:K1').cellStyle.fontSize = 12;
+    awbs.getRangeByName('L1').setText('Trabajado Por');
+    awbs.getRangeByName('A1:L1').columnWidth = 20;
+    awbs.getRangeByName('A1:L1').cellStyle.bold = true;
+    awbs.getRangeByName('A1:L1').cellStyle.hAlign = xls.HAlignType.center;
+    awbs.getRangeByName('A1:L1').cellStyle.backColor = '#000000';
+    awbs.getRangeByName('A1:L1').cellStyle.fontColor = '#FFFFFF';
+    awbs.getRangeByName('A1:L1').cellStyle.fontSize = 12;
 
     for (var i = 0; i < reservas.length; i++) {
       awbs
@@ -184,6 +198,7 @@ class _DashboardViewState extends State<DashboardView> {
               reservas[i].cancelada)
           ? '${reservas[i].fechaRes.day}/${reservas[i].fechaRes.month}/${reservas[i].fechaRes.year}'
           : 'Pendiente');
+      awbs.getRangeByName('L${i + 2}').setText(reservas[i].actualizado.nombre);
       total++;
     }
     awbs.getRangeByName('A${total + 1}').setText('Total Registros');

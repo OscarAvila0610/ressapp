@@ -12,7 +12,8 @@ import 'package:ress_app/ui/buttons/custom_icon_button.dart';
 import 'package:ress_app/ui/modals/booking_modal.dart';
 
 class BookingsViewFind extends StatefulWidget {
-  const BookingsViewFind({Key? key, required this.awb, required this.user}) : super(key: key);
+  const BookingsViewFind({Key? key, required this.awb, required this.user})
+      : super(key: key);
   final String awb;
   final Usuario user;
 
@@ -50,13 +51,6 @@ class _BookingsViewFindState extends State<BookingsViewFind> {
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
-            Text(
-              'Reservas',
-              style: CustomLabels.h1,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
             // if (reservas.isEmpty)
             //   WhiteCard(
             //       child: Container(

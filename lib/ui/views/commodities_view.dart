@@ -33,13 +33,6 @@ class _CommoditiesViewState extends State<CommoditiesView> {
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
-            Text(
-              'Tipos de Carga',
-              style: CustomLabels.h1,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
             PaginatedDataTable(
               columns: const [
                 DataColumn(label: Text('Prefijo')),

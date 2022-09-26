@@ -22,6 +22,7 @@ class Reserva {
     required this.usuario,
     required this.exportador,
     required this.descripcion,
+    required this.actualizado,
   });
 
   String id;
@@ -44,6 +45,7 @@ class Reserva {
   _ByName usuario;
   _ByName exportador;
   String descripcion;
+  _ByName actualizado;
 
   factory Reserva.fromJson(String str) => Reserva.fromMap(json.decode(str));
 
@@ -70,6 +72,7 @@ class Reserva {
         usuario: _ByName.fromMap(json["usuario"]),
         exportador: _ByName.fromMap(json["exportador"]),
         descripcion: json["descripcion"],
+        actualizado: _ByName.fromMap(json["actualizado"]),
       );
 
   Map<String, dynamic> toMap() => {
@@ -93,6 +96,7 @@ class Reserva {
         "usuario": usuario.toMap(),
         "exportador": exportador.toMap(),
         "descripcion": descripcion,
+        "actualizado": actualizado.toMap(),
       };
 }
 
@@ -105,8 +109,6 @@ class _NumberPrefix {
   String id;
   int prefijo;
 
-  factory _NumberPrefix.fromJson(String str) =>
-      _NumberPrefix.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
@@ -130,7 +132,6 @@ class _ByName {
   String id;
   String nombre;
 
-  factory _ByName.fromJson(String str) => _ByName.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 

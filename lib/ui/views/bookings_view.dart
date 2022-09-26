@@ -6,9 +6,6 @@ import 'package:ress_app/datatable/bookings_datasource.dart';
 import 'package:ress_app/models/user.dart';
 
 import 'package:ress_app/providers/providers.dart';
-import 'package:ress_app/ui/cards/white_card.dart';
-
-import 'package:ress_app/ui/labels/custom_labels.dart';
 import 'package:ress_app/ui/buttons/custom_icon_button.dart';
 import 'package:ress_app/ui/modals/booking_modal.dart';
 
@@ -50,21 +47,6 @@ class _BookingsViewState extends State<BookingsView> {
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
-            Text(
-              'Reservas',
-              style: CustomLabels.h1,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            // if (reservas.isEmpty)
-            //   WhiteCard(
-            //       child: Container(
-            //     alignment: Alignment.center,
-            //     height: 300,
-            //     child: const CircularProgressIndicator(),
-            //   )),
-            // if (reservas.isNotEmpty)
             PaginatedDataTable(
               sortAscending: bookingsProvider.ascending,
               sortColumnIndex: bookingsProvider.sortColumnIndex,

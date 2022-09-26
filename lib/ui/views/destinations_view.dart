@@ -34,13 +34,6 @@ class _DestinationsViewState extends State<DestinationsView> {
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
-            Text(
-              'Destinos',
-              style: CustomLabels.h1,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
             PaginatedDataTable(
               columns: const [
                 DataColumn(label: Text('Prefijo')),

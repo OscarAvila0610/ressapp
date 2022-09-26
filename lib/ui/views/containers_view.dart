@@ -33,13 +33,6 @@ class _ContainersViewState extends State<ContainersView> {
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
-            Text(
-              'Contenedores',
-              style: CustomLabels.h1,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
             PaginatedDataTable(
               columns: const [
                 DataColumn(label: Text('Nombre')),

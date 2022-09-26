@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ress_app/ui/layouts/auth/widgets/background.dart';
 import 'package:ress_app/ui/layouts/auth/widgets/custom_title.dart';
-// import 'package:ress_app/ui/layouts/auth/widgets/links_bar.dart';
+import 'package:ress_app/ui/layouts/auth/widgets/links_bar.dart';
 
 class AuthLayout extends StatelessWidget {
   const AuthLayout({Key? key, required this.child}) : super(key: key);
@@ -21,7 +21,7 @@ class AuthLayout extends StatelessWidget {
                   ? _DesktopBody(child: child)
                   : _MobileBody(child: child),
               //LinksBar
-              // const LinksBar()
+              const LinksBar()
             ],
           ),
         ));

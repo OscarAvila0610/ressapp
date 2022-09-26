@@ -34,11 +34,11 @@ class Sidebar extends StatelessWidget {
       child: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
-          const Logo(),
+          Logo(user: user!),
           const SizedBox(
             height: 50,
           ),
-          if (user!.rol == admin) ...[
+          if (user.rol == admin) ...[
             const TextSeparator(text: 'Administrador'),
             MenuItem(
                 isActive:
@@ -97,15 +97,9 @@ class Sidebar extends StatelessWidget {
             MenuItem(
                 isActive:
                     sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
-                text: 'Dashboard',
+                text: 'Resumen',
                 icon: Icons.compass_calibration_outlined,
                 onPressed: () => navigateTo(Flurorouter.dashboardUserRoute)),
-            MenuItem(
-                isActive:
-                    sideMenuProvider.currentPage == Flurorouter.iconsRoute,
-                text: 'Iconos',
-                icon: Icons.list_alt_outlined,
-                onPressed: () => navigateTo(Flurorouter.iconsRoute)),
             MenuItem(
                 isActive:
                     sideMenuProvider.currentPage == Flurorouter.bookingsRoute,
@@ -132,15 +126,9 @@ class Sidebar extends StatelessWidget {
             MenuItem(
                 isActive:
                     sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
-                text: 'Dashboard',
+                text: 'Resumen',
                 icon: Icons.compass_calibration_outlined,
                 onPressed: () => navigateTo(Flurorouter.dashboardAnalistRoute)),
-            MenuItem(
-                isActive:
-                    sideMenuProvider.currentPage == Flurorouter.iconsRoute,
-                text: 'Iconos',
-                icon: Icons.list_alt_outlined,
-                onPressed: () => navigateTo(Flurorouter.iconsRoute)),
             MenuItem(
                 isActive:
                     sideMenuProvider.currentPage == Flurorouter.bookingsRoute,
@@ -158,7 +146,7 @@ class Sidebar extends StatelessWidget {
           ],
           const TextSeparator(text: 'Exit'),
           MenuItem(
-              text: 'Logout',
+              text: 'Salir',
               icon: Icons.exit_to_app_outlined,
               onPressed: () {
                 Provider.of<AuthProvider>(context, listen: false).logout();

@@ -10,6 +10,7 @@ class AdminProvider extends ChangeNotifier {
   List<Totaleskg> kgsExporter = [];
   List<Exportadore> exportadores = [];
   List<Totaleskg> listaFinal = [];
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   getKgsByExporter() async {
     try {
@@ -34,8 +35,12 @@ class AdminProvider extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print(e);
+      // print(e);
     }
     notifyListeners();
+  }
+
+  bool validForm() {
+    return formKey.currentState!.validate();
   }
 }

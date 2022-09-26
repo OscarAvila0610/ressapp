@@ -71,44 +71,46 @@ class BookingsDTS extends DataTableSource {
                 Icons.check_circle_outline,
                 color: Colors.green.withOpacity(0.9),
               ),
-              onPressed: () {
-                final dialog = AlertDialog(
-                  backgroundColor: const Color(0xff092044),
-                  title: const Text(
-                    'Desea Aprobar la Reserva?',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  content: Text(
-                    'AWB ${reserva.awb} ?',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  actions: [
-                    TextButton(
-                      child: const Text(
-                        'No',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    TextButton(
-                      child: const Text(
-                        'Si',
-                        style: TextStyle(color: Colors.green),
-                      ),
-                      onPressed: () async {
-                        await Provider.of<BookingsProvider>(context,
-                                listen: false)
-                            .approveBooking(reserva.id);
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
+              onPressed: (reserva.aprobacion || reserva.cancelada)
+                  ? null
+                  : () {
+                      final dialog = AlertDialog(
+                        backgroundColor: const Color(0xff092044),
+                        title: const Text(
+                          'Desea Aprobar la Reserva?',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        content: Text(
+                          'AWB ${reserva.awb} ?',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        actions: [
+                          TextButton(
+                            child: const Text(
+                              'No',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          TextButton(
+                            child: const Text(
+                              'Si',
+                              style: TextStyle(color: Colors.green),
+                            ),
+                            onPressed: () async {
+                              await Provider.of<BookingsProvider>(context,
+                                      listen: false)
+                                  .approveBooking(reserva.id);
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
 
-                showDialog(context: context, builder: (_) => dialog);
-              },
+                      showDialog(context: context, builder: (_) => dialog);
+                    },
             ),
           ],
           IconButton(
@@ -116,44 +118,46 @@ class BookingsDTS extends DataTableSource {
               Icons.delete_outline,
               color: Colors.red.withOpacity(0.9),
             ),
-            onPressed: () {
-              final dialog = AlertDialog(
-                backgroundColor: const Color(0xff092044),
-                title: const Text(
-                  'Desea Cancelar la Reserva?',
-                  style: TextStyle(color: Colors.white),
-                ),
-                content: Text(
-                  'AWB ${reserva.awb} ?',
-                  style: const TextStyle(color: Colors.white),
-                ),
-                actions: [
-                  TextButton(
-                    child: const Text(
-                      'No',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  TextButton(
-                    child: const Text(
-                      'Si',
-                      style: TextStyle(color: Colors.green),
-                    ),
-                    onPressed: () async {
-                      await Provider.of<BookingsProvider>(context,
-                              listen: false)
-                          .cancelBooking(reserva.id);
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
+            onPressed: (reserva.aprobacion || reserva.cancelada)
+                ? null
+                : () {
+                    final dialog = AlertDialog(
+                      backgroundColor: const Color(0xff092044),
+                      title: const Text(
+                        'Desea Cancelar la Reserva?',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      content: Text(
+                        'AWB ${reserva.awb} ?',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      actions: [
+                        TextButton(
+                          child: const Text(
+                            'No',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        TextButton(
+                          child: const Text(
+                            'Si',
+                            style: TextStyle(color: Colors.green),
+                          ),
+                          onPressed: () async {
+                            await Provider.of<BookingsProvider>(context,
+                                    listen: false)
+                                .cancelBooking(reserva.id);
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
 
-              showDialog(context: context, builder: (_) => dialog);
-            },
+                    showDialog(context: context, builder: (_) => dialog);
+                  },
           ),
         ],
       )),

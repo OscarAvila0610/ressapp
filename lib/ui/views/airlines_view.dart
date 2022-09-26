@@ -33,13 +33,6 @@ class _AirlinesViewState extends State<AirlinesView> {
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
-            Text(
-              'Aerolíneas',
-              style: CustomLabels.h1,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
             PaginatedDataTable(
               columns: const [
                 DataColumn(label: Text('Prefijo')),

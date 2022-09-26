@@ -34,7 +34,8 @@ class _DashboardAnalistViewState extends State<DashboardAnalistView> {
   Widget build(BuildContext context) {
     final user = Provider.of<AuthProvider>(context).user!;
     final reservas = Provider.of<BookingsProvider>(context);
-    return Column(
+    return SingleChildScrollView(
+        child: Column(
       children: [
         WhiteCard(title: 'Dashboard Analista', child: Text(user.nombre)),
         const SizedBox(
@@ -42,10 +43,13 @@ class _DashboardAnalistViewState extends State<DashboardAnalistView> {
         ),
         WhiteCard(
             title: 'Resumen Reservas',
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Wrap(
+              spacing: 75,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              direction: Axis.horizontal,
               children: [
                 WhiteCard(
+                    width: 170,
                     title: 'Reservas Aprobadas',
                     child: Text(
                       reservas.aprobadas.toString(),
@@ -55,6 +59,7 @@ class _DashboardAnalistViewState extends State<DashboardAnalistView> {
                   height: 10,
                 ),
                 WhiteCard(
+                    width: 170,
                     title: 'Reservas Canceladas',
                     child: Text(reservas.canceladas.toString(),
                         style: const TextStyle(color: Colors.red))),
@@ -62,6 +67,7 @@ class _DashboardAnalistViewState extends State<DashboardAnalistView> {
                   height: 10,
                 ),
                 WhiteCard(
+                    width: 170,
                     title: 'Reservas Pendientes',
                     child: Text(reservas.pendientes.toString())),
                 const SizedBox(
@@ -91,7 +97,7 @@ class _DashboardAnalistViewState extends State<DashboardAnalistView> {
           ),
         ),
       ],
-    );
+    ));
   }
 
   Future _generateFlyPlan(List<Reserva> reservas, Usuario user) async {

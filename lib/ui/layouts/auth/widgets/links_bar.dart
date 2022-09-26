@@ -14,18 +14,7 @@ class LinksBar extends StatelessWidget {
       child: Wrap(
         alignment: WrapAlignment.center,
         children:  const [
-          LinkText(text: 'About'),
-          LinkText(text: 'Help Center'),
-          LinkText(text: 'Privacy Policy'),
-          LinkText(text: 'Terms of Service'),
-          LinkText(text: 'Cookie Policy'),
-          LinkText(text: 'Ads info'),
-          LinkText(text: 'Blog'),
-          LinkText(text: 'Status'),
-          LinkText(text: 'Careers'),
-          LinkText(text: 'Brand Resources'),
-          LinkText(text: 'Advertising'),
-          LinkText(text: 'Marketing'),
+          LinkText(text: 'Todos los derechos reservados. 2022© Agentes Aéreos, Sociedad Anonima'),
         ],
       )
     );

@@ -33,13 +33,6 @@ class _ExportersViewState extends State<ExportersView> {
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
-            Text(
-              'Exportadores',
-              style: CustomLabels.h1,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
             PaginatedDataTable(
               columns: const [
                 DataColumn(label: Text('Nombre')),
