@@ -48,7 +48,7 @@ class _UserModalState extends State<UserModal> {
                 Provider.of<RegisterFormProvider>(context, listen: false);
             return Container(
               padding: const EdgeInsets.all(20),
-              height: 600,
+              height: 500,
               width: 300, //Expanded
               decoration: buildBoxDecoration(),
               child: Form(

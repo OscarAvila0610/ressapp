@@ -25,7 +25,7 @@ class DashboardHandlers {
   static Handler dashboardUser = Handler(handlerFunc: (context, params) {
     final authProvider = Provider.of<AuthProvider>(context!);
     Provider.of<SideMenuProvider>(context, listen: false)
-        .setCurrentPageUrl(Flurorouter.dashboardRoute);
+        .setCurrentPageUrl(Flurorouter.dashboardUserRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
       return DashboardUserView(
         user: authProvider.user!,
@@ -38,7 +38,7 @@ class DashboardHandlers {
   static Handler dashboardAnalist = Handler(handlerFunc: (context, params) {
     final authProvider = Provider.of<AuthProvider>(context!);
     Provider.of<SideMenuProvider>(context, listen: false)
-        .setCurrentPageUrl(Flurorouter.dashboardRoute);
+        .setCurrentPageUrl(Flurorouter.dashboardAnalistRoute);
     if (authProvider.authStatus == AuthStatus.authenticated) {
       return DashboardAnalistView(
         user: authProvider.user!,

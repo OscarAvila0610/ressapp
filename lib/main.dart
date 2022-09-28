@@ -39,6 +39,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ContainersProviders()),
         ChangeNotifierProvider(create: (_) => CommoditiesProviders()),
         ChangeNotifierProvider(create: (_) => DestinationsProviders()),
+        ChangeNotifierProvider(lazy: false, create: (_) => ModulesProvider()),
         ChangeNotifierProvider(create: (_) => OriginsProviders()),
         ChangeNotifierProvider(create: (_) => ExportersProviders()),
         ChangeNotifierProvider(create: (_) => UsersProvider()),

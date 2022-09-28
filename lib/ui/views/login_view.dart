@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:email_validator/email_validator.dart';
 import 'package:ress_app/providers/auth_provider.dart';
+import 'package:ress_app/providers/providers.dart';
 
 // import 'package:ress_app/router/router.dart';
 
@@ -86,13 +87,6 @@ class LoginView extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          // LinkText(
-                          //   text: 'Nueva Cuenta',
-                          //   onPressed: () {
-                          //     Navigator.pushReplacementNamed(
-                          //         context, Flurorouter.registerRoute);
-                          //   },
-                          // )
                         ],
                       ),
                     ),

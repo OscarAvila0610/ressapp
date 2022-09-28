@@ -46,7 +46,7 @@ class _ExporterModalState extends State<ExporterModal> {
         Provider.of<ExportersProviders>(context, listen: false);
     return Container(
       padding: const EdgeInsets.all(20),
-      height: 700,
+      height: 500,
       width: 300, //Expanded
       decoration: buildBoxDecoration(),
       child: Form(

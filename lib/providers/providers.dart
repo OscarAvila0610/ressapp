@@ -7,6 +7,7 @@ export 'package:ress_app/providers/calculator_provider.dart';
 export 'package:ress_app/providers/commodities_provider.dart';
 export 'package:ress_app/providers/roles_provider.dart';
 export 'package:ress_app/providers/destinations_provider.dart';
+export 'package:ress_app/providers/modules_provider.dart';
 export 'package:ress_app/providers/exporter_provider.dart';
 export 'package:ress_app/providers/origins_provider.dart';
 export 'package:ress_app/providers/sidemenu_provider.dart';
