@@ -317,6 +317,9 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
                         if (value == null || value.isEmpty) {
                           return 'Peso obligatorio';
                         }
+                        if (pesoFisico > pesoVolumetrico) {
+                          return 'Físico mayor que Volumétrico';
+                        }
                         return null;
                       },
                       initialValue: widget.reserva?.pesoFisico.toString() ?? '',
@@ -347,6 +350,9 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Peso obligatorio';
+                        }
+                        if (pesoFisico > pesoVolumetrico) {
+                          return 'Volumétrico menor que Físico';
                         }
                         return null;
                       },

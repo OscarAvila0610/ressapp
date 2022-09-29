@@ -23,7 +23,9 @@ class ResponsiveScreen extends StatefulWidget {
       required this.origenes,
       required this.destinos,
       required this.reserva,
-      required this.bookingFormProvider, required this.bookingsProvider, required this.user})
+      required this.bookingFormProvider,
+      required this.bookingsProvider,
+      required this.user})
       : super(key: key);
 
   final List<Aerolinea> aerolineas;
@@ -261,6 +263,9 @@ class _ResponsiveScreenState extends State<ResponsiveScreen> {
             if (value == null || value.isEmpty) {
               return 'Peso obligatorio';
             }
+            if (pesoFisico > pesoVolumetrico) {
+              return 'Físico mayor que Volumétrico';
+            }
             return null;
           },
           initialValue: widget.reserva?.pesoFisico.toString() ?? '',
@@ -288,6 +293,9 @@ class _ResponsiveScreenState extends State<ResponsiveScreen> {
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Peso obligatorio';
+            }
+            if (pesoFisico > pesoVolumetrico) {
+              return 'Volumétrico menor que Físico';
             }
             return null;
           },
@@ -374,77 +382,74 @@ class _ResponsiveScreenState extends State<ResponsiveScreen> {
           style: const TextStyle(color: Colors.white),
         ),
         const SizedBox(
-                    height: 10,
-                  ),
+          height: 10,
+        ),
         TextFormField(
-                    initialValue: widget.reserva?.descripcion ?? '',
-                    onChanged: (value) => descripcion = value,
-                    decoration: CustomInputs.loginInputDecoration(
-                        hint: 'Descripcion de la Reserva',
-                        label: 'Descripcion',
-                        icon: Icons.description_outlined),
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 30),
-                    alignment: Alignment.center,
-                    child: CustomOutlinedButton(
-                      onPressed: () async {
-                        try {
-                          if (id == null) {
-                            final validForm =
-                                widget.bookingFormProvider.validateForm();
-                            if (!validForm) return;
-                            await widget.bookingsProvider.newBooking(
-                                aerolinea,
-                                awb,
-                                tipo,
-                                origen,
-                                destino,
-                                contenedor,
-                                widget.user.exportador.id,
-                                alto,
-                                ancho,
-                                largo,
-                                pesoFisico,
-                                pesoVolumetrico,
-                                date,
-                                descripcion);
-                            NotificationsService.showSnackbar(
-                                'Reserva AWB $awb creada');
-                          } else {
-                            await widget.bookingsProvider.updateBooking(
-                                id!,
-                                aerolinea,
-                                awb,
-                                tipo,
-                                origen,
-                                destino,
-                                contenedor,
-                                alto,
-                                ancho,
-                                largo,
-                                pesoFisico,
-                                pesoVolumetrico,
-                                date,
-                                descripcion);
-                            NotificationsService.showSnackbar(
-                                '$awb actualizado');
-                          }
-                          Navigator.of(context).pop();
-                        } catch (e) {
-                          Navigator.of(context).pop();
-                          NotificationsService.showSnackbarError(
-                              'No se pudo guardar reserva');
-                        }
-                      },
-                      text: 'Guardar',
-                      color: Colors.white,
-                    ),
-                  ),
+          initialValue: widget.reserva?.descripcion ?? '',
+          onChanged: (value) => descripcion = value,
+          decoration: CustomInputs.loginInputDecoration(
+              hint: 'Descripcion de la Reserva',
+              label: 'Descripcion',
+              icon: Icons.description_outlined),
+          style: const TextStyle(color: Colors.white),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 30),
+          alignment: Alignment.center,
+          child: CustomOutlinedButton(
+            onPressed: () async {
+              try {
+                if (id == null) {
+                  final validForm = widget.bookingFormProvider.validateForm();
+                  if (!validForm) return;
+                  await widget.bookingsProvider.newBooking(
+                      aerolinea,
+                      awb,
+                      tipo,
+                      origen,
+                      destino,
+                      contenedor,
+                      widget.user.exportador.id,
+                      alto,
+                      ancho,
+                      largo,
+                      pesoFisico,
+                      pesoVolumetrico,
+                      date,
+                      descripcion);
+                  NotificationsService.showSnackbar('Reserva AWB $awb creada');
+                } else {
+                  await widget.bookingsProvider.updateBooking(
+                      id!,
+                      aerolinea,
+                      awb,
+                      tipo,
+                      origen,
+                      destino,
+                      contenedor,
+                      alto,
+                      ancho,
+                      largo,
+                      pesoFisico,
+                      pesoVolumetrico,
+                      date,
+                      descripcion);
+                  NotificationsService.showSnackbar('$awb actualizado');
+                }
+                Navigator.of(context).pop();
+              } catch (e) {
+                Navigator.of(context).pop();
+                NotificationsService.showSnackbarError(
+                    'No se pudo guardar reserva');
+              }
+            },
+            text: 'Guardar',
+            color: Colors.white,
+          ),
+        ),
       ],
     );
   }

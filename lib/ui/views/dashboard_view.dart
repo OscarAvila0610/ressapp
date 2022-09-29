@@ -5,6 +5,7 @@ import 'package:ress_app/excel/mobile.dart'
     if (dart.library.html) 'package:ress_app/excel/web.dart';
 import 'package:ress_app/models/booking.dart';
 import 'package:ress_app/models/user.dart';
+import 'package:ress_app/services/notifications_service.dart';
 import 'package:ress_app/ui/inputs/custom_inputs.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xls;
 
@@ -32,7 +33,6 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     final kgs = Provider.of<AdminProvider>(context);
-    RegExp regexp = RegExp(r'(\d{4}-\d{2}-\d{2})');
     return ListView(children: [
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,7 +91,7 @@ class _DashboardViewState extends State<DashboardView> {
                         }
                         return null;
                       },
-                      initialValue: '',
+                      initialValue: fechaFinal,
                       onChanged: (value) {
                         fechaFinal = value;
                       },
@@ -109,6 +109,12 @@ class _DashboardViewState extends State<DashboardView> {
                     constraints: const BoxConstraints(maxWidth: 200),
                     child: ElevatedButton(
                       onPressed: () async {
+                        final iniVal = DateTime.parse(fechaInicial);
+                        final endVal = DateTime.parse(fechaFinal);
+                        if (iniVal.isAfter(endVal)) {
+                          NotificationsService.showSnackbarError(
+                              'La fecha inicial no puede ser mayor a la fecha final');
+                        }
                         if (kgs.validForm()) {
                           await Provider.of<BookingsProvider>(context,
                                   listen: false)
@@ -117,7 +123,12 @@ class _DashboardViewState extends State<DashboardView> {
                                   context,
                                   listen: false)
                               .reservas;
-                          generarLista(reservas);
+                          if (reservas.isNotEmpty) {
+                            generarLista(reservas);
+                          } else {
+                            NotificationsService.showSnackbarError(
+                                'No se encontraron datos de Reserva en las fechas estipuladas');
+                          }
                         }
                       },
                       style: ButtonStyle(
@@ -177,7 +188,7 @@ class _DashboardViewState extends State<DashboardView> {
           .setText(reservas[i].aerolinea.prefijo.toString());
       awbs.getRangeByName('B${i + 2}').setText(reservas[i].awb.toString());
       awbs.getRangeByName('C${i + 2}').setText(
-          '${reservas[i].fechaSalida.day}/${reservas[i].fechaSalida.month}/${reservas[i].fechaSalida.year}');
+          '${reservas[i].fechaSalida.year}/${reservas[i].fechaSalida.month}/${reservas[i].fechaSalida.day}');
       awbs.getRangeByName('D${i + 2}').setText(reservas[i].destino.prefijo);
       awbs
           .getRangeByName('E${i + 2}')
@@ -193,10 +204,10 @@ class _DashboardViewState extends State<DashboardView> {
               ? 'Cancelada'
               : 'Pendiente');
       awbs.getRangeByName('J${i + 2}').setText(
-          '${reservas[i].fechaSolicitud.day}/${reservas[i].fechaSolicitud.month}/${reservas[i].fechaSolicitud.year}');
+          '${reservas[i].fechaSolicitud.year}/${reservas[i].fechaSolicitud.month}/${reservas[i].fechaSolicitud.day}');
       awbs.getRangeByName('K${i + 2}').setText((reservas[i].aprobacion ||
               reservas[i].cancelada)
-          ? '${reservas[i].fechaRes.day}/${reservas[i].fechaRes.month}/${reservas[i].fechaRes.year}'
+          ? '${reservas[i].fechaRes.year}/${reservas[i].fechaRes.month}/${reservas[i].fechaRes.day}'
           : 'Pendiente');
       awbs.getRangeByName('L${i + 2}').setText(reservas[i].actualizado.nombre);
       total++;

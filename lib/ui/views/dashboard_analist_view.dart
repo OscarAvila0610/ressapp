@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import 'package:ress_app/models/booking.dart';
 import 'package:ress_app/models/user.dart';
+import 'package:ress_app/services/notifications_service.dart';
+import 'package:ress_app/ui/charts/pie_chart.dart';
 
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'dart:typed_data';
@@ -37,7 +39,13 @@ class _DashboardAnalistViewState extends State<DashboardAnalistView> {
     return SingleChildScrollView(
         child: Column(
       children: [
-        WhiteCard(title: 'Dashboard Analista', child: Text(user.nombre)),
+        WhiteCard(
+            title: 'Resumen Reservas',
+            child: BookingPieChart(
+              aprobadas: reservas.aprobadas,
+              canceladas: reservas.canceladas,
+              pendientes: reservas.pendientes,
+            )),
         const SizedBox(
           height: 10,
         ),
@@ -81,7 +89,14 @@ class _DashboardAnalistViewState extends State<DashboardAnalistView> {
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 200),
           child: ElevatedButton(
-            onPressed: () => _generateFlyPlan(reservas.planVuelo, user),
+            onPressed: () {
+              if (reservas.planVuelo.isNotEmpty) {
+                _generateFlyPlan(reservas.planVuelo, user);
+              } else {
+                NotificationsService.showSnackbarError(
+                    'No hay registros en el plan de vuelo de hoy');
+              }
+            },
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.indigo),
                 shadowColor: MaterialStateProperty.all(Colors.transparent)),

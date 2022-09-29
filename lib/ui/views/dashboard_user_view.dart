@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ress_app/models/booking.dart';
+import 'package:ress_app/services/notifications_service.dart';
+import 'package:ress_app/ui/charts/pie_chart.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
@@ -34,7 +36,13 @@ class _DashboardUserViewState extends State<DashboardUserView> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          WhiteCard(title: 'Dashboard Usuario', child: Text(user.nombre)),
+          WhiteCard(
+              title: 'Dashboard Usuario',
+              child: BookingPieChart(
+                aprobadas: reservas.aprobadas,
+                canceladas: reservas.canceladas,
+                pendientes: reservas.pendientes,
+              )),
           const SizedBox(
             height: 10,
           ),
@@ -44,7 +52,7 @@ class _DashboardUserViewState extends State<DashboardUserView> {
                 spacing: 75,
                 children: [
                   WhiteCard(
-                    width: 170,
+                      width: 170,
                       title: 'Reservas Aprobadas',
                       child: Text(
                         reservas.aprobadas.toString(),
@@ -54,7 +62,7 @@ class _DashboardUserViewState extends State<DashboardUserView> {
                     height: 10,
                   ),
                   WhiteCard(
-                    width: 170,
+                      width: 170,
                       title: 'Reservas Canceladas',
                       child: Text(reservas.canceladas.toString(),
                           style: const TextStyle(color: Colors.red))),
@@ -62,7 +70,7 @@ class _DashboardUserViewState extends State<DashboardUserView> {
                     height: 10,
                   ),
                   WhiteCard(
-                    width: 170,
+                      width: 170,
                       title: 'Reservas Pendientes',
                       child: Text(reservas.pendientes.toString())),
                   const SizedBox(
@@ -76,7 +84,14 @@ class _DashboardUserViewState extends State<DashboardUserView> {
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 200),
             child: ElevatedButton(
-              onPressed: () => _generateFlyPlan(reservas.planVuelo, user),
+              onPressed: () {
+                if (reservas.planVuelo.isNotEmpty) {
+                  _generateFlyPlan(reservas.planVuelo, user);
+                }else{
+                  NotificationsService.showSnackbarError(
+                                'No hay registros en el plan de vuelo de hoy');
+                }
+              },
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.indigo),
                   shadowColor: MaterialStateProperty.all(Colors.transparent)),
