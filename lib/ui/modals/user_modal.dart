@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ress_app/models/exporter.dart';
 import 'package:ress_app/models/role.dart';
-import 'package:ress_app/providers/auth_provider.dart';
 import 'package:ress_app/providers/providers.dart';
 import 'package:ress_app/providers/register_form_provider.dart';
 
@@ -113,7 +112,7 @@ class _UserModalState extends State<UserModal> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Container(
+                    SizedBox(
                       width: 250,
                       child: DropdownButtonFormField(
                         decoration: CustomInputs.loginInputDecoration(
@@ -138,7 +137,7 @@ class _UserModalState extends State<UserModal> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Container(
+                    SizedBox(
                       width: 250,
                       child: DropdownButtonFormField(
                         decoration: CustomInputs.loginInputDecoration(

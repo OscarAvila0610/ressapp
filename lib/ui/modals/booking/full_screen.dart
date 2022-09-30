@@ -89,7 +89,7 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
             Container(
               child: Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 200,
                     child: DropdownButtonFormField(
                       decoration: CustomInputs.loginInputDecoration(
@@ -115,7 +115,7 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Container(
+                  SizedBox(
                     width: 200,
                     child: TextFormField(
                       keyboardType: TextInputType.number,
@@ -152,7 +152,7 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
             Container(
                 child: Row(
               children: [
-                Container(
+                SizedBox(
                   width: 200,
                   child: DropdownButtonFormField(
                     decoration: CustomInputs.loginInputDecoration(
@@ -177,7 +177,7 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
                 const SizedBox(
                   width: 10,
                 ),
-                Container(
+                SizedBox(
                   width: 200,
                   child: DropdownButtonFormField(
                     decoration: CustomInputs.loginInputDecoration(
@@ -210,7 +210,7 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
             Container(
               child: Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 150,
                     child: TextFormField(
                       keyboardType: TextInputType.number,
@@ -241,7 +241,7 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Container(
+                  SizedBox(
                     width: 150,
                     child: TextFormField(
                       keyboardType: TextInputType.number,
@@ -272,7 +272,7 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Container(
+                  SizedBox(
                     width: 150,
                     child: TextFormField(
                       keyboardType: TextInputType.number,
@@ -306,7 +306,7 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
             Container(
               child: Row(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 200,
                     child: TextFormField(
                       keyboardType: TextInputType.number,
@@ -314,6 +314,9 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
                         FilteringTextInputFormatter.digitsOnly
                       ],
                       validator: (value) {
+                        if (value == '0') {
+                          return 'Peso debe ser mayor a 0';
+                        }
                         if (value == null || value.isEmpty) {
                           return 'Peso obligatorio';
                         }
@@ -340,7 +343,7 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Container(
+                  SizedBox(
                     width: 200,
                     child: TextFormField(
                       keyboardType: TextInputType.number,
@@ -348,6 +351,9 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
                         FilteringTextInputFormatter.digitsOnly
                       ],
                       validator: (value) {
+                        if (value == '0') {
+                          return 'Peso debe ser mayor a 0';
+                        }
                         if (value == null || value.isEmpty) {
                           return 'Peso obligatorio';
                         }
@@ -387,7 +393,7 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
+            SizedBox(
               width: 200,
               child: DropdownButtonFormField(
                 decoration: CustomInputs.loginInputDecoration(
@@ -411,7 +417,7 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
             const SizedBox(
               width: 10,
             ),
-            Container(
+            SizedBox(
               width: 200,
               child: DropdownButtonFormField(
                 decoration: CustomInputs.loginInputDecoration(
@@ -436,7 +442,7 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
             const SizedBox(
               width: 10,
             ),
-            Container(
+            SizedBox(
               width: 150,
               child: TextFormField(
                 keyboardType: TextInputType.datetime,

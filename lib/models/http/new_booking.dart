@@ -102,7 +102,6 @@ class _NumberPrefix {
     String id;
     int prefijo;
 
-    factory _NumberPrefix.fromJson(String str) => _NumberPrefix.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
@@ -126,7 +125,6 @@ class _ByName {
     String id;
     String nombre;
 
-    factory _ByName.fromJson(String str) => _ByName.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
@@ -150,7 +148,6 @@ class _StringPrefix {
     String id;
     String prefijo;
 
-    factory _StringPrefix.fromJson(String str) => _StringPrefix.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 

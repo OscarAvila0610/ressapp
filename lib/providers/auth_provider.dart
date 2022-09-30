@@ -14,7 +14,6 @@ import 'package:ress_app/services/notifications_service.dart';
 enum AuthStatus { checking, authenticated, notAuthenticated }
 
 class AuthProvider extends ChangeNotifier {
-  String? _token;
   AuthStatus authStatus = AuthStatus.checking;
   Usuario? user;
 
@@ -42,7 +41,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }).catchError((e) {
       // print('error en: $e');
-      NotificationsService.showSnackbarError('USUARIO / PASSWORD NO VALIDOS');
+      NotificationsService.showSnackbarError('USUARIO / CONTRASEÑA NO VALIDOS');
     });
   }
 

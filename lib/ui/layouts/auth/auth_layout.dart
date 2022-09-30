@@ -80,13 +80,13 @@ class _MobileBody extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const CustomTitle(),
-          Container(
+          SizedBox(
             width: double.infinity,
             height: 420,
             child: child,
           ),
-          Container(
-              width: double.infinity, height: 400, child: const Background())
+          const SizedBox(
+              width: double.infinity, height: 400, child:  Background())
         ],
       ),
     );

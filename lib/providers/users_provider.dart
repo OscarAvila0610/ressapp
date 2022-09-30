@@ -31,7 +31,6 @@ class UsersProvider extends ChangeNotifier {
 
       return user;
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -52,7 +51,6 @@ class UsersProvider extends ChangeNotifier {
       users.add(newUser);
       notifyListeners();
     } catch (e) {
-      print(e);
       throw 'Error al crear Usuario';
     }
   }

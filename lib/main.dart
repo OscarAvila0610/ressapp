@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:ress_app/api/ress_api.dart';
+import 'package:ress_app/services/my_scroll.dart';
 
 import 'providers/providers.dart';
 
@@ -57,7 +58,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'RESapp A.A.',
+      title: 'RESapps A.A.',
+      scrollBehavior: MyCustomScrollBehavior(),
       initialRoute: '/',
       onGenerateRoute: Flurorouter.router.generator,
       navigatorKey: NavigationService.navigatorKey,

@@ -155,9 +155,6 @@ class _StringPrefix {
   String id;
   String prefijo;
 
-  factory _StringPrefix.fromJson(String str) =>
-      _StringPrefix.fromMap(json.decode(str));
-
   String toJson() => json.encode(toMap());
 
   factory _StringPrefix.fromMap(Map<String, dynamic> json) => _StringPrefix(

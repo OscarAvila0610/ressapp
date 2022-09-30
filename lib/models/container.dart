@@ -41,7 +41,6 @@ class _Usuario {
     String id;
     String nombre;
 
-    factory _Usuario.fromJson(String str) => _Usuario.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 

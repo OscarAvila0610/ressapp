@@ -5,7 +5,6 @@ import 'package:ress_app/providers/airlines_provider.dart';
 
 import 'package:ress_app/datatable/airlines_datasource.dart';
 
-import 'package:ress_app/ui/labels/custom_labels.dart';
 import 'package:ress_app/ui/buttons/custom_icon_button.dart';
 import 'package:ress_app/ui/modals/airline_modal.dart';
 

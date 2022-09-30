@@ -44,7 +44,7 @@ class _CalculatorModalState extends State<CalculatorModal> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Cargos a incluir en AWB',
+                'Cargos AWB',
                 style: CustomLabels.h1.copyWith(color: Colors.white),
               ),
               IconButton(

@@ -85,7 +85,8 @@ class CalculatorView extends StatelessWidget {
                             hint: 'Tarifa Pactada',
                             label: 'Tarifa',
                             icon: Icons.mark_email_read_outlined),
-                        keyboardType: TextInputType.number,
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.allow(RegExp(r"[0-9.]")),
                         ],
@@ -102,7 +103,7 @@ class CalculatorView extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      Container(
+                      SizedBox(
                         width: 200,
                         child: DropdownButtonFormField(
                           decoration: CustomInputs.loginInputDecoration(

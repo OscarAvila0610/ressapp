@@ -6,10 +6,6 @@ class UserFormProvider extends ChangeNotifier {
   Usuario? user;
   late GlobalKey<FormState> formKey;
 
-  // void updateListeners() {
-  //   notifyListeners();
-  // }
-
   copyUserWith({
     String? nombre,
     String? correo,
@@ -50,11 +46,9 @@ class UserFormProvider extends ChangeNotifier {
     };
 
     try {
-      final resp = await RessApi.put('/usuarios/${user!.uid}', data);
-      // print(resp);
+      await RessApi.put('/usuarios/${user!.uid}', data);
       return true;
     } catch (e) {
-      print('error al actualizar Usuario $e');
       return false;
     }
   }

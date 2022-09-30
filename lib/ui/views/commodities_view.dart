@@ -5,7 +5,6 @@ import 'package:ress_app/providers/commodities_provider.dart';
 
 import 'package:ress_app/datatable/commodities_datasource.dart';
 
-import 'package:ress_app/ui/labels/custom_labels.dart';
 import 'package:ress_app/ui/buttons/custom_icon_button.dart';
 import 'package:ress_app/ui/modals/commodity_modal.dart';
 

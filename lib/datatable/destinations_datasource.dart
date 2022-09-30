@@ -38,17 +38,18 @@ class DestinationsDTS extends DataTableSource {
             ),
             onPressed: () {
               final dialog = AlertDialog(
-                title: const Text('Esta seguro de borrarlo?'),
-                content: Text('Borrar definitivamente $destino ?'),
+                backgroundColor: const Color(0xff092044),
+                title: const Text('Esta seguro de borrarlo?', style: TextStyle(color: Colors.white),),
+                content: Text('Borrar definitivamente $destino ?', style: const TextStyle(color: Colors.white),),
                 actions: [
                   TextButton(
-                    child: const Text('No'),
+                    child: const Text('No', style: TextStyle(color: Colors.red),),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
                   ),
                   TextButton(
-                    child: const Text('Si, borrar'),
+                    child: const Text('Si, borrar', style: TextStyle(color: Colors.green),),
                     onPressed: () async {
                       await Provider.of<DestinationsProviders>(context,
                               listen: false)

@@ -109,13 +109,13 @@ class _DashboardViewState extends State<DashboardView> {
                     constraints: const BoxConstraints(maxWidth: 200),
                     child: ElevatedButton(
                       onPressed: () async {
-                        final iniVal = DateTime.parse(fechaInicial);
-                        final endVal = DateTime.parse(fechaFinal);
-                        if (iniVal.isAfter(endVal)) {
-                          NotificationsService.showSnackbarError(
-                              'La fecha inicial no puede ser mayor a la fecha final');
-                        }
                         if (kgs.validForm()) {
+                          final iniVal = DateTime.parse(fechaInicial);
+                          final endVal = DateTime.parse(fechaFinal);
+                          if (iniVal.isAfter(endVal)) {
+                            NotificationsService.showSnackbarError(
+                                'La fecha inicial no puede ser mayor a la fecha final');
+                          }
                           await Provider.of<BookingsProvider>(context,
                                   listen: false)
                               .getBookingByDate(fechaInicial, fechaFinal);

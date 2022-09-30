@@ -24,8 +24,15 @@ class UsersDTS extends DataTableSource {
         ),
         onPressed: () {
           final dialog = AlertDialog(
-            title: const Text('Esta segudo que desea desactivar el usuario?'),
-            content: Text('Desactivar definitivamente a ${user.nombre} ?'),
+            backgroundColor: const Color(0xff092044),
+            title: const Text(
+              'Esta segudo que desea desactivar el usuario?',
+              style: TextStyle(color: Colors.white),
+            ),
+            content: Text(
+              'Desactivar definitivamente a ${user.nombre} ?',
+              style: const TextStyle(color: Colors.white),
+            ),
             actions: [
               TextButton(
                 child: const Text(

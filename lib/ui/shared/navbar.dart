@@ -28,17 +28,15 @@ class Navbar extends StatelessWidget {
               icon: const Icon(Icons.menu_outlined),
               onPressed: () => SideMenuProvider.openMenu(),
             ),
-
           const SizedBox(
             width: 5,
           ),
           if (sideMenuProvider.currentPage == Flurorouter.bookingsRoute ||
               sideMenuProvider.currentPage == Flurorouter.awbRoute)
             ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 250),
+              constraints: const BoxConstraints(maxWidth: 200),
               child: const SearchText(),
             ),
-
           const Spacer(),
           if (size.width > 525)
             ConstrainedBox(

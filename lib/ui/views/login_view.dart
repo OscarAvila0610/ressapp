@@ -39,7 +39,10 @@ class LoginView extends StatelessWidget {
                             onFieldSubmitted: (_) =>
                                 onFormSubmit(loginFormProvider, authProvider),
                             validator: (value) {
-                              if (!EmailValidator.validate(value ?? '')) {
+                              if (value == null || value.isEmpty) {
+                                return 'Ingrese su correo';
+                              }
+                              if (!EmailValidator.validate(value)) {
                                 return 'Email no valido';
                               }
                               return null;
@@ -64,8 +67,8 @@ class LoginView extends StatelessWidget {
                               if (value == null || value.isEmpty) {
                                 return 'Ingrese su contraseña';
                               }
-                              if (value.length < 6) {
-                                return 'La contraseña debe de ser de 6 caracteres';
+                              if (value.length < 8) {
+                                return 'La contraseña debe de ser de 8 caracteres';
                               }
                               return null;
                             },

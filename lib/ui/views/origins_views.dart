@@ -5,7 +5,6 @@ import 'package:ress_app/providers/origins_provider.dart';
 
 import 'package:ress_app/datatable/origins_datasource.dart';
 
-import 'package:ress_app/ui/labels/custom_labels.dart';
 import 'package:ress_app/ui/buttons/custom_icon_button.dart';
 import 'package:ress_app/ui/modals/origin_modal.dart';
 

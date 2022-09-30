@@ -9,7 +9,6 @@ class Flurorouter {
   static String rootRoute = '/';
   //Auth Router
   static String loginRoute = '/auth/login';
-  static String registerRoute = '/auth/register';
 
   //Dashboard
   static String airlinesRoute = '/dashboard/airlines';
@@ -35,8 +34,6 @@ class Flurorouter {
         handler: AdminHandlers.login, transitionType: TransitionType.none);
     router.define(loginRoute,
         handler: AdminHandlers.login, transitionType: TransitionType.none);
-    router.define(registerRoute,
-        handler: AdminHandlers.register, transitionType: TransitionType.none);
 
     //Dashboard
     router.define(airlinesRoute,

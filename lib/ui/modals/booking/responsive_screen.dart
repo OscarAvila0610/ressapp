@@ -260,6 +260,9 @@ class _ResponsiveScreenState extends State<ResponsiveScreen> {
             FilteringTextInputFormatter.digitsOnly
           ],
           validator: (value) {
+            if (value == '0') {
+              return 'Peso debe ser mayor a 0';
+            }
             if (value == null || value.isEmpty) {
               return 'Peso obligatorio';
             }
@@ -291,6 +294,9 @@ class _ResponsiveScreenState extends State<ResponsiveScreen> {
             FilteringTextInputFormatter.digitsOnly
           ],
           validator: (value) {
+            if (value == '0') {
+              return 'Peso debe ser mayor a 0';
+            }
             if (value == null || value.isEmpty) {
               return 'Peso obligatorio';
             }
