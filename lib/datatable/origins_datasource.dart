@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:ress_app/providers/origins_provider.dart';
 
 import 'package:ress_app/models/origin.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 
 import 'package:ress_app/ui/modals/origin_modal.dart';
 
@@ -16,14 +17,28 @@ class OriginsDTS extends DataTableSource {
   DataRow getRow(int index) {
     final origen = origenes[index];
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(origen.prefijo)),
-      DataCell(Text(origen.pais)),
-      DataCell(Text(origen.nombre)),
-      DataCell(Text(origen.usuario.nombre)),
+      DataCell(Text(
+        origen.prefijo,
+        style: CustomLabels.text,
+      )),
+      DataCell(Text(
+        origen.pais,
+        style: CustomLabels.text,
+      )),
+      DataCell(Text(
+        origen.nombre,
+        style: CustomLabels.text,
+      )),
+      DataCell(Text(
+        origen.usuario.nombre,
+        style: CustomLabels.text,
+      )),
       DataCell(Row(
         children: [
           IconButton(
-            icon: const Icon(Icons.edit_outlined),
+            icon: const Icon(
+              Icons.edit_outlined,
+            ),
             onPressed: () {
               showModalBottomSheet(
                   isScrollControlled: true,
@@ -40,17 +55,29 @@ class OriginsDTS extends DataTableSource {
             onPressed: () {
               final dialog = AlertDialog(
                 backgroundColor: const Color(0xff092044),
-                title: const Text('Esta seguro de borrarlo?', style: TextStyle(color: Colors.white),),
-                content: Text('Borrar definitivamente $origen ?', style: const TextStyle(color: Colors.white),),
+                title: const Text(
+                  'Esta seguro de borrarlo?',
+                  style: TextStyle(color: Colors.white),
+                ),
+                content: Text(
+                  'Borrar definitivamente ${origen.nombre} ?',
+                  style: const TextStyle(color: Colors.white),
+                ),
                 actions: [
                   TextButton(
-                    child: const Text('No', style: TextStyle(color: Colors.red),),
+                    child: const Text(
+                      'No',
+                      style: TextStyle(color: Colors.red),
+                    ),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
                   ),
                   TextButton(
-                    child: const Text('Si, borrar', style: TextStyle(color: Colors.green),),
+                    child: const Text(
+                      'Si, borrar',
+                      style: TextStyle(color: Colors.green),
+                    ),
                     onPressed: () async {
                       await Provider.of<OriginsProviders>(context,
                               listen: false)

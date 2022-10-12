@@ -26,35 +26,37 @@ class _MenuItemState extends State<MenuItem> {
     return AnimatedContainer(
       duration: const Duration(microseconds: 250),
       color: isHovered
-      ? Colors.white.withOpacity(0.1)
-      :widget.isActive ? Colors.white.withOpacity(0.1) : Colors.transparent,
+          ? Colors.white.withOpacity(0.1)
+          : widget.isActive
+              ? Colors.white.withOpacity(0.1)
+              : Colors.transparent,
       child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: widget.isActive ? null : ()=> widget.onPressed(),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            child: MouseRegion(
-              onEnter: (_) => setState(() => isHovered = true),
-              onExit: (_) => setState(() => isHovered = false),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(widget.icon, color: Colors.white.withOpacity(0.3),),
-                  const SizedBox(width: 10,),
-                  Text(
-                    widget.text,
-                    style: GoogleFonts.roboto(
-                      fontSize: 14,
-                      color: Colors.white.withOpacity(0.8)
-                    )
-                  )
-                ],
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: widget.isActive ? null : () => widget.onPressed(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              child: MouseRegion(
+                onEnter: (_) => setState(() => isHovered = true),
+                onExit: (_) => setState(() => isHovered = false),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      widget.icon,
+                      color: Colors.white.withOpacity(0.3),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(widget.text,
+                        style: GoogleFonts.robotoSlab(
+                            fontSize: 14, color: Colors.white.withOpacity(0.8)))
+                  ],
+                ),
               ),
             ),
-          ),
-        )
-      ),
+          )),
     );
   }
 }

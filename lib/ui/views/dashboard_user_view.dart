@@ -37,7 +37,7 @@ class _DashboardUserViewState extends State<DashboardUserView> {
       child: Column(
         children: [
           WhiteCard(
-              title: 'Dashboard Usuario',
+              title: 'Resumen Usuario',
               child: BookingPieChart(
                 aprobadas: reservas.aprobadas,
                 canceladas: reservas.canceladas,

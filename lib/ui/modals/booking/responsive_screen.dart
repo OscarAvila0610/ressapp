@@ -191,7 +191,7 @@ class _ResponsiveScreenState extends State<ResponsiveScreen> {
           },
           decoration: CustomInputs.loginInputDecoration(
               hint: 'Largo de la Carga',
-              label: 'Largo cm',
+              label: 'Largo pul',
               icon: Icons.vertical_distribute_outlined),
           style: const TextStyle(color: Colors.white),
         ),
@@ -219,7 +219,7 @@ class _ResponsiveScreenState extends State<ResponsiveScreen> {
           },
           decoration: CustomInputs.loginInputDecoration(
               hint: 'Ancho de la Carga',
-              label: 'Ancho cm',
+              label: 'Ancho pul',
               icon: Icons.horizontal_distribute_outlined),
           style: const TextStyle(color: Colors.white),
         ),
@@ -247,7 +247,7 @@ class _ResponsiveScreenState extends State<ResponsiveScreen> {
           },
           decoration: CustomInputs.loginInputDecoration(
               hint: 'Alto de la Carga',
-              label: 'Alto cm',
+              label: 'Alto pul',
               icon: Icons.height_outlined),
           style: const TextStyle(color: Colors.white),
         ),
@@ -428,6 +428,10 @@ class _ResponsiveScreenState extends State<ResponsiveScreen> {
                       descripcion);
                   NotificationsService.showSnackbar('Reserva AWB $awb creada');
                 } else {
+                  if (date == '') {
+                    date = DateFormat('yyyy-MM-dd')
+                        .format(widget.reserva!.fechaSalida);
+                  }
                   await widget.bookingsProvider.updateBooking(
                       id!,
                       aerolinea,

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:ress_app/providers/commodities_provider.dart';
 
 import 'package:ress_app/models/commodity.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 
 import 'package:ress_app/ui/modals/commodity_modal.dart';
 
@@ -16,8 +17,8 @@ class CommoditiesDTS extends DataTableSource {
   DataRow getRow(int index) {
     final tipo = tipos[index];
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(tipo.prefijo)),
-      DataCell(Text(tipo.nombre)),
+      DataCell(Text(tipo.prefijo, style: CustomLabels.text,)),
+      DataCell(Text(tipo.nombre, style: CustomLabels.text,)),
       (tipo.peligroso) ? const DataCell(Text('Si')) : const DataCell(Text('No')),
       DataCell(Text(tipo.usuario.nombre)),
       DataCell(Row(

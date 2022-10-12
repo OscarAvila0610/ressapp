@@ -6,6 +6,7 @@ import 'package:ress_app/providers/containers_provider.dart';
 import 'package:ress_app/datatable/containers_datasource.dart';
 
 import 'package:ress_app/ui/buttons/custom_icon_button.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 import 'package:ress_app/ui/modals/container_modal.dart';
 
 class ContainersView extends StatefulWidget {
@@ -33,10 +34,10 @@ class _ContainersViewState extends State<ContainersView> {
           physics: const ClampingScrollPhysics(),
           children: [
             PaginatedDataTable(
-              columns: const [
-                DataColumn(label: Text('Nombre')),
-                DataColumn(label: Text('Creado por')),
-                DataColumn(label: Text('Acciones')),
+              columns:  [
+                DataColumn(label: Text('Nombre', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Creado por', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Acciones', style: CustomLabels.h2,)),
               ],
               onRowsPerPageChanged: (value) {
                 setState(() {
@@ -45,9 +46,10 @@ class _ContainersViewState extends State<ContainersView> {
               },
               rowsPerPage: _rowsPerPage,
               source: ContainersDTS(contenedores, context),
-              header: const Text(
-                'Contenedores disponibles: ',
+              header:  Text(
+                'CONTENEDORES: ',
                 maxLines: 2,
+                style: CustomLabels.h1,
               ),
               actions: [
                 CustomIconButton(

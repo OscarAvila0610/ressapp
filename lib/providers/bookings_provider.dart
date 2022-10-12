@@ -27,7 +27,6 @@ class BookingsProvider extends ChangeNotifier {
       final bookingsResp = BookingsResponse.fromMap(resp);
       reservas = [...bookingsResp.reservas];
     } else {
-
       final resp = await RessApi.httpGet('/reservas/${user.uid}');
       final bookingsResp = BookingsResponse.fromMap(resp);
       reservas = [...bookingsResp.reservas];
@@ -77,17 +76,35 @@ class BookingsProvider extends ChangeNotifier {
   }
 
   Future newBooking(
-      String airline,int awb, String commodity,
-      String origin, String dest, String cont,
-      String exp,int alt, int anch,
-      int lar, int fis,
-      int vol, String date, String descrip) async {
-      final data = {
-      "aerolinea": airline, "awb": awb, "tipoCarga": commodity,
-      "origen": origin, "destino": dest, "contenedor": cont,
-      "exportador": exp, "alto": alt, "ancho": anch,
-      "largo": lar, "pesoFisico": fis, "pesoVolumetrico": vol,
-      "fecha": date, "descripcion": descrip
+      String airline,
+      int awb,
+      String commodity,
+      String origin,
+      String dest,
+      String cont,
+      String exp,
+      int alt,
+      int anch,
+      int lar,
+      int fis,
+      int vol,
+      String date,
+      String descrip) async {
+    final data = {
+      "aerolinea": airline,
+      "awb": awb,
+      "tipoCarga": commodity,
+      "origen": origin,
+      "destino": dest,
+      "contenedor": cont,
+      "exportador": exp,
+      "alto": alt,
+      "ancho": anch,
+      "largo": lar,
+      "pesoFisico": fis,
+      "pesoVolumetrico": vol,
+      "fecha": date,
+      "descripcion": descrip
     };
 
     try {
@@ -148,6 +165,7 @@ class BookingsProvider extends ChangeNotifier {
         reserva.alto = alt;
         reserva.ancho = anch;
         reserva.largo = lar;
+        reserva.fechaSalida = DateTime.parse(date);
         reserva.pesoFisico = fis;
         reserva.pesoVolumetrico = vol;
         reserva.descripcion = descrip;

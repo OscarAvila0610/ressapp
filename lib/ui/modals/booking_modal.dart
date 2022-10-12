@@ -56,7 +56,7 @@ class _BookingModalState extends State<BookingModal> {
         final bookingFormProvider = Provider.of<BookingFormProvider>(context);
         return Container(
           padding: const EdgeInsets.all(20),
-          height: 600,
+          height: 500,
           width: 300, //Expanded
           decoration: buildBoxDecoration(),
           child: Form(

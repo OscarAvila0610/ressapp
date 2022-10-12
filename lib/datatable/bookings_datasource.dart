@@ -10,6 +10,7 @@ import 'package:ress_app/models/origin.dart';
 import 'package:ress_app/models/user.dart';
 import 'package:ress_app/models/booking.dart';
 import 'package:ress_app/providers/bookings_provider.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 
 import 'package:ress_app/ui/modals/booking_modal.dart';
 
@@ -29,23 +30,44 @@ class BookingsDTS extends DataTableSource {
   DataRow getRow(int index) {
     final reserva = reservas[index];
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(reserva.aerolinea.prefijo.toString())),
-      DataCell(Text(DateFormat('yyyy-MM-dd').format(reserva.fechaSalida))),
-      DataCell(Text(reserva.awb.toString())),
-      DataCell(Text(reserva.destino.prefijo)),
-      DataCell(Text(reserva.exportador.nombre)),
-      DataCell(Text(reserva.usuario.nombre)),
+      DataCell(Text(
+        reserva.aerolinea.prefijo.toString(),
+        style: CustomLabels.text,
+      )),
+      DataCell(Text(
+        DateFormat('yyyy-MM-dd').format(reserva.fechaSalida),
+        style: CustomLabels.text,
+      )),
+      DataCell(Text(
+        reserva.awb.toString(),
+        style: CustomLabels.text,
+      )),
+      DataCell(Text(
+        reserva.destino.prefijo,
+        style: CustomLabels.text,
+      )),
+      DataCell(Text(
+        reserva.exportador.nombre,
+        style: CustomLabels.text,
+      )),
+      DataCell(Text(
+        reserva.usuario.nombre,
+        style: CustomLabels.text,
+      )),
       DataCell((reserva.aprobacion == true)
-          ? const Text(
+          ? Text(
               'Aprobada',
-              style: TextStyle(color: Colors.green),
+              style: CustomLabels.aprobada,
             )
           : (reserva.cancelada == true)
-              ? const Text(
+              ? Text(
                   'Cancelada',
-                  style: TextStyle(color: Colors.red),
+                  style: CustomLabels.cancelada,
                 )
-              : const Text('Pendiente')),
+              : Text(
+                  'Pendiente',
+                  style: CustomLabels.text,
+                )),
       DataCell(Row(
         children: [
           IconButton(

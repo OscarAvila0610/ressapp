@@ -6,6 +6,7 @@ import 'package:ress_app/providers/exporter_provider.dart';
 import 'package:ress_app/providers/roles_provider.dart';
 import 'package:ress_app/providers/users_provider.dart';
 import 'package:ress_app/ui/buttons/custom_icon_button.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 
 import 'package:ress_app/ui/modals/user_modal.dart';
 
@@ -41,37 +42,38 @@ class _UsersViewState extends State<UsersView> {
               sortColumnIndex: usersProvider.sortColumnIndex,
               columns: [
                 DataColumn(
-                    label: const Text('Rol'),
+                    label:  Text('Rol', style: CustomLabels.h2,),
                     onSort: (colIndex, _) {
                       usersProvider.sortColumnIndex = colIndex;
                       usersProvider.sort<String>((user) => user.rol);
                     }),
                 DataColumn(
-                    label: const Text('Nombre'),
+                    label:  Text('Nombre', style: CustomLabels.h2,),
                     onSort: (colIndex, _) {
                       usersProvider.sortColumnIndex = colIndex;
                       usersProvider.sort<String>((user) => user.nombre);
                     }),
                 DataColumn(
-                    label: const Text('Email'),
+                    label:  Text('Email', style: CustomLabels.h2,),
                     onSort: (colIndex, _) {
                       usersProvider.sortColumnIndex = colIndex;
                       usersProvider.sort<String>((user) => user.correo);
                     }),
                 DataColumn(
-                    label: const Text('Exportador'),
+                    label:  Text('Exportador', style: CustomLabels.h2,),
                     onSort: (colIndex, _) {
                       usersProvider.sortColumnIndex = colIndex;
                       usersProvider
                           .sort<String>((user) => user.exportador.nombre);
                     }),
-                const DataColumn(label: Text('Acciones')),
+                 DataColumn(label: Text('Acciones', style: CustomLabels.h2,)),
               ],
               source: usersDataSource,
               onPageChanged: (page) {},
-              header: const Text(
-                'Lista Usuarios: ',
+              header:  Text(
+                'USUARIOS: ',
                 maxLines: 2,
+                style: CustomLabels.h1,
               ),
               actions: [
                 CustomIconButton(

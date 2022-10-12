@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:ress_app/providers/exporter_provider.dart';
 
 import 'package:ress_app/models/exporter.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 
 import 'package:ress_app/ui/modals/exporter_modal.dart';
 
@@ -16,10 +17,10 @@ class ExportersDTS extends DataTableSource {
   DataRow getRow(int index) {
     final exportador = exportadores[index];
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(exportador.nombre)),
-      DataCell(Text(exportador.direccion)),
-      DataCell(Text(exportador.telefono.toString())),
-      DataCell(Text(exportador.codigoIata.toString())),
+      DataCell(Text(exportador.nombre, style: CustomLabels.text,)),
+      DataCell(Text(exportador.direccion, style: CustomLabels.text,)),
+      DataCell(Text(exportador.telefono.toString(), style: CustomLabels.text,)),
+      DataCell(Text(exportador.codigoIata.toString(), style: CustomLabels.text,)),
       DataCell(Row(
         children: [
           IconButton(

@@ -40,7 +40,7 @@ class _DashboardAnalistViewState extends State<DashboardAnalistView> {
         child: Column(
       children: [
         WhiteCard(
-            title: 'Resumen Reservas',
+            title: 'Resumen Analista',
             child: BookingPieChart(
               aprobadas: reservas.aprobadas,
               canceladas: reservas.canceladas,
@@ -122,31 +122,48 @@ class _DashboardAnalistViewState extends State<DashboardAnalistView> {
     final Size pageSize = page.getClientSize();
     page.graphics.drawImage(PdfBitmap(await _readImageData()),
         const Rect.fromLTWH(400, 10, 100, 50));
+    int kilosDespachados = 0;
+    double canceladasPer = 0;
 
     page.graphics.drawString(
-        '\n\n\n\n\tGuatemala, ${today.day}/${today.month}/${today.year}\n\n\n\tEstimados señores Operaciones:',
-        PdfStandardFont(PdfFontFamily.timesRoman, 15,
-            style: PdfFontStyle.bold));
-
+        '\tGuatemala, ${today.day}/${today.month}/${today.year}\n\n\n\tSeñores\n\tOperaciones\n\tIBERIA LÍNEAS AÉREAS DE ESPAÑA, S.A OPERADORA\n\tPresente',
+        PdfStandardFont(
+          PdfFontFamily.timesRoman,
+          12,
+          style: PdfFontStyle.bold,
+        ),
+        format: PdfStringFormat(alignment: PdfTextAlignment.left),
+        bounds: Rect.fromLTWH(0, pageSize.height * 0.10, 0, 0));
     page.graphics.drawString(
-        '\n\n\n\n\n\n\n\n\n\n\tEn la presente se encuentra la informacion correspondiente al vuelo IB6342 \n\tdel día de hoy.',
-        PdfStandardFont(PdfFontFamily.timesRoman, 15));
+        '\tEstimados señores Operaciones: \n\n\tEn la presente se encuentra la informacion correspondiente al vuelo IB6342 del día de hoy.',
+        PdfStandardFont(PdfFontFamily.timesRoman, 12),
+        format: PdfStringFormat(alignment: PdfTextAlignment.left),
+        bounds: Rect.fromLTWH(0, pageSize.height * 0.30, 0, 0));
 
     final PdfGrid grid = PdfGrid();
     grid.style = PdfGridStyle(
-        font: PdfStandardFont(PdfFontFamily.timesRoman, 8,
-            style: PdfFontStyle.bold),
+        font: PdfStandardFont(
+          PdfFontFamily.timesRoman,
+          8,
+          style: PdfFontStyle.bold,
+        ),
         cellPadding: PdfPaddings(bottom: 2, left: 2, right: 2, top: 2));
     grid.columns.add(count: 6);
     final PdfGridRow headerRow = grid.headers.add(1)[0];
     headerRow.style.backgroundBrush = PdfSolidBrush(PdfColor(68, 114, 196));
     headerRow.style.textBrush = PdfBrushes.white;
     headerRow.cells[0].value = 'Aerolínea - No. AWB';
+    headerRow.cells[0].stringFormat.alignment = PdfTextAlignment.center;
     headerRow.cells[1].value = 'Destino';
+    headerRow.cells[1].stringFormat.alignment = PdfTextAlignment.center;
     headerRow.cells[2].value = 'Exportador';
+    headerRow.cells[2].stringFormat.alignment = PdfTextAlignment.center;
     headerRow.cells[3].value = 'Peso Físico';
+    headerRow.cells[3].stringFormat.alignment = PdfTextAlignment.center;
     headerRow.cells[4].value = 'Peso Volumétrico';
+    headerRow.cells[4].stringFormat.alignment = PdfTextAlignment.center;
     headerRow.cells[5].value = 'Estado';
+    headerRow.cells[5].stringFormat.alignment = PdfTextAlignment.center;
 
     for (var i = 0; i < reservas.length; i++) {
       addRow(
@@ -157,20 +174,45 @@ class _DashboardAnalistViewState extends State<DashboardAnalistView> {
           reservas[i].pesoVolumetrico,
           (reservas[i].aprobacion) ? 'Aprobada' : 'Cancelada',
           grid);
+      if (reservas[i].aprobacion) {
+        kilosDespachados = kilosDespachados + reservas[i].pesoVolumetrico;
+      } else {
+        canceladasPer = canceladasPer + 1;
+      }
+    }
+    canceladasPer = (canceladasPer / reservas.length) * 100;
+
+    for (int i = 0; i < grid.rows.count; i++) {
+      final PdfGridRow row = grid.rows[i];
+      for (int j = 0; j < row.cells.count; j++) {
+        final PdfGridCell cell = row.cells[j];
+        cell.stringFormat.alignment = PdfTextAlignment.center;
+        cell.style.cellPadding =
+            PdfPaddings(bottom: 5, left: 5, right: 5, top: 5);
+      }
     }
 
-    grid.draw(page: page, bounds: const Rect.fromLTWH(0, 220, 0, 0));
-
-    page.graphics.drawString('____________________________\n${user.nombre}',
-        PdfStandardFont(PdfFontFamily.timesRoman, 13, style: PdfFontStyle.bold),
-        format: PdfStringFormat(alignment: PdfTextAlignment.left),
-        bounds: Rect.fromLTWH(0, pageSize.height - 150, 0, 0));
+    grid.draw(
+        page: page, bounds: Rect.fromLTWH(0, pageSize.height * 0.40, 0, 0));
 
     page.graphics.drawString(
-        'Toda la Información contenida en el plan de vuelo ha sido revisada por \nnuestros analistas, por lo que se confirma que los kilos descritos seran despachados',
-        PdfStandardFont(PdfFontFamily.timesRoman, 9),
+        '\tTotal de Kilos Despachados: $kilosDespachados\n\n\tPorcentaje Reservas Canceladas: $canceladasPer%',
+        PdfStandardFont(PdfFontFamily.timesRoman, 12),
         format: PdfStringFormat(alignment: PdfTextAlignment.left),
+        bounds: Rect.fromLTWH(0, pageSize.height * 0.63, 0, 0));
+
+    page.graphics.drawString(
+        '\t____________________________\n\t${user.nombre}\n\t${user.exportador.nombre}',
+        PdfStandardFont(PdfFontFamily.timesRoman, 13, style: PdfFontStyle.bold),
+        format: PdfStringFormat(alignment: PdfTextAlignment.left),
+        bounds: Rect.fromLTWH(0, pageSize.height * 0.80, 0, 0));
+
+    page.graphics.drawString(
+        '\tToda la Información contenida en el plan de vuelo ha sido revisada por \nnuestros analistas, por lo que se confirma que los kilos descritos seran despachados',
+        PdfStandardFont(PdfFontFamily.timesRoman, 9),
+        format: PdfStringFormat(alignment: PdfTextAlignment.justify),
         bounds: Rect.fromLTWH(0, pageSize.height - 70, 0, 0));
+
     List<int> bytes = await flyPlan.save();
     flyPlan.dispose();
     saveAndLaunchFile(bytes, 'PlanDeVuelo.pdf');

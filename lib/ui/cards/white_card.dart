@@ -24,7 +24,7 @@ class WhiteCard extends StatelessWidget {
               fit: BoxFit.contain,
               child: Text(
                 title!,
-                style: GoogleFonts.roboto(
+                style: GoogleFonts.robotoSlab(
                     fontSize: 12, fontWeight: FontWeight.bold),
               ),
             ),

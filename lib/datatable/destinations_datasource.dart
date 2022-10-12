@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:ress_app/providers/destinations_provider.dart';
 
 import 'package:ress_app/models/destination.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 
 import 'package:ress_app/ui/modals/destination_modal.dart';
 
@@ -16,10 +17,22 @@ class DestinationsDTS extends DataTableSource {
   DataRow getRow(int index) {
     final destino = destinos[index];
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(destino.prefijo)),
-      DataCell(Text(destino.pais)),
-      DataCell(Text(destino.nombre)),
-      DataCell(Text(destino.usuario.nombre)),
+      DataCell(Text(
+        destino.prefijo,
+        style: CustomLabels.text,
+      )),
+      DataCell(Text(
+        destino.pais,
+        style: CustomLabels.text,
+      )),
+      DataCell(Text(
+        destino.nombre,
+        style: CustomLabels.text,
+      )),
+      DataCell(Text(
+        destino.usuario.nombre,
+        style: CustomLabels.text,
+      )),
       DataCell(Row(
         children: [
           IconButton(
@@ -39,17 +52,29 @@ class DestinationsDTS extends DataTableSource {
             onPressed: () {
               final dialog = AlertDialog(
                 backgroundColor: const Color(0xff092044),
-                title: const Text('Esta seguro de borrarlo?', style: TextStyle(color: Colors.white),),
-                content: Text('Borrar definitivamente $destino ?', style: const TextStyle(color: Colors.white),),
+                title: const Text(
+                  'Esta seguro de borrarlo?',
+                  style: TextStyle(color: Colors.white),
+                ),
+                content: Text(
+                  'Borrar definitivamente $destino ?',
+                  style: const TextStyle(color: Colors.white),
+                ),
                 actions: [
                   TextButton(
-                    child: const Text('No', style: TextStyle(color: Colors.red),),
+                    child: const Text(
+                      'No',
+                      style: TextStyle(color: Colors.red),
+                    ),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
                   ),
                   TextButton(
-                    child: const Text('Si, borrar', style: TextStyle(color: Colors.green),),
+                    child: const Text(
+                      'Si, borrar',
+                      style: TextStyle(color: Colors.green),
+                    ),
                     onPressed: () async {
                       await Provider.of<DestinationsProviders>(context,
                               listen: false)

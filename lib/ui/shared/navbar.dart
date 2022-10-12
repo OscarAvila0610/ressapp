@@ -44,7 +44,7 @@ class Navbar extends StatelessWidget {
               child: WhiteCard(
                   child: Text(
                 user!.correo,
-                style: GoogleFonts.roboto(
+                style: GoogleFonts.robotoSlab(
                     fontSize: 13, fontWeight: FontWeight.bold),
               )),
             ),

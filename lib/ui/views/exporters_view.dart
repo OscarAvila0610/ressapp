@@ -6,6 +6,7 @@ import 'package:ress_app/providers/exporter_provider.dart';
 import 'package:ress_app/datatable/exporters_datasource.dart';
 
 import 'package:ress_app/ui/buttons/custom_icon_button.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 import 'package:ress_app/ui/modals/exporter_modal.dart';
 
 class ExportersView extends StatefulWidget {
@@ -33,12 +34,12 @@ class _ExportersViewState extends State<ExportersView> {
           physics: const ClampingScrollPhysics(),
           children: [
             PaginatedDataTable(
-              columns: const [
-                DataColumn(label: Text('Nombre')),
-                DataColumn(label: Text('Dirección')),
-                DataColumn(label: Text('Teléfono')),
-                DataColumn(label: Text('Código IATA')),
-                DataColumn(label: Text('Acciones')),
+              columns:  [
+                DataColumn(label: Text('Nombre', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Dirección', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Teléfono', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Código IATA', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Acciones', style: CustomLabels.h2,)),
               ],
               onRowsPerPageChanged: (value) {
                 setState(() {
@@ -47,9 +48,10 @@ class _ExportersViewState extends State<ExportersView> {
               },
               rowsPerPage: _rowsPerPage,
               source: ExportersDTS(exportadores, context),
-              header: const Text(
-                'Exportadores disponibles: ',
+              header:  Text(
+                'EXPORTADORES: ',
                 maxLines: 2,
+                style: CustomLabels.h1,
               ),
               actions: [
                 CustomIconButton(

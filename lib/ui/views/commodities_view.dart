@@ -6,6 +6,7 @@ import 'package:ress_app/providers/commodities_provider.dart';
 import 'package:ress_app/datatable/commodities_datasource.dart';
 
 import 'package:ress_app/ui/buttons/custom_icon_button.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 import 'package:ress_app/ui/modals/commodity_modal.dart';
 
 class CommoditiesView extends StatefulWidget {
@@ -33,12 +34,12 @@ class _CommoditiesViewState extends State<CommoditiesView> {
           physics: const ClampingScrollPhysics(),
           children: [
             PaginatedDataTable(
-              columns: const [
-                DataColumn(label: Text('Prefijo')),
-                DataColumn(label: Text('Nombre')),
-                DataColumn(label: Text('DG')),
-                DataColumn(label: Text('Creado por')),
-                DataColumn(label: Text('Acciones')),
+              columns:  [
+                DataColumn(label: Text('Prefijo', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Nombre', style: CustomLabels.h2,)),
+                DataColumn(label: Text('DG', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Creado por', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Acciones', style: CustomLabels.h2,)),
               ],
               onRowsPerPageChanged: (value) {
                 setState(() {
@@ -47,9 +48,10 @@ class _CommoditiesViewState extends State<CommoditiesView> {
               },
               rowsPerPage: _rowsPerPage,
               source: CommoditiesDTS(tipos, context),
-              header: const Text(
-                'Tipos de Carga disponibles: ',
+              header:  Text(
+                'TIPOS DE CARGA: ',
                 maxLines: 2,
+                style: CustomLabels.h1,
               ),
               actions: [
                 CustomIconButton(

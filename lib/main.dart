@@ -80,7 +80,8 @@ class MyApp extends StatelessWidget {
           scrollbarTheme: const ScrollbarThemeData().copyWith(
               thumbColor:
                   MaterialStateProperty.all(Colors.grey.withOpacity(0.5))),
-          unselectedWidgetColor: Colors.white),
+          unselectedWidgetColor: Colors.white,
+          ),
     );
   }
 }

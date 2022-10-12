@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:ress_app/providers/airlines_provider.dart';
 
 import 'package:ress_app/models/airline.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 
 import 'package:ress_app/ui/modals/airline_modal.dart';
 
@@ -16,10 +17,10 @@ class AirlinesDTS extends DataTableSource {
   DataRow getRow(int index) {
     final aerolinea = aerolineas[index];
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(aerolinea.prefijo.toString())),
-      DataCell(Text(aerolinea.nombre)),
-      DataCell(Text(aerolinea.estacion)),
-      DataCell(Text(aerolinea.usuario.nombre)),
+      DataCell(Text(aerolinea.prefijo.toString(), style: CustomLabels.text,)),
+      DataCell(Text(aerolinea.nombre, style: CustomLabels.text,)),
+      DataCell(Text(aerolinea.estacion, style: CustomLabels.text,)),
+      DataCell(Text(aerolinea.usuario.nombre, style: CustomLabels.text,)),
       DataCell(Row(
         children: [
           IconButton(

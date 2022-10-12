@@ -6,6 +6,7 @@ import 'package:ress_app/providers/airlines_provider.dart';
 import 'package:ress_app/datatable/airlines_datasource.dart';
 
 import 'package:ress_app/ui/buttons/custom_icon_button.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 import 'package:ress_app/ui/modals/airline_modal.dart';
 
 class AirlinesView extends StatefulWidget {
@@ -33,12 +34,12 @@ class _AirlinesViewState extends State<AirlinesView> {
           physics: const ClampingScrollPhysics(),
           children: [
             PaginatedDataTable(
-              columns: const [
-                DataColumn(label: Text('Prefijo')),
-                DataColumn(label: Text('Nombre')),
-                DataColumn(label: Text('Estación')),
-                DataColumn(label: Text('Creado por')),
-                DataColumn(label: Text('Acciones')),
+              columns:  [
+                DataColumn(label: Text('Prefijo', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Nombre', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Estación', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Creado por', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Acciones', style: CustomLabels.h2,)),
               ],
               onRowsPerPageChanged: (value) {
                 setState(() {
@@ -47,9 +48,10 @@ class _AirlinesViewState extends State<AirlinesView> {
               },
               rowsPerPage: _rowsPerPage,
               source: AirlinesDTS(aerolineas, context),
-              header: const Text(
-                'Aerolíneas disponibles: ',
+              header:  Text(
+                'AEROLÍNEAS: ',
                 maxLines: 2,
+                style: CustomLabels.h1,
               ),
               actions: [
                 CustomIconButton(

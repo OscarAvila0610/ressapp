@@ -6,6 +6,7 @@ import 'package:ress_app/providers/origins_provider.dart';
 import 'package:ress_app/datatable/origins_datasource.dart';
 
 import 'package:ress_app/ui/buttons/custom_icon_button.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 import 'package:ress_app/ui/modals/origin_modal.dart';
 
 class OriginsView extends StatefulWidget {
@@ -33,12 +34,33 @@ class _OriginsViewState extends State<OriginsView> {
           physics: const ClampingScrollPhysics(),
           children: [
             PaginatedDataTable(
-              columns: const [
-                DataColumn(label: Text('Prefijo')),
-                DataColumn(label: Text('Pais')),
-                DataColumn(label: Text('Nombre')),
-                DataColumn(label: Text('Creado por')),
-                DataColumn(label: Text('Acciones')),
+              arrowHeadColor: Colors.white,
+              columns: [
+                DataColumn(
+                    label: Text(
+                  'Prefijo',
+                  style: CustomLabels.h2,
+                )),
+                DataColumn(
+                    label: Text(
+                  'País',
+                  style: CustomLabels.h2,
+                )),
+                DataColumn(
+                    label: Text(
+                  'Nombre',
+                  style: CustomLabels.h2,
+                )),
+                DataColumn(
+                    label: Text(
+                  'Creado por',
+                  style: CustomLabels.h2,
+                )),
+                DataColumn(
+                    label: Text(
+                  'Acciones',
+                  style: CustomLabels.h2,
+                )),
               ],
               onRowsPerPageChanged: (value) {
                 setState(() {
@@ -47,9 +69,10 @@ class _OriginsViewState extends State<OriginsView> {
               },
               rowsPerPage: _rowsPerPage,
               source: OriginsDTS(origenes, context),
-              header: const Text(
-                'Origenes disponibles: ',
+              header: Text(
+                'ORÍGENES: ',
                 maxLines: 2,
+                style: CustomLabels.h1,
               ),
               actions: [
                 CustomIconButton(

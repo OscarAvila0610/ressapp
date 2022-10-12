@@ -6,6 +6,7 @@ import 'package:ress_app/providers/destinations_provider.dart';
 import 'package:ress_app/datatable/destinations_datasource.dart';
 
 import 'package:ress_app/ui/buttons/custom_icon_button.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 import 'package:ress_app/ui/modals/destination_modal.dart';
 
 class DestinationsView extends StatefulWidget {
@@ -34,12 +35,12 @@ class _DestinationsViewState extends State<DestinationsView> {
           physics: const ClampingScrollPhysics(),
           children: [
             PaginatedDataTable(
-              columns: const [
-                DataColumn(label: Text('Prefijo')),
-                DataColumn(label: Text('Pais')),
-                DataColumn(label: Text('Nombre')),
-                DataColumn(label: Text('Creado por')),
-                DataColumn(label: Text('Acciones')),
+              columns:  [
+                DataColumn(label: Text('Prefijo', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Pais', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Nombre', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Creado por', style: CustomLabels.h2,)),
+                DataColumn(label: Text('Acciones', style: CustomLabels.h2,)),
               ],
               onRowsPerPageChanged: (value) {
                 setState(() {
@@ -48,9 +49,10 @@ class _DestinationsViewState extends State<DestinationsView> {
               },
               rowsPerPage: _rowsPerPage,
               source: DestinationsDTS(destinos, context),
-              header: const Text(
-                'Destinos disponibles: ',
+              header:  Text(
+                'DESTINOS: ',
                 maxLines: 2,
+                style: CustomLabels.h1,
               ),
               actions: [
                 CustomIconButton(

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:ress_app/providers/containers_provider.dart';
 
 import 'package:ress_app/models/container.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 
 import 'package:ress_app/ui/modals/container_modal.dart';
 
@@ -16,8 +17,8 @@ class ContainersDTS extends DataTableSource {
   DataRow getRow(int index) {
     final contenedor = contenedores[index];
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(contenedor.nombre)),
-      DataCell(Text(contenedor.usuario.nombre)),
+      DataCell(Text(contenedor.nombre, style: CustomLabels.text,)),
+      DataCell(Text(contenedor.usuario.nombre, style: CustomLabels.text,)),
       DataCell(Row(
         children: [
           IconButton(

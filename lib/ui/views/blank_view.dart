@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ress_app/providers/auth_provider.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 
 import '../cards/white_card.dart';
 
@@ -17,8 +18,10 @@ class BlankView extends StatelessWidget {
           children: [
             WhiteCard(
               title: user!.nombre,
-              child: const Text(
-                  'Lleve su mercancía dónde necesite rápidamente con Prioritise - nuestra solución express, cuya esencia es la fiabilidad, ofrece tiempos de entrega y aceptación rápidos para todas las cargas unitarias y sueltas.'),
+              child: Text(
+                'Lleve su mercancía dónde necesite rápidamente con Prioritise - nuestra solución express, cuya esencia es la fiabilidad, ofrece tiempos de entrega y aceptación rápidos para todas las cargas unitarias y sueltas.',
+                style: CustomLabels.text,
+              ),
             ),
             const SizedBox(
               height: 5,

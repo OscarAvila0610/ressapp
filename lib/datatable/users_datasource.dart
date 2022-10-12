@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ress_app/models/user.dart';
 import 'package:ress_app/providers/users_provider.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 
 class UsersDTS extends DataTableSource {
   final List<Usuario> users;
@@ -13,10 +14,22 @@ class UsersDTS extends DataTableSource {
   DataRow getRow(int index) {
     final Usuario user = users[index];
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(user.rol)),
-      DataCell(Text(user.nombre)),
-      DataCell(Text(user.correo)),
-      DataCell(Text(user.exportador.nombre)),
+      DataCell(Text(
+        user.rol,
+        style: CustomLabels.text,
+      )),
+      DataCell(Text(
+        user.nombre,
+        style: CustomLabels.text,
+      )),
+      DataCell(Text(
+        user.correo,
+        style: CustomLabels.text,
+      )),
+      DataCell(Text(
+        user.exportador.nombre,
+        style: CustomLabels.text,
+      )),
       DataCell(IconButton(
         icon: Icon(
           Icons.delete_outline,
