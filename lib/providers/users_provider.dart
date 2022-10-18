@@ -35,8 +35,8 @@ class UsersProvider extends ChangeNotifier {
     }
   }
 
-  Future newUser(String email,String name, String rol,
-      String exportador) async {
+  Future newUser(
+      String email, String name, String rol, String exportador) async {
     final data = {
       'nombre': name,
       'correo': email,

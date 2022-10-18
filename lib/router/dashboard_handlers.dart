@@ -227,7 +227,7 @@ class DashboardHandlers {
           user: authProvider.user!,
         );
       } else {
-        return const UsersView();
+        return  BookingsView(user: authProvider.user!);
       }
     } else {
       return const LoginView();

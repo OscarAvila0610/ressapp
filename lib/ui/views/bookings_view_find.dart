@@ -8,7 +8,9 @@ import 'package:ress_app/models/user.dart';
 import 'package:ress_app/providers/providers.dart';
 
 import 'package:ress_app/ui/buttons/custom_icon_button.dart';
+import 'package:ress_app/ui/labels/custom_labels.dart';
 import 'package:ress_app/ui/modals/booking_modal.dart';
+import 'package:ress_app/ui/shared/widgets/search_text.dart';
 
 class BookingsViewFind extends StatefulWidget {
   const BookingsViewFind({Key? key, required this.awb, required this.user})
@@ -50,45 +52,70 @@ class _BookingsViewFindState extends State<BookingsViewFind> {
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
-            // if (reservas.isEmpty)
-            //   WhiteCard(
-            //       child: Container(
-            //     alignment: Alignment.center,
-            //     height: 300,
-            //     child: const CircularProgressIndicator(),
-            //   )),
-            // if (reservas.isNotEmpty)
+            ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 200),
+                child: const SearchText(),
+              ),
             PaginatedDataTable(
               sortAscending: bookingsProvider.ascending,
               sortColumnIndex: bookingsProvider.sortColumnIndex,
               columnSpacing: 30,
               columns: [
-                const DataColumn(label: Text('Aerolínea')),
                 DataColumn(
-                    label: const Text('Salida'),
+                    label: Text(
+                  'Aerolínea',
+                  style: CustomLabels.h2,
+                )),
+                DataColumn(
+                    label: Text(
+                      'Salida',
+                      style: CustomLabels.h2,
+                    ),
                     onSort: (colIndex, _) {
                       bookingsProvider.sortColumnIndex = colIndex;
                       bookingsProvider.sort<String>((reserva) =>
                           DateFormat('yyyy-MM-dd').format(reserva.fechaSalida));
                     }),
-                const DataColumn(label: Text('AWB')),
-                const DataColumn(label: Text('Destino')),
                 DataColumn(
-                    label: const Text('Exportador'),
+                    label: Text(
+                  'AWB',
+                  style: CustomLabels.h2,
+                )),
+                DataColumn(
+                    label: Text(
+                  'Destino',
+                  style: CustomLabels.h2,
+                )),
+                DataColumn(
+                    label: Text(
+                      'Exportador',
+                      style: CustomLabels.h2,
+                    ),
                     onSort: (colIndex, _) {
                       bookingsProvider.sortColumnIndex = colIndex;
                       bookingsProvider
                           .sort<String>((reserva) => reserva.exportador.nombre);
                     }),
                 DataColumn(
-                    label: const Text('Creada Por'),
+                    label: Text(
+                      'Creada Por',
+                      style: CustomLabels.h2,
+                    ),
                     onSort: (colIndex, _) {
                       bookingsProvider.sortColumnIndex = colIndex;
                       bookingsProvider
                           .sort<String>((reserva) => reserva.usuario.nombre);
                     }),
-                const DataColumn(label: Text('Estado')),
-                const DataColumn(label: Text('Acciones')),
+                DataColumn(
+                    label: Text(
+                  'Estado',
+                  style: CustomLabels.h2,
+                )),
+                DataColumn(
+                    label: Text(
+                  'Acciones',
+                  style: CustomLabels.h2,
+                )),
               ],
               onRowsPerPageChanged: (value) {
                 setState(() {
@@ -98,9 +125,10 @@ class _BookingsViewFindState extends State<BookingsViewFind> {
               rowsPerPage: _rowsPerPage,
               source: BookingsDTS(reservas, context, aerolineas, contenedores,
                   tipos, origenes, destinos, widget.user),
-              header: const Text(
-                'Reservas realizadas: ',
+              header: Text(
+                'RESERVAS: ',
                 maxLines: 2,
+                style: CustomLabels.h1,
               ),
               actions: [
                 if (widget.user.rol == 'USER_ROLE') ...[

@@ -120,7 +120,8 @@ class _FullScreenBookingsState extends State<FullScreenBookings> {
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(8),
                       ],
                       initialValue: widget.reserva?.awb.toString() ?? '',
                       validator: (value) {

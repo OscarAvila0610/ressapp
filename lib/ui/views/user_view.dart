@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:ress_app/models/user.dart';
 import 'package:ress_app/providers/providers.dart';
+import 'package:ress_app/router/router.dart';
 
 import 'package:ress_app/services/navigation_service.dart';
 import 'package:ress_app/services/notifications_service.dart';
@@ -221,6 +222,8 @@ class _UserViewForm extends StatelessWidget {
                       NotificationsService.showSnackbar('Usuario Actualizado');
                       Provider.of<UsersProvider>(context, listen: false)
                           .refreshUser(user);
+                      NavigationService.replaceTo(
+                          '/dashboard/users/${user.uid}');
                     } else {
                       NotificationsService.showSnackbarError(
                           'Usuario no Actualizado');

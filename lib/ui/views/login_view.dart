@@ -31,7 +31,6 @@ class LoginView extends StatelessWidget {
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 370),
                     child: Form(
-                      autovalidateMode: AutovalidateMode.always,
                       key: loginFormProvider.formKey,
                       child: Column(
                         children: [
@@ -43,7 +42,7 @@ class LoginView extends StatelessWidget {
                                 return 'Ingrese su correo';
                               }
                               if (!EmailValidator.validate(value)) {
-                                return 'Email no valido';
+                                return 'Correo no valido';
                               }
                               return null;
                             },
@@ -52,7 +51,7 @@ class LoginView extends StatelessWidget {
                             style: const TextStyle(color: Colors.white),
                             decoration: CustomInputs.loginInputDecoration(
                                 hint: 'Ingrese su correo',
-                                label: 'Email',
+                                label: 'Correo',
                                 icon: Icons.email_outlined),
                           ),
                           const SizedBox(

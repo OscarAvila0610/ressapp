@@ -6,9 +6,11 @@ import 'package:ress_app/datatable/bookings_datasource.dart';
 import 'package:ress_app/models/user.dart';
 
 import 'package:ress_app/providers/providers.dart';
+import 'package:ress_app/router/router.dart';
 import 'package:ress_app/ui/buttons/custom_icon_button.dart';
 import 'package:ress_app/ui/labels/custom_labels.dart';
 import 'package:ress_app/ui/modals/booking_modal.dart';
+import 'package:ress_app/ui/shared/widgets/search_text.dart';
 
 class BookingsView extends StatefulWidget {
   const BookingsView({Key? key, required this.user}) : super(key: key);
@@ -43,42 +45,78 @@ class _BookingsViewState extends State<BookingsView> {
     final origenes = Provider.of<OriginsProviders>(context).origenes;
     final destinos = Provider.of<DestinationsProviders>(context).destinos;
     final bookingsProvider = Provider.of<BookingsProvider>(context);
+    final sideMenuProvider = Provider.of<SideMenuProvider>(context);
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: ListView(
           physics: const ClampingScrollPhysics(),
           children: [
+            if (sideMenuProvider.currentPage == Flurorouter.bookingsRoute ||
+                sideMenuProvider.currentPage == Flurorouter.awbRoute)
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 200),
+                child: const SearchText(),
+              ),
             PaginatedDataTable(
               sortAscending: bookingsProvider.ascending,
               sortColumnIndex: bookingsProvider.sortColumnIndex,
               columnSpacing: 30,
               columns: [
-                 DataColumn(label: Text('Aerolínea', style: CustomLabels.h2,)),
                 DataColumn(
-                    label:  Text('Salida', style: CustomLabels.h2,),
+                    label: Text(
+                  'Aerolínea',
+                  style: CustomLabels.h2,
+                )),
+                DataColumn(
+                    label: Text(
+                      'Salida',
+                      style: CustomLabels.h2,
+                    ),
                     onSort: (colIndex, _) {
                       bookingsProvider.sortColumnIndex = colIndex;
                       bookingsProvider.sort<String>((reserva) =>
                           DateFormat('yyyy-MM-dd').format(reserva.fechaSalida));
                     }),
-                 DataColumn(label: Text('AWB', style: CustomLabels.h2,)),
-                 DataColumn(label: Text('Destino', style: CustomLabels.h2,)),
                 DataColumn(
-                    label:  Text('Exportador', style: CustomLabels.h2,),
+                    label: Text(
+                  'AWB',
+                  style: CustomLabels.h2,
+                )),
+                DataColumn(
+                    label: Text(
+                  'Destino',
+                  style: CustomLabels.h2,
+                )),
+                DataColumn(
+                    label: Text(
+                      'Exportador',
+                      style: CustomLabels.h2,
+                    ),
                     onSort: (colIndex, _) {
                       bookingsProvider.sortColumnIndex = colIndex;
                       bookingsProvider
                           .sort<String>((reserva) => reserva.exportador.nombre);
                     }),
                 DataColumn(
-                    label:  Text('Creada Por', style: CustomLabels.h2,),
+                    label: Text(
+                      'Creada Por',
+                      style: CustomLabels.h2,
+                    ),
                     onSort: (colIndex, _) {
                       bookingsProvider.sortColumnIndex = colIndex;
                       bookingsProvider
                           .sort<String>((reserva) => reserva.usuario.nombre);
                     }),
-                 DataColumn(label: Text('Estado', style: CustomLabels.h2,)),
-                 DataColumn(label: Text('Acciones', style: CustomLabels.h2,)),
+                DataColumn(
+                    label: Text(
+                  'Estado',
+                  style: CustomLabels.h2,
+                )),
+                DataColumn(
+                    label: Text(
+                  'Acciones',
+                  style: CustomLabels.h2,
+                )),
               ],
               onRowsPerPageChanged: (value) {
                 setState(() {
@@ -88,7 +126,7 @@ class _BookingsViewState extends State<BookingsView> {
               rowsPerPage: _rowsPerPage,
               source: BookingsDTS(reservas, context, aerolineas, contenedores,
                   tipos, origenes, destinos, widget.user),
-              header:  Text(
+              header: Text(
                 'RESERVAS: ',
                 maxLines: 2,
                 style: CustomLabels.h1,

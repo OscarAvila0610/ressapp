@@ -109,26 +109,31 @@ class _DashboardViewState extends State<DashboardView> {
                     constraints: const BoxConstraints(maxWidth: 200),
                     child: ElevatedButton(
                       onPressed: () async {
-                        if (kgs.validForm()) {
-                          final iniVal = DateTime.parse(fechaInicial);
-                          final endVal = DateTime.parse(fechaFinal);
-                          if (iniVal.isAfter(endVal)) {
-                            NotificationsService.showSnackbarError(
-                                'La fecha inicial no puede ser mayor a la fecha final');
+                        try {
+                          if (kgs.validForm()) {
+                            final iniVal = DateTime.parse(fechaInicial);
+                            final endVal = DateTime.parse(fechaFinal);
+                            if (iniVal.isAfter(endVal)) {
+                              NotificationsService.showSnackbarError(
+                                  'La fecha inicial no puede ser mayor a la fecha final');
+                            }
+                            await Provider.of<BookingsProvider>(context,
+                                    listen: false)
+                                .getBookingByDate(fechaInicial, fechaFinal);
+                            final reservas = Provider.of<BookingsProvider>(
+                                    context,
+                                    listen: false)
+                                .reservas;
+                            if (reservas.isNotEmpty) {
+                              generarLista(reservas);
+                            } else {
+                              NotificationsService.showSnackbarError(
+                                  'No se encontraron datos de Reserva en las fechas estipuladas');
+                            }
                           }
-                          await Provider.of<BookingsProvider>(context,
-                                  listen: false)
-                              .getBookingByDate(fechaInicial, fechaFinal);
-                          final reservas = Provider.of<BookingsProvider>(
-                                  context,
-                                  listen: false)
-                              .reservas;
-                          if (reservas.isNotEmpty) {
-                            generarLista(reservas);
-                          } else {
-                            NotificationsService.showSnackbarError(
-                                'No se encontraron datos de Reserva en las fechas estipuladas');
-                          }
+                        } catch (e) {
+                          NotificationsService.showSnackbarError(
+                              'Formato de fechas Incorrecto');
                         }
                       },
                       style: ButtonStyle(

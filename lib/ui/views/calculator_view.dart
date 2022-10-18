@@ -42,7 +42,7 @@ class CalculatorView extends StatelessWidget {
                         decoration: CustomInputs.formInputDecoration(
                             hint: 'Peso Fisico',
                             label: 'Físico',
-                            icon: Icons.supervised_user_circle_outlined),
+                            icon: Icons.line_weight_outlined),
                         onChanged: (value) {
                           calculator.pesoFisico = value;
                         },
@@ -65,7 +65,7 @@ class CalculatorView extends StatelessWidget {
                         decoration: CustomInputs.formInputDecoration(
                             hint: 'Peso Volumetrico',
                             label: 'Volumetrico',
-                            icon: Icons.mark_email_read_outlined),
+                            icon: Icons.line_weight_outlined),
                         onChanged: (value) {
                           calculator.pesoVolumetrico = value;
                         },
@@ -84,7 +84,7 @@ class CalculatorView extends StatelessWidget {
                         decoration: CustomInputs.formInputDecoration(
                             hint: 'Tarifa Pactada',
                             label: 'Tarifa',
-                            icon: Icons.mark_email_read_outlined),
+                            icon: Icons.monetization_on_outlined),
                         keyboardType: const TextInputType.numberWithOptions(
                             decimal: true),
                         inputFormatters: <TextInputFormatter>[

@@ -208,14 +208,15 @@ class _DashboardAnalistViewState extends State<DashboardAnalistView> {
         bounds: Rect.fromLTWH(0, pageSize.height * 0.80, 0, 0));
 
     page.graphics.drawString(
-        '\tToda la Información contenida en el plan de vuelo ha sido revisada por \nnuestros analistas, por lo que se confirma que los kilos descritos seran despachados',
+        'Toda la Información contenida en el plan de vuelo ha sido revisada por \nnuestros analistas, por lo que se confirma que los kilos descritos seran despachados',
         PdfStandardFont(PdfFontFamily.timesRoman, 9),
         format: PdfStringFormat(alignment: PdfTextAlignment.justify),
         bounds: Rect.fromLTWH(0, pageSize.height - 70, 0, 0));
 
     List<int> bytes = await flyPlan.save();
     flyPlan.dispose();
-    saveAndLaunchFile(bytes, 'PlanDeVuelo.pdf');
+    saveAndLaunchFile(
+        bytes, 'Plan de Vuelo ${today.day}-${today.month}-${today.year}.pdf');
   }
 
   Future<Uint8List> _readImageData() async {

@@ -201,7 +201,8 @@ class _ResponsiveScreenState extends State<ResponsiveScreen> {
         TextFormField(
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.digitsOnly
+            FilteringTextInputFormatter.digitsOnly,
+            LengthLimitingTextInputFormatter(8),
           ],
           validator: (value) {
             if (value == null || value.isEmpty) {

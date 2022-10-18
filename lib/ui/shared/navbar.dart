@@ -6,7 +6,6 @@ import 'package:ress_app/providers/sidemenu_provider.dart';
 import 'package:ress_app/router/router.dart';
 import 'package:ress_app/ui/cards/white_card.dart';
 
-import 'package:ress_app/ui/shared/widgets/search_text.dart';
 
 class Navbar extends StatelessWidget {
   const Navbar({Key? key}) : super(key: key);
@@ -29,13 +28,13 @@ class Navbar extends StatelessWidget {
               onPressed: () => SideMenuProvider.openMenu(),
             ),
           const SizedBox(
-            width: 5,
+            width: 10,
           ),
           if (sideMenuProvider.currentPage == Flurorouter.bookingsRoute ||
               sideMenuProvider.currentPage == Flurorouter.awbRoute)
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 200),
-              child: const SearchText(),
+              child: Container(),
             ),
           const Spacer(),
           if (size.width > 525)

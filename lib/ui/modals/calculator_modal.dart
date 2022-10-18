@@ -29,7 +29,7 @@ class _CalculatorModalState extends State<CalculatorModal> {
 
   @override
   Widget build(BuildContext context) {
-    terminal = double.parse(widget.pesoFisico) * 0.3399;
+    terminal = double.parse(widget.pesoFisico) * 0.02367;
     flete = double.parse(widget.pesoVolumetrico) * double.parse(widget.tarifa);
     vat = (widget.tipoEmbarque == 'PP') ? (terminal + flete + ics) * 0.12 : 0;
     total = terminal + flete + ics + vat;
@@ -66,7 +66,9 @@ class _CalculatorModalState extends State<CalculatorModal> {
             enabled: false,
             initialValue: 'USD ${flete.toStringAsFixed(2)}',
             decoration: CustomInputs.loginInputDecoration(
-                hint: 'Flete', label: 'Flete', icon: Icons.airplanemode_active),
+                hint: 'Flete',
+                label: 'Flete',
+                icon: Icons.monetization_on_outlined),
             style: const TextStyle(color: Colors.white),
           ),
           const SizedBox(
@@ -78,7 +80,7 @@ class _CalculatorModalState extends State<CalculatorModal> {
             decoration: CustomInputs.loginInputDecoration(
                 hint: 'Terminal',
                 label: 'Terminal',
-                icon: Icons.airplanemode_active),
+                icon: Icons.monetization_on_outlined),
             style: const TextStyle(color: Colors.white),
           ),
           const SizedBox(
@@ -90,7 +92,7 @@ class _CalculatorModalState extends State<CalculatorModal> {
             decoration: CustomInputs.loginInputDecoration(
                 hint: 'Transmision Electronica',
                 label: 'Transmision',
-                icon: Icons.airplanemode_active),
+                icon: Icons.monetization_on_outlined),
             style: const TextStyle(color: Colors.white),
           ),
           const SizedBox(
@@ -100,7 +102,9 @@ class _CalculatorModalState extends State<CalculatorModal> {
             initialValue: 'USD ${vat.toStringAsFixed(2)}',
             enabled: false,
             decoration: CustomInputs.loginInputDecoration(
-                hint: 'IVA', label: 'IVA', icon: Icons.airplanemode_active),
+                hint: 'IVA',
+                label: 'IVA',
+                icon: Icons.monetization_on_outlined),
             style: const TextStyle(color: Colors.white),
           ),
           const SizedBox(
@@ -110,7 +114,9 @@ class _CalculatorModalState extends State<CalculatorModal> {
             initialValue: 'USD ${total.toStringAsFixed(2)}',
             enabled: false,
             decoration: CustomInputs.loginInputDecoration(
-                hint: 'Total', label: 'Total', icon: Icons.airplanemode_active),
+                hint: 'Total',
+                label: 'Total',
+                icon: Icons.monetization_on_outlined),
             style: const TextStyle(color: Colors.white),
           ),
         ],
